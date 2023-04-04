@@ -1,0 +1,21 @@
+# Map file for tile-based game
+# (Lines that start with '#' are comments)
+# The tiles are:
+#   (Space) Empty tile
+#   A       Tile for top right
+#   B	    Tile for top left
+#   C	    Tile for top middle
+#   D	    Tile for ground
+#   E       Nutritious plant
+#   F       Poisonous plant
+#   *       Goal
+#   1       Bad Guy 1 (grub)
+#   2       Bad Guy 2 (fly)
+
+                         
+    EEEE                                                 EF
+ ACCCCCCCB      	ACCCB          EF                 
+        
+
+       EEEEEEEEEE    F                  EEEE  F   EEEEEF    
+DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
