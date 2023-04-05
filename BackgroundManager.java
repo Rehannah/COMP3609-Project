@@ -51,6 +51,11 @@ public class BackgroundManager {
   	}
 
 
+	public void update(){
+		moveRight();
+	}
+
+
   	// The draw method draws the backgrounds on the screen. The
   	// backgrounds are drawn from the back to the front.
 

@@ -138,21 +138,17 @@ public class TileMapManager {
         // keep looking for tile A,B,C, etc. this makes it
         // easy to drop new tiles in the images/ folder
 
-	File file;
+	    File file;
 
-	System.out.println("loadTileImages called.");
-
-        tiles = new ArrayList<Image>();
+	    tiles = new ArrayList<Image>();
         char ch = 'A';
         while (true) {
             String filename = "images/myimages/tiles/tile_" + ch + ".png";
 	    file = new File(filename);
             if (!file.exists()) {
-		System.out.println("Image file could not be opened: " + filename);
                 break;
-            }
-	    else
-		System.out.println("Image file opened: " + filename);
+            }	    
+		
 		Image tileImage = new ImageIcon(filename).getImage();
            	tiles.add(tileImage);
             ch++;

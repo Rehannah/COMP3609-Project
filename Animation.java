@@ -81,14 +81,16 @@ public class Animation {
 		}
 		else { 
 	            isActive = false;				// set to false to terminate animation
+                return;
 		}
             }
 
-	    if (!isActive)
-	       return;
+	    // if (!isActive)
+	    //    return;
 
             while (animTime > getFrame(currFrameIndex).endTime) {
                 currFrameIndex++;				// set frame corresponding to time animation has run for
+                
             }
         }
 	

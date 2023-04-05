@@ -24,6 +24,7 @@ public class Background {
     		this.bgDX = bgDX;
 		backgroundX = 0;
 		backgroundX2 = bgImageWidth;
+		bgX = 0;
 
   	}
 
@@ -72,7 +73,6 @@ public class Background {
  
 
   	public void draw (Graphics2D g2) {
-		System.out.println("back"+bgImageWidth+" "+backgroundX+" "+backgroundX2);	
 		g2.drawImage(bgImage, backgroundX, 0, 1920, 1080, null);
 		g2.drawImage(bgImage, backgroundX2, 0, 1920, 1080, null);
   	}

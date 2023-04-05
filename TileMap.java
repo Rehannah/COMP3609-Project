@@ -171,10 +171,11 @@ public class TileMap {
         // get the scrolling position of the map
         // based on player's position
 
-        int offsetX = screenWidth / 2 -
-            Math.round(player.getX()) - TILE_SIZE;
+        // int offsetX = screenWidth / 2 -
+        //     Math.round(player.getX()) - TILE_SIZE;
+        int offsetX = Math.round(player.getPosition()) - TILE_SIZE;
         offsetX = Math.min(offsetX, 0);
-        offsetX = Math.max(offsetX, screenWidth - mapWidthPixels);
+        //offsetX = Math.max(offsetX, screenWidth - mapWidthPixels);
 
 /*
         // draw black background, if needed
@@ -274,7 +275,10 @@ public class TileMap {
 
 
     public void update() {
-	player.update();
+        bgManager.update();
+        moveRight();
+        player.update();
+
     }
 
 }
