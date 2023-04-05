@@ -40,9 +40,7 @@ public class TileMapManager {
     }
 
 
-     public TileMap loadMap(String filename)
-        throws IOException
-    {
+     public TileMap loadMap(String filename) throws IOException{
         ArrayList<String> lines = new ArrayList<String>();
         int mapWidth = 0;
         int mapHeight = 0;

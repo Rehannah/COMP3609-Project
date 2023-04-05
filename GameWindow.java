@@ -57,7 +57,7 @@ public class GameWindow extends JFrame implements
 
 	public GameWindow() {
  
-		super("Tiled Bat and Ball Game: Full Screen Exclusive Mode");
+		super("Treasure RecovARRy");
 
 		initFullScreen();
 

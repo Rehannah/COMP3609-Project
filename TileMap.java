@@ -15,7 +15,6 @@ import javax.swing.JFrame;
 public class TileMap {
 
     private static final int TILE_SIZE = 96;
-    private static final int TILE_SIZE_BITS = 6;
 
     private Image[][] tiles;
     private int screenWidth, screenHeight;
@@ -44,6 +43,7 @@ public class TileMap {
 
 	mapWidth = width;
 	mapHeight = height;
+    System.out.println("mapHEight"+mapHeight);
 
         // get the y offset to draw all sprites and tiles
 

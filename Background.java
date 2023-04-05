@@ -20,8 +20,10 @@ public class Background {
 
     	this.bgImage = loadImage(imageFile);
 		dimension = window.getSize();
-    	bgImageWidth = dimension.width;	// get width of the background
+    	bgImageWidth = bgImage.getWidth(window);	// get width of the background
     		this.bgDX = bgDX;
+		backgroundX = 0;
+		backgroundX2 = bgImageWidth;
 
   	}
 
@@ -30,7 +32,8 @@ public class Background {
 
 		if (bgX == 0) {
 			backgroundX = 0;
-			backgroundX2 = bgImageWidth;			
+			backgroundX2 = bgImageWidth;
+					
 		}
 
 		bgX = bgX - bgDX;
@@ -69,7 +72,8 @@ public class Background {
  
 
   	public void draw (Graphics2D g2) {
-		g2.drawImage(bgImage, backgroundX, 0,  1920, 1080, null);
+		System.out.println("back"+bgImageWidth+" "+backgroundX+" "+backgroundX2);	
+		g2.drawImage(bgImage, backgroundX, 0, 1920, 1080, null);
 		g2.drawImage(bgImage, backgroundX2, 0, 1920, 1080, null);
   	}
 

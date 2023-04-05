@@ -17,8 +17,8 @@ import javax.swing.JFrame;
 public class BackgroundManager {
 
 	private String bgImages[] = {"images/myimages/background/1sky.png",
-								"images/myimages/background/2cloud2.png",
-								"images/myimages/background/3mountain2.png",
+								"images/myimages/background/2cloud.png",
+								"images/myimages/background/3mountain.png",
 								"images/myimages/background/4mist.png",
 								"images/myimages/background/5hill.png",
 								"images/myimages/background/6forest.png",
