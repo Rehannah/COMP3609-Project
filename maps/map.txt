@@ -13,9 +13,9 @@
 #   2       Bad Guy 2 (fly)
 
                          
-    EEEE                                                 EF
- ACCCCCCCB      	ACCCB          EF                         
+    EEEE                                                 EF                      FFFF
+ ACCCCCCCB      	ACCCB                                   
 
 
        EEEEEEEEEE    F                  EEEE  F   EEEEEF    
-DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
+DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD

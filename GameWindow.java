@@ -424,13 +424,13 @@ public class GameWindow extends JFrame implements
 			return;				//  one of these keys (ESC, Q, END)			
          	}
 		else
-		if (keyCode == KeyEvent.VK_LEFT) {
-			tileMap.moveLeft();
-		}
-		else
-		if (keyCode == KeyEvent.VK_RIGHT) {
-			tileMap.moveRight();
-		}
+		// if (keyCode == KeyEvent.VK_LEFT) {
+		// 	tileMap.moveLeft();
+		// }
+		// else
+		// if (keyCode == KeyEvent.VK_RIGHT) {
+		// 	tileMap.moveRight();
+		// }
 		if (keyCode == KeyEvent.VK_SPACE) {
 			tileMap.jump();
 		}
