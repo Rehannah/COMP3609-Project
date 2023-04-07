@@ -18,7 +18,7 @@ public class Player {
 
    private int x;			// x-position of player's sprite
    private int y;			// y-position of player's sprite
-   private int position;
+   //private int position;
 
    Graphics2D g2;
    private Dimension dimension;
@@ -51,7 +51,7 @@ public class Player {
 	  initialiseAnimations();	  
 	  currentAnim = animations.get("run");
 	  x = window.getSize().width;
-	  position = x;
+	  //position = x;
 	  System.out.println("Xpos"+x);
    }
 
@@ -187,74 +187,74 @@ public class Player {
 */
 
 
-    public synchronized void move (int direction) {
-		int newX = x;
-      	Point tilePos = null;
+//     public synchronized void move (int direction) {
+// 		int newX = x;
+//       	Point tilePos = null;
 		
-      	if (!window.isVisible ()) return;
+//       	if (!window.isVisible ()) return;
       
-      	if (direction == 1) {		// move left
-	   		newX = x - DX;
-			if (newX < 0) {
-				x = 0;
-				return;
-			}
+//       	// if (direction == 1) {		// move left
+// 	   	// 	newX = x - DX;
+// 		// 	if (newX < 0) {
+// 		// 		x = 0;
+// 		// 		return;
+// 		// 	}
 			
-			tilePos = collidesWithTile(newX, y);
-      	}	
-      	else				
-      	if (direction == 2) {		// move right
-			int playerWidth = playerImage.getWidth(null);
-			position = x + DX;
+// 			// tilePos = collidesWithTile(newX, y);
+//       	// }	
+//       	// else				
+//       	// if (direction == 2) {		// move right
+// 		// 	int playerWidth = playerImage.getWidth(null);
+// 		// 	position = x + DX;
 
-			int tileMapWidth = tileMap.getWidthPixels();
+// 		// 	int tileMapWidth = tileMap.getWidthPixels();
 
-			if (position + playerImage.getWidth(null) >= tileMapWidth) {
-				x = tileMapWidth - playerImage.getWidth(null);
-				return;
-			}
+// 		// 	if (position + playerImage.getWidth(null) >= tileMapWidth) {
+// 		// 		x = tileMapWidth - playerImage.getWidth(null);
+// 		// 		return;
+// 		// 	}
 
-			tilePos = collidesWithTile(position+playerWidth, y);			
-		}
-		else				// jump
-			if (direction == 3 && !jumping) {	
-				jump();
-			return;
-			}
+// 		// 	tilePos = collidesWithTile(position+playerWidth, y);			
+// 		// }
+// 		// else				// jump
+// 			if (direction == 3 && !jumping) {	
+// 				jump();
+// 			return;
+// 			}
     
-		if (tilePos != null) {  
-			if (direction == 1) {
-				System.out.println (": Collision going left");
-				x = ((int) tilePos.getX() + 1) * TILE_SIZE;	   // keep flush with right side of tile
-			}
-			else
-				if (direction == 2) {
-				System.out.println (": Collision going right");
-					int playerWidth = playerImage.getWidth(null);
-					position = ((int) tilePos.getX()) * TILE_SIZE - playerWidth; // keep flush with left side of tile
-				}
-      	}
-		else {
-			if (direction == 1) {
-				x = newX;
-				bgManager.moveLeft();
-			}
-			else
-			if (direction == 2) {
-				//x = newX;
-				bgManager.moveRight();
-			}
+// 		if (tilePos != null) {  
+// 		// 	if (direction == 1) {
+// 		// 		System.out.println (": Collision going left");
+// 		// 		x = ((int) tilePos.getX() + 1) * TILE_SIZE;	   // keep flush with right side of tile
+// 		// 	}
+// 		// 	else
+// 		// 		if (direction == 2) {
+// 		// 		System.out.println (": Collision going right");
+// 		// 			int playerWidth = playerImage.getWidth(null);
+// 		// 			position = ((int) tilePos.getX()) * TILE_SIZE - playerWidth; // keep flush with left side of tile
+// 		// 		}
+//       	// }
+// 		// else {
+// 			// if (direction == 1) {
+// 			// 	x = newX;
+// 			// 	bgManager.moveLeft();
+// 			// }
+// 			// else
+// 			// if (direction == 2) {
+// 			// 	//x = newX;
+// 			// 	bgManager.moveRight();
+// 			// }
 
-			if (isInAir()) {
-				System.out.println("In the air. Starting to fall.");
-				if (direction == 1) {				// make adjustment for falling on left side of tile
-					int playerWidth = playerImage.getWidth(null);
-					x = x - playerWidth + DX;
-				}
-				fall();
-			}
-		}
-   }
+// 			if (isInAir()) {
+// 				System.out.println("In the air. Starting to fall.");
+// 				if (direction == 1) {				// make adjustment for falling on left side of tile
+// 					int playerWidth = playerImage.getWidth(null);
+// 					x = x - playerWidth + DX;
+// 				}
+// 				fall();
+// 			}
+// 		}
+//    }
 
 
    public boolean isInAir() {
@@ -303,6 +303,10 @@ public class Player {
       startY = y;
       initialVelocity = 70;
    }
+
+  	public void idle() {
+		playerImage = ImageManager.loadImage("images/myimages/boy/Idle/1.png");	  
+	}
 
 
    public void update () {
@@ -380,14 +384,14 @@ public class Player {
       return x;
    }
 
-   public int getPosition() {
-	return position;
- }
+//    public int getPosition() {
+// 	return position;
+//  }
 
 
    public void setX(int x) {
       this.x = x;
-	  position = x;
+	  //position = x;
    }
 
 
@@ -404,5 +408,8 @@ public class Player {
    public Image getImage() {
       return playerImage;
    }
+
+
+
 
 }

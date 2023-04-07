@@ -2,6 +2,7 @@ import java.awt.Image;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.Iterator;
 import javax.swing.JFrame;
 
@@ -23,7 +24,7 @@ public class TileMap {
     private int offsetY;
     private int offsetX;
 
-    private LinkedList sprites;
+    private ArrayList<Sprite> sprites;
     private Player player;
 
     BackgroundManager bgManager;
@@ -55,7 +56,7 @@ public class TileMap {
 
         tiles = new Image[mapWidth][mapHeight];
 	player = new Player (window, this, bgManager);
-        sprites = new LinkedList();
+        sprites = new ArrayList<Sprite>();
         offsetX = screenWidth / 2 - Math.round(player.getX()) - TILE_SIZE;
 	Image playerImage = player.getImage();
 	int playerHeight = playerImage.getHeight(null);
@@ -165,21 +166,7 @@ public class TileMap {
     /**
         Draws the specified TileMap.
     */
-    public void draw(Graphics2D g2)
-    {
-        
-
-        
-        
-/*
-        // draw black background, if needed
-        if (background == null ||
-            screenHeight > background.getHeight(null))
-        {
-            g.setColor(Color.black);
-            g.fillRect(0, 0, screenWidth, screenHeight);
-        }
-*/
+    public void draw(Graphics2D g2){
 	// draw the background first
 	bgManager.draw (g2);
 
@@ -204,41 +191,43 @@ public class TileMap {
 
         g2.drawImage(player.getImage(),
             Math.round(player.getX()),
-            Math.round(player.getY()), //+ offsetY,
+            Math.round(player.getY()), 
             null);
 
-/*
+
         // draw sprites
-        Iterator i = map.getSprites();
+        Iterator i = getSprites();
         while (i.hasNext()) {
+            
             Sprite sprite = (Sprite)i.next();
-            int x = Math.round(sprite.getX()) + offsetX;
+            int x = Math.round(sprite.getX());
             int y = Math.round(sprite.getY()) + offsetY;
-            g.drawImage(sprite.getImage(), x, y, null);
+            System.out.println("Draw x: "+ y);
+            g2.drawImage(sprite.getImage(),x, y, null);
 
             // wake up the creature when it's on screen
-            if (sprite instanceof Creature &&
-                x >= 0 && x < screenWidth)
-            {
-                ((Creature)sprite).wakeUp();
-            }
+            // if (sprite instanceof Creature &&
+            //     x >= 0 && x < screenWidth)
+            // {
+            //     ((Creature)sprite).wakeUp();
+            // }
         }
-*/
+
 
     }
 
 
-    public void moveLeft() {
-	int x, y;
-	x = player.getX();
-	y = player.getY();
+    // public void moveLeft() {
+	// int x, y;
+	// x = player.getX();
+	// y = player.getY();
 
-	String mess = "Going left. x = " + x + " y = " + y;
-	System.out.println(mess);
+	// String mess = "Going left. x = " + x + " y = " + y;
+	// System.out.println(mess);
 
-	player.move(1);
+	// player.move(1);
 
-    }
+    // }
 
 
     public void moveRight() {
@@ -249,7 +238,7 @@ public class TileMap {
 	String mess = "Going right. x = " + x + " y = " + y;
 	System.out.println(mess);
 
-	player.move(2);
+	//player.move(2);
 
     }
 
@@ -262,20 +251,53 @@ public class TileMap {
 	String mess = "Jumping. x = " + x + " y = " + y;
 	System.out.println(mess);
 
-	player.move(3);
+	player.jump();
 
     }
 
 
     public void update() {
-    bgManager.update();
     offsetX -= DX;
-    offsetX = Math.min(offsetX, 0);
-    offsetX = Math.max(offsetX, screenWidth - tilesToPixels(mapWidth));
-	player.update();
+    //offsetX = Math.min(offsetX, 0);
+    if((screenWidth - tilesToPixels(mapWidth)) > offsetX){
+        offsetX = screenWidth - tilesToPixels(mapWidth); 
+        player.idle();       
+    }
+    else{
+        bgManager.update();
+        player.update();
+    }
+    
+    }
+
+
+    public void addSprite(Sprite sprite) {
+        System.out.println("X2: "+ sprite.getY());
+
+        sprites.add(sprite);
+        
+        System.out.println("X3: "+ sprite.getY());
     }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
