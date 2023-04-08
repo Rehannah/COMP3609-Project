@@ -24,7 +24,7 @@ public class TileMap {
     private int offsetY;
     private int offsetX;
 
-    private ArrayList<Sprite> sprites;
+    private ArrayList sprites;
     private Player player;
 
     BackgroundManager bgManager;
@@ -56,13 +56,13 @@ public class TileMap {
 
         tiles = new Image[mapWidth][mapHeight];
 	player = new Player (window, this, bgManager);
-        sprites = new ArrayList<Sprite>();
-        offsetX = screenWidth / 2 - Math.round(player.getX()) - TILE_SIZE;
+        sprites = new ArrayList();
+        offsetX = 0;
 	Image playerImage = player.getImage();
 	int playerHeight = playerImage.getHeight(null);
 
 	int x, y;
-	x = (dimension.width / 2);	// position player in middle of screen
+	x = (dimension.width / 2 - playerImage.getWidth(null)/2);	// position player in middle of screen
 
 	//x = 192;					// position player in 'random' location
 	y = dimension.height - (TILE_SIZE + playerHeight);
@@ -197,14 +197,13 @@ public class TileMap {
 
         // draw sprites
         Iterator i = getSprites();
-        while (i.hasNext()) {
-            
+        while (i.hasNext()) {            
             Sprite sprite = (Sprite)i.next();
-            int x = Math.round(sprite.getX());
-            int y = Math.round(sprite.getY()) + offsetY;
-            System.out.println("Draw x: "+ y);
-            g2.drawImage(sprite.getImage(),x, y, null);
-
+            int x = Math.round(sprite.getX()) + offsetX;
+            if(x >=-sprite.getWidth() && x < screenWidth){
+                int y = Math.round(sprite.getY()) + offsetY;
+                g2.drawImage(sprite.getImage(),x, y, null);
+            }
             // wake up the creature when it's on screen
             // if (sprite instanceof Creature &&
             //     x >= 0 && x < screenWidth)
@@ -257,26 +256,20 @@ public class TileMap {
 
 
     public void update() {
-    offsetX -= DX;
-    //offsetX = Math.min(offsetX, 0);
-    if((screenWidth - tilesToPixels(mapWidth)) > offsetX){
-        offsetX = screenWidth - tilesToPixels(mapWidth); 
-        player.idle();       
-    }
-    else{
-        bgManager.update();
-        player.update();
-    }
-    
+        offsetX -= DX;
+        if((screenWidth - tilesToPixels(mapWidth)) > offsetX){
+            offsetX = screenWidth - tilesToPixels(mapWidth); 
+            player.idle();       
+        }
+        else{
+            bgManager.update();
+            player.update();
+        }
     }
 
 
     public void addSprite(Sprite sprite) {
-        System.out.println("X2: "+ sprite.getY());
-
         sprites.add(sprite);
-        
-        System.out.println("X3: "+ sprite.getY());
     }
 
 }

@@ -17,24 +17,24 @@ public class TileMapManager {
     private int currentMap = 0;
 
     private JFrame window;
-
+private Score score;
 
     private GraphicsConfiguration gc;
 
     // host sprites used for cloning
-    private Sprite playerSprite;
-    private Sprite poisonSprite;
-    private Sprite coinSprite;
-    private Sprite nutritiousSprite;
-    private Sprite grubSprite;
-    private Sprite flySprite;
+    //private Sprite playerSprite;
+    private PoisonSprite poisonSprite;
+    //private Sprite coinSprite;
+    private NutritiousSprite nutritiousSprite;
+    // private Sprite grubSprite;
+    // private Sprite flySprite;
 
 
-    public TileMapManager(JFrame window) {
+    public TileMapManager(JFrame window, Score s) {
 	this.window = window;
-        poisonSprite = new Sprite(ImageManager.loadImage("images/myimages/tiles/poison.png"));
-        nutritiousSprite = new Sprite(ImageManager.loadImage("images/myimages/tiles/nutritious.png"));
-
+        poisonSprite = new PoisonSprite(ImageManager.loadImage("images/myimages/tiles/poison.png"), score);
+        nutritiousSprite = new NutritiousSprite(ImageManager.loadImage("images/myimages/tiles/nutritious.png"), score);
+        score = s;
         loadTileImages();
 
         //loadCreatureSprites();
@@ -85,11 +85,10 @@ public class TileMapManager {
 
                 // check if the char represents a sprite
                 else if (ch == '!') {
-                    addSprite(newMap, new Sprite (ImageManager.loadImage("images/myimages/tiles/poison.png")), x, y);
+                    addSprite(newMap, poisonSprite, x, y);
                 }
                 else if (ch == '*') {
-                    //addSprite(newMap, nutritiousSprite, x, y);
-                    //newMap.setTile(x, y, tiles.get(tile));
+                    addSprite(newMap, nutritiousSprite, x, y);
                 }
 
             }
@@ -104,13 +103,10 @@ public class TileMapManager {
     {
         if (hostSprite != null) {
             // clone the sprite from the "host"
-            //Sprite sprite = (Sprite)hostSprite.getClone();
-            Sprite sprite = hostSprite;
+            Sprite sprite = (Sprite)hostSprite.getClone();
             // center the sprite
-            sprite.setY(map.tilesToPixels(tileY+1) - sprite.getHeight());
-            
             sprite.setX(map.tilesToPixels(tileX));
-            System.out.println("X: "+ sprite.getY());
+            sprite.setY(map.tilesToPixels(tileY+1) - sprite.getHeight());
             // bottom-justify the sprite
             
             // add it to the map

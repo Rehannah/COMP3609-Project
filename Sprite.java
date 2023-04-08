@@ -5,21 +5,17 @@ import java.util.HashMap;
 
 import javax.swing.JFrame;
 
-public class Sprite implements Cloneable{
+public abstract class Sprite implements Cloneable{
     
     private static final int DX = 8;
     
     private int x;			// x-position of sprite
     private int y;			// y-position of sprite
-    //private int position;
+    private boolean visible;
  
     Graphics2D g2; 
     private Image image;
-    
-   
-    public Sprite(Image im){
-        image = im;
-    }
+    private Score score;
 
     public int getX() {
         return x;
@@ -46,7 +42,11 @@ public class Sprite implements Cloneable{
     }
 
     public void setY(int n) {
-        x = n;
+        y = n;
+    }
+
+    public void setVisible(boolean v) {
+        visible = v;
     }
 
     public Object getClone() {
@@ -56,5 +56,6 @@ public class Sprite implements Cloneable{
             return null;
         }
     }
-    
+
+    public boolean collides;
 }

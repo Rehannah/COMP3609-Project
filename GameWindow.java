@@ -52,8 +52,9 @@ public class GameWindow extends JFrame implements
 	private BufferStrategy bufferStrategy;
 
 	private SoundManager soundManager;
-	TileMapManager tileManager;
-	TileMap	tileMap;
+	private TileMapManager tileManager;
+	private TileMap	tileMap;
+	private Score score;
 
 	public GameWindow() {
  
@@ -73,7 +74,7 @@ public class GameWindow extends JFrame implements
 		animation = new BirdAnimation();
 		soundManager = SoundManager.getInstance();
 		image = new BufferedImage (pWidth, pHeight, BufferedImage.TYPE_INT_RGB);
-
+		
 		startGame();
 	}
 
@@ -157,6 +158,9 @@ public class GameWindow extends JFrame implements
 		} 
 	}
 
+	public Score getScore(){
+		return score;
+	}
 
 	public void gameRender (Graphics gScr) {		// draw the game objects
 
@@ -366,8 +370,8 @@ public class GameWindow extends JFrame implements
 	private void startGame() { 
 		if (gameThread == null) {
 			//soundManager.playSound ("background", true);
-
-			tileManager = new TileMapManager (this);
+			score =  new Score(this);
+			tileManager = new TileMapManager (this, getScore());
 
 			try {
 				tileMap = tileManager.loadMap("maps/map.txt");
@@ -549,5 +553,13 @@ public class GameWindow extends JFrame implements
 			isOverQuitButton = quitButtonArea.contains(x,y) ? true : false;
 		}
 	}
+
+
+	public void setPoints(int points) {
+	}
+
+
+    public void setLives(int lives) {
+    }
 
 }

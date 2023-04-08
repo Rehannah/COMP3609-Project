@@ -3,8 +3,8 @@
 # The tiles are:
 #   (Space) Empty tile
 #   A       Tile for top right
-#   B	    Tile for top left
-#   C	    Tile for top middle
+#   B	    Tile for top middle
+#   C	    Tile for top left
 #   D	    Tile for ground
 #   E       Nutritious plant
 #   F       Poisonous plant
@@ -13,9 +13,9 @@
 #   2       Bad Guy 2 (fly)
 
                          
-!* !  !!                                        
-ACCC   CCCCCB      	ACCCB                                  
+                              ******         
+                              ABBBBC                 ABBBC                               
 
 
-          
-DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
+             ******!        ****         !!***           !*** 
+DDDDDDDDDDDDDDDDDDDDDDEEDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
