@@ -32,8 +32,8 @@ private Score score;
 
     public TileMapManager(JFrame window, Score s) {
 	this.window = window;
-        poisonSprite = new PoisonSprite(ImageManager.loadImage("images/myimages/tiles/poison.png"), score);
-        nutritiousSprite = new NutritiousSprite(ImageManager.loadImage("images/myimages/tiles/nutritious.png"), score);
+        poisonSprite = new PoisonSprite(score);
+        nutritiousSprite = new NutritiousSprite(score);
         score = s;
         loadTileImages();
 

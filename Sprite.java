@@ -7,15 +7,20 @@ import javax.swing.JFrame;
 
 public abstract class Sprite implements Cloneable{
     
-    private static final int DX = 8;
+    protected static final int DX = 8;
     
-    private int x;			// x-position of sprite
-    private int y;			// y-position of sprite
-    private boolean visible;
- 
-    Graphics2D g2; 
-    private Image image;
-    private Score score;
+    protected int x;			// x-position of sprite
+    protected int y;			// y-position of sprite
+    protected boolean visible; 
+    protected Graphics2D g2; 
+    protected Image image;
+    protected Score score;
+
+    public Sprite(Image im, Score s){
+        image = im;
+        visible = true;
+        score = s;
+    }
 
     public int getX() {
         return x;

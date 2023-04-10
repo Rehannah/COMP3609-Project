@@ -29,6 +29,7 @@ public class BackgroundManager {
 
   	private Background[] backgrounds;
   	private int numBackgrounds;
+
   	public BackgroundManager(JFrame window) {
     		numBackgrounds = bgImages.length;
     		backgrounds = new Background[numBackgrounds];

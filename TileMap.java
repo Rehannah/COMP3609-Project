@@ -25,7 +25,7 @@ public class TileMap {
     private int offsetX;
 
     private ArrayList sprites;
-    private Player player;
+    private Level1Player player;
 
     BackgroundManager bgManager;
 
@@ -55,7 +55,7 @@ public class TileMap {
 	bgManager = new BackgroundManager (window);
 
         tiles = new Image[mapWidth][mapHeight];
-	player = new Player (window, this, bgManager);
+	player = new Level1Player (window, this, bgManager);
         sprites = new ArrayList();
         offsetX = 0;
 	Image playerImage = player.getImage();
@@ -163,12 +163,32 @@ public class TileMap {
         return numTiles * TILE_SIZE;
     }
 
+
+    public void update() {
+        offsetX -= DX;
+        if((screenWidth - tilesToPixels(mapWidth)) > offsetX){
+            offsetX = screenWidth - tilesToPixels(mapWidth); 
+            player.idle();       
+        }
+        else{
+            bgManager.update();
+            player.update();
+        }
+    }
+
     /**
         Draws the specified TileMap.
     */
     public void draw(Graphics2D g2){
 	// draw the background first
 	bgManager.draw (g2);
+        // draw player
+
+        g2.drawImage(player.getImage(),
+        Math.round(player.getX()),
+        Math.round(player.getY()), 
+        null);
+
 
         // draw the visible tiles
 
@@ -187,14 +207,7 @@ public class TileMap {
         }
 
 
-        // draw player
-
-        g2.drawImage(player.getImage(),
-            Math.round(player.getX()),
-            Math.round(player.getY()), 
-            null);
-
-
+        
         // draw sprites
         Iterator i = getSprites();
         while (i.hasNext()) {            
@@ -255,17 +268,7 @@ public class TileMap {
     }
 
 
-    public void update() {
-        offsetX -= DX;
-        if((screenWidth - tilesToPixels(mapWidth)) > offsetX){
-            offsetX = screenWidth - tilesToPixels(mapWidth); 
-            player.idle();       
-        }
-        else{
-            bgManager.update();
-            player.update();
-        }
-    }
+    
 
 
     public void addSprite(Sprite sprite) {

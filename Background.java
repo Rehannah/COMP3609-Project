@@ -1,15 +1,11 @@
 import java.awt.Graphics2D;
-import java.awt.Dimension;
 import java.awt.Image;
 import javax.swing.JFrame;
 import javax.swing.ImageIcon;
 
 public class Background {
   	private Image bgImage;
-  	private int bgImageWidth;      		
-
-	private Dimension dimension;
-
+  	private int bgImageWidth;   
  	private int bgX;
 	private int backgroundX;
 	private int backgroundX2;
@@ -19,7 +15,6 @@ public class Background {
 	public Background(JFrame window, String imageFile, int bgDX) {
 
     	this.bgImage = loadImage(imageFile);
-		dimension = window.getSize();
     	bgImageWidth = bgImage.getWidth(window);	// get width of the background
     		this.bgDX = bgDX;
 		backgroundX = 0;
@@ -43,7 +38,6 @@ public class Background {
 		backgroundX2 = backgroundX2 - bgDX;
 
 		if ((bgX + bgImageWidth) % bgImageWidth == 0) {
-			System.out.println ("Background change: bgX = " + bgX); 
 			backgroundX = 0;
 			backgroundX2 = bgImageWidth;
 		}
@@ -65,7 +59,6 @@ public class Background {
 		backgroundX2 = backgroundX2 + bgDX;
 
 		if ((bgX + bgImageWidth) % bgImageWidth == 0) {
-			//System.out.println ("Background change: bgX = " + bgX); 
 			backgroundX = bgImageWidth * -1;
 			backgroundX2 = 0;
 		}			
