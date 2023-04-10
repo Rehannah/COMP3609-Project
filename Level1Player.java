@@ -10,7 +10,7 @@ public class Level1Player{
 	private static final int DX = 8;	// amount of X pixels to move in one keystroke
 	private static final int DY = 32;	// amount of Y pixels to move in one keystroke
 
-	private static final int TILE_SIZE = 64;
+	private static final int TILE_SIZE = 96;
 
 	private JFrame window;		// reference to the JFrame on which player is drawn
 	private TileMap tileMap;
@@ -306,8 +306,8 @@ public class Level1Player{
 						//int offsetY = tileMap.getOffsetY();
 						//int topTileY = ((int) tilePos.getY()) * TILE_SIZE + offsetY;
 
-						y = dimension.height - ((int) tilePos.getY()) * TILE_SIZE - playerHeight;
-						System.out.print("Y: "+y);
+						y = dimension.height - (tileMap.getHeight() - ((int) tilePos.getY())) * TILE_SIZE - playerImage.getHeight(null);
+						System.out.print( dimension.height+ " "+tileMap.getHeight()+" "+ (int) tilePos.getY()+ " " + playerImage.getHeight(null)+"Y: "+y);
 						jumping = false;
 						inAir = false;
 					}
