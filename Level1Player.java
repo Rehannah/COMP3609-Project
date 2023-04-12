@@ -99,29 +99,50 @@ public class Level1Player{
 		int playerWidth = playerImage.getWidth(null);
 		int playerHeight = playerImage.getHeight(null);
 		int offsetY = tileMap.getOffsetY();
-		int xTile = tileMap.pixelsToTiles(newX);
-		System.out.println("Xtile: "+xTile);
+		// int xTile = tileMap.pixelsToTiles(newX);
+		// System.out.println("Xtile: "+xTile);
 		int yTileFrom = tileMap.pixelsToTiles(y - offsetY);
-		System.out.println("Ytile From: "+yTileFrom);
+		//System.out.println("Ytile From: "+yTileFrom);
 		int yTileTo = tileMap.pixelsToTiles(newY - offsetY + playerHeight);
-		System.out.println("Y ttile to: "+yTileTo);
+		//System.out.println("Y ttile to: "+yTileTo);
 		for (int yTile=yTileFrom; yTile<=yTileTo; yTile++) {
-			System.out.println("x, y "+xTile + " "+ yTile);
+			int xTile = tileMap.pixelsToTiles(newX - tileMap.getOffsetX());
+			int xTile2 = tileMap.pixelsToTiles(newX + getImage().getWidth(null) - tileMap.getOffsetX());
+			//System.out.println("offset: "+tileMap.getOffsetX());
+		// System.out.println("Xtile: "+xTile);
+		// 	System.out.println("x, y "+xTile + " "+ yTile);
 			if (tileMap.getTile(xTile, yTile) != null) {
 					Point tilePos = new Point (xTile, yTile);
-					System.out.println("first");
+					//System.out.println("first");
 					return tilePos;
 			}
 			else {
+				xTile = tileMap.pixelsToTiles(newX - tileMap.getOffsetX());
 				if (tileMap.getTile(xTile+1, yTile) != null) {
 					int leftSide = (xTile + 1) * TILE_SIZE;
 					if (newX + playerWidth > leftSide) {
-						System.out.println("second");
+						//System.out.println("second");
 						Point tilePos = new Point (xTile+1, yTile);
 						return tilePos;
 					}
 				}
 			}
+			if (tileMap.getTile(xTile2, yTile) != null) {
+				Point tilePos = new Point (xTile2, yTile);
+				//System.out.println("first");
+				return tilePos;
+		}
+		else {
+			xTile2 = tileMap.pixelsToTiles(newX - tileMap.getOffsetX());
+			if (tileMap.getTile(xTile2+1, yTile) != null) {
+				int leftSide = (xTile2 + 1) * TILE_SIZE;
+				if (newX + playerWidth > leftSide) {
+					//System.out.println("second");
+					Point tilePos = new Point (xTile+1, yTile);
+					return tilePos;
+				}
+			}
+		}
 		}
 		return null;
 	}
@@ -254,7 +275,7 @@ public class Level1Player{
 		goingDown = false;
 
 		startY = y;
-		initialVelocity = 70;
+		initialVelocity = 80;
 	}
 
 	public void idle() {
@@ -276,8 +297,9 @@ public class Level1Player{
 		
 		timeElapsed++;
 
-		if (jumping || inAir) {
-			distance = (int) (initialVelocity * timeElapsed - 4.9 * timeElapsed * timeElapsed);
+		if (jumping) {
+			//System.out.println("inAir");
+			distance = (int) (initialVelocity * timeElapsed - 3.5 * timeElapsed * timeElapsed);
 			newY = startY - distance;
 
 			if (newY > y && goingUp) {
@@ -305,7 +327,7 @@ public class Level1Player{
 			else if (goingDown) {			
 				Point tilePos = collidesWithTileDown (x, newY);	
 					if (tilePos != null) {				// hits a tile going up
-						System.out.println ("Jumping: Collision Going Down!");
+						//System.out.println ("Jumping: Collision Going Down!");
 						int playerHeight = playerImage.getHeight(null);
 						goingDown = false;
 
@@ -313,18 +335,24 @@ public class Level1Player{
 						//int topTileY = ((int) tilePos.getY()) * TILE_SIZE + offsetY;
 
 						y = dimension.height - (tileMap.getHeight() - ((int) tilePos.getY())) * TILE_SIZE - playerImage.getHeight(null);
-						System.out.print( dimension.height+ " "+tileMap.getHeight()+" "+ (int) tilePos.getY()+ " " + playerImage.getHeight(null)+"Y: "+y);
+						//System.out.print( dimension.height+ " "+tileMap.getHeight()+" "+ (int) tilePos.getY()+ " " + playerImage.getHeight(null)+"Y: "+y);
 						jumping = false;
 						inAir = false;
 					}
 					else {
 						y = newY;
-						System.out.println ("Jumping: No collision.");
+						//System.out.println ("Jumping: No collision.");
 					}
 			}
 		}
+		else if (isInAir()){
+			System.out.println("inair");
+			fall();
+		}
 	// return true;
 	}
+
+	
 
 
 	// public void moveUp () {

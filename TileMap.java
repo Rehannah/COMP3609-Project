@@ -82,6 +82,10 @@ public class TileMap {
 	return tilesToPixels(mapWidth);
     }
 
+    public int getOffsetX(){
+        return offsetX;
+    }
+
 
     /**
         Gets the width of this TileMap (number of tiles across).
