@@ -100,17 +100,23 @@ public class Level1Player{
 		int playerHeight = playerImage.getHeight(null);
 		int offsetY = tileMap.getOffsetY();
 		int xTile = tileMap.pixelsToTiles(newX);
+		System.out.println("Xtile: "+xTile);
 		int yTileFrom = tileMap.pixelsToTiles(y - offsetY);
+		System.out.println("Ytile From: "+yTileFrom);
 		int yTileTo = tileMap.pixelsToTiles(newY - offsetY + playerHeight);
+		System.out.println("Y ttile to: "+yTileTo);
 		for (int yTile=yTileFrom; yTile<=yTileTo; yTile++) {
+			System.out.println("x, y "+xTile + " "+ yTile);
 			if (tileMap.getTile(xTile, yTile) != null) {
 					Point tilePos = new Point (xTile, yTile);
+					System.out.println("first");
 					return tilePos;
 			}
 			else {
 				if (tileMap.getTile(xTile+1, yTile) != null) {
 					int leftSide = (xTile + 1) * TILE_SIZE;
 					if (newX + playerWidth > leftSide) {
+						System.out.println("second");
 						Point tilePos = new Point (xTile+1, yTile);
 						return tilePos;
 					}
