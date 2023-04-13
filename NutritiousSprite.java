@@ -4,7 +4,7 @@ public class NutritiousSprite extends Sprite {
         super(ImageManager.loadImage("images/myimages/tiles/nutritious.png"),s);
     }
     
-    public boolean collides(){
+    public boolean collidesWithPlayer(){
         setVisible(false);
         score.increasePoints();
         return true;

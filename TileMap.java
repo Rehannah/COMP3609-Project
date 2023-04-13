@@ -217,7 +217,7 @@ public class TileMap {
         while (i.hasNext()) {            
             Sprite sprite = (Sprite)i.next();
             int x = Math.round(sprite.getX()) + offsetX;
-            if(x >=-sprite.getWidth() && x < screenWidth){
+            if(x >=-sprite.getWidth() && x < screenWidth && sprite.isVisible()){
                 int y = Math.round(sprite.getY()) + offsetY;
                 g2.drawImage(sprite.getImage(),x, y, null);
             }

@@ -42,6 +42,10 @@ public abstract class Sprite implements Cloneable{
         return image.getHeight(null);
     }
 
+    public boolean isVisible() {
+        return visible;
+    }
+
     public void setX(int n) {
         x = n;
     }
@@ -62,5 +66,5 @@ public abstract class Sprite implements Cloneable{
         }
     }
 
-    public boolean collides;
+    public boolean collidesWithPlayer;
 }
