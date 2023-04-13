@@ -107,42 +107,42 @@ public class Level1Player{
 		//System.out.println("Y ttile to: "+yTileTo);
 		for (int yTile=yTileFrom; yTile<=yTileTo; yTile++) {
 			int xTile = tileMap.pixelsToTiles(newX - tileMap.getOffsetX());
-			int xTile2 = tileMap.pixelsToTiles(newX + getImage().getWidth(null) - tileMap.getOffsetX());
+			//int xTile2 = tileMap.pixelsToTiles(newX + getImage().getWidth(null) - tileMap.getOffsetX());
 			//System.out.println("offset: "+tileMap.getOffsetX());
 		// System.out.println("Xtile: "+xTile);
 		// 	System.out.println("x, y "+xTile + " "+ yTile);
 			if (tileMap.getTile(xTile, yTile) != null) {
-					Point tilePos = new Point (xTile, yTile);
+					
 					//System.out.println("first");
-					return tilePos;
+					return new Point (xTile, yTile);
 			}
 			else {
 				xTile = tileMap.pixelsToTiles(newX - tileMap.getOffsetX());
 				if (tileMap.getTile(xTile+1, yTile) != null) {
 					int leftSide = (xTile + 1) * TILE_SIZE;
-					if (newX + playerWidth > leftSide) {
+					if ((newX + playerWidth-tileMap.getOffsetX()) > leftSide) {
 						//System.out.println("second");
-						Point tilePos = new Point (xTile+1, yTile);
-						return tilePos;
+						
+						return new Point (xTile+1, yTile);
 					}
 				}
 			}
-			if (tileMap.getTile(xTile2, yTile) != null) {
-				Point tilePos = new Point (xTile2, yTile);
-				//System.out.println("first");
-				return tilePos;
-		}
-		else {
-			xTile2 = tileMap.pixelsToTiles(newX - tileMap.getOffsetX());
-			if (tileMap.getTile(xTile2+1, yTile) != null) {
-				int leftSide = (xTile2 + 1) * TILE_SIZE;
-				if (newX + playerWidth > leftSide) {
-					//System.out.println("second");
-					Point tilePos = new Point (xTile+1, yTile);
-					return tilePos;
-				}
-			}
-		}
+		// 	if (tileMap.getTile(xTile2, yTile) != null) {
+		// 		Point tilePos = new Point (xTile2, yTile);
+		// 		//System.out.println("first");
+		// 		return tilePos;
+		// }
+		// else {
+		// 	xTile2 = tileMap.pixelsToTiles(newX - tileMap.getOffsetX());
+		// 	if (tileMap.getTile(xTile2+1, yTile) != null) {
+		// 		int leftSide = (xTile2 + 1) * TILE_SIZE;
+		// 		if (newX + playerWidth > leftSide) {
+		// 			//System.out.println("second");
+		// 			Point tilePos = new Point (xTile+1, yTile);
+		// 			return tilePos;
+		// 		}
+		// 	}
+		// }
 		}
 		return null;
 	}
