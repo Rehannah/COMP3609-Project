@@ -81,7 +81,7 @@ public class Level1Player{
 
 		int playerWidth = playerImage.getWidth(null);
 		int offsetY = tileMap.getOffsetY();
-		int xTile = tileMap.pixelsToTiles(newX);
+		int xTile = tileMap.pixelsToTiles(newX - tileMap.getOffsetX());
 		int yTile = tileMap.pixelsToTiles(newY - offsetY);
 
 		if (tileMap.getTile(xTile, yTile) != null) {
@@ -99,7 +99,6 @@ public class Level1Player{
 		int playerWidth = playerImage.getWidth(null);
 		int playerHeight = playerImage.getHeight(null);
 		int offsetY = tileMap.getOffsetY();
-		// int xTile = tileMap.pixelsToTiles(newX);
 		// System.out.println("Xtile: "+xTile);
 		int yTileFrom = tileMap.pixelsToTiles(y - offsetY);
 		//System.out.println("Ytile From: "+yTileFrom);
@@ -107,7 +106,6 @@ public class Level1Player{
 		//System.out.println("Y ttile to: "+yTileTo);
 		for (int yTile=yTileFrom; yTile<=yTileTo; yTile++) {
 			int xTile = tileMap.pixelsToTiles(newX - tileMap.getOffsetX());
-			//int xTile2 = tileMap.pixelsToTiles(newX + getImage().getWidth(null) - tileMap.getOffsetX());
 			//System.out.println("offset: "+tileMap.getOffsetX());
 		// System.out.println("Xtile: "+xTile);
 		// 	System.out.println("x, y "+xTile + " "+ yTile);
@@ -152,7 +150,7 @@ public class Level1Player{
 
 		int playerWidth = playerImage.getWidth(null);
 		int offsetY = tileMap.getOffsetY();
-		int xTile = tileMap.pixelsToTiles(newX);
+		int xTile = tileMap.pixelsToTiles(newX-tileMap.getOffsetX());
 		int yTileFrom = tileMap.pixelsToTiles(y - offsetY);
 		int yTileTo = tileMap.pixelsToTiles(newY - offsetY);
 			
@@ -298,7 +296,7 @@ public class Level1Player{
 		timeElapsed++;
 
 		if (jumping) {
-			//System.out.println("inAir");
+			System.out.println("inAir");
 			distance = (int) (initialVelocity * timeElapsed - 3.5 * timeElapsed * timeElapsed);
 			newY = startY - distance;
 
@@ -321,7 +319,7 @@ public class Level1Player{
 				}
 				else{
 					y = newY;
-					System.out.println ("Jumping: No collision.");
+					//System.out.println ("Jumping: No collision.");
 				}
 			}
 			else if (goingDown) {			
@@ -345,10 +343,11 @@ public class Level1Player{
 					}
 			}
 		}
-		else if (isInAir()){
-			System.out.println("inair");
+		if (isInAir()){
+			//System.out.println("inair");
 			fall();
 		}
+		
 	// return true;
 	}
 
