@@ -56,6 +56,10 @@ public class GameWindow extends JFrame implements
 	private TileMap	tileMap;
 	private Score score;
 
+	private GamePanel panel;
+	private Image backgroundImage;
+
+	private int level=1;
 	public GameWindow() {
  
 		super("Treasure RecovARRy");
@@ -75,6 +79,11 @@ public class GameWindow extends JFrame implements
 		soundManager = SoundManager.getInstance();
 		image = new BufferedImage (pWidth, pHeight, BufferedImage.TYPE_INT_RGB);
 		
+		backgroundImage = ImageManager.loadImage ("images/myimages/background/pirateship.gif");
+
+		panel = new GamePanel(this);
+        panel.setPreferredSize(new Dimension(getWidth(), getHeight()));
+
 		startGame();
 	}
 
@@ -86,9 +95,17 @@ public class GameWindow extends JFrame implements
 			isRunning = true;
 			while (isRunning) {
 				if (isPaused == false) {
-					gameUpdate();
+					if (level==1) {
+						gameUpdate();
+					}
+					else{
+						panel.gameUpdate();
+					}
 				}
 				screenUpdate();
+				if (level==2) {
+					panel.gameRender();
+				}
 				Thread.sleep (50);
 			}
 		}
@@ -127,8 +144,9 @@ public class GameWindow extends JFrame implements
 
 
 	public void gameUpdate () {
-		tileMap.update();
-
+		if (level==1) {
+			tileMap.update();
+		}
 		if (!isPaused && isAnimShown && !isAnimPaused)
 			animation.update();
 		imageEffect.update();
@@ -166,7 +184,17 @@ public class GameWindow extends JFrame implements
 
 		Graphics2D imageContext = (Graphics2D) image.getGraphics();
 
-		tileMap.draw(imageContext);
+		if (level==1) {
+			tileMap.draw(imageContext);
+		}
+		else{
+			// render the background image first
+			imageContext.drawImage(backgroundImage, 0, 0, pWidth, pHeight, null);
+
+			if (panel.l2Player != null) {
+				panel.l2Player.draw(imageContext);
+			}
+		}
 	
 		if (isAnimShown)
 			animation.draw(imageContext);		// draw the animation
@@ -371,22 +399,29 @@ public class GameWindow extends JFrame implements
 		if (gameThread == null) {
 			//soundManager.playSound ("background", true);
 			score =  new Score(this);
+			
 			tileManager = new TileMapManager (this, getScore());
+			if (level==1) {
+				try {
+					tileMap = tileManager.loadMap("maps/map.txt");
+					int w, h;
+					w = tileMap.getWidth();
+					h = tileMap.getHeight();
+					System.out.println ("Width of tilemap " + w);
+					System.out.println ("Height of tilemap " + h);
+				}
+				catch (Exception e) {
+					System.out.println(e);
+					System.exit(0);
+				}
 
-			try {
-				tileMap = tileManager.loadMap("maps/map.txt");
-				int w, h;
-				w = tileMap.getWidth();
-				h = tileMap.getHeight();
-				System.out.println ("Width of tilemap " + w);
-				System.out.println ("Height of tilemap " + h);
 			}
-			catch (Exception e) {
-				System.out.println(e);
-				System.exit(0);
+			else{
+				panel.createGameEntities();
+				System.out.println("entities created");
 			}
-
 			imageEffect = new ImageEffect (this);
+
 			gameThread = new Thread(this);
 			gameThread.start();			
 
@@ -436,7 +471,9 @@ public class GameWindow extends JFrame implements
 		// 	tileMap.moveRight();
 		// }
 		if (keyCode == KeyEvent.VK_SPACE) {
-			tileMap.jump();
+			if (level==1) {
+				tileMap.jump();
+			}
 		}
 		else
 		if (keyCode == KeyEvent.VK_UP) {

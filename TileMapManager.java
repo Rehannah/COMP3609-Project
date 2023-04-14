@@ -17,7 +17,7 @@ public class TileMapManager {
     private int currentMap = 0;
 
     private JFrame window;
-private Score score;
+    private Score score;
 
     private GraphicsConfiguration gc;
 
