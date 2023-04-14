@@ -6,7 +6,7 @@ import java.util.Random;
 import java.awt.Image;
 import java.util.HashMap;
 
-public class SwordPirate {
+public class KnifePirate {
 
    private JFrame window;
 
@@ -32,11 +32,11 @@ public class SwordPirate {
 
    boolean isActive;
 
-   public SwordPirate (JFrame w, Level2Player player) {
+   public KnifePirate (JFrame w, Level2Player player) {
       window = w;
 
-      width = 200;
-      height = 200;
+      width = 500;
+      height = 500;
 
       random = new Random();
 
@@ -48,7 +48,7 @@ public class SwordPirate {
 
       this.player = player;
 
-      pirateImage = ImageManager.loadImage ("images/myimages/pirates/sword/idle/1_entity_000_IDLE_000.png");
+      pirateImage = ImageManager.loadImage ("images/myimages/pirates/knife/idle/3_3-PIRATE_IDLE_000.png");
       soundManager = SoundManager.getInstance();
 
       soundPlayed = false;
@@ -67,23 +67,23 @@ public class SwordPirate {
 	public void initialiseAnimations(){
 		animations = new HashMap<>();
 		Animation anim = new Animation(true);
-		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/sword/attack/1_entity_000_ATTACK_000.png"), 150);
-		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/sword/attack/1_entity_000_ATTACK_001.png"), 150);
-		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/sword/attack/1_entity_000_ATTACK_002.png"), 175);
-		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/sword/attack/1_entity_000_ATTACK_003.png"), 175);
-		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/sword/attack/1_entity_000_ATTACK_004.png"), 125);
-		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/sword/attack/1_entity_000_ATTACK_005.png"), 150);
-      anim.addFrame(ImageManager.loadImage("images/myimages/pirates/sword/attack/1_entity_000_ATTACK_006.png"), 150);
+		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/knife/attack/3_3-PIRATE_ATTACK_000.png"), 150);
+		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/knife/attack/3_3-PIRATE_ATTACK_001.png"), 150);
+		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/knife/attack/3_3-PIRATE_ATTACK_002.png"), 175);
+		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/knife/attack/3_3-PIRATE_ATTACK_003.png"), 175);
+		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/knife/attack/3_3-PIRATE_ATTACK_004.png"), 125);
+		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/knife/attack/3_3-PIRATE_ATTACK_005.png"), 150);
+      anim.addFrame(ImageManager.loadImage("images/myimages/pirates/knife/attack/3_3-PIRATE_ATTACK_006.png"), 150);
 		animations.put("attack", anim);
 		
 		anim = new Animation(true);
-		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/sword/idle/1_entity_000_IDLE_000.png"), 150);
-		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/sword/idle/1_entity_000_IDLE_001.png"), 150);
-		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/sword/idle/1_entity_000_IDLE_002.png"), 175);
-		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/sword/idle/1_entity_000_IDLE_003.png"), 175);
-		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/sword/idle/1_entity_000_IDLE_004.png"), 125);
-		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/sword/idle/1_entity_000_IDLE_005.png"), 150);
-      anim.addFrame(ImageManager.loadImage("images/myimages/pirates/sword/idle/1_entity_000_IDLE_006.png"), 150);
+		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/knife/idle/3_3-PIRATE_IDLE_000"), 150);
+		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/knife/idle/3_3-PIRATE_IDLE_001"), 150);
+		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/knife/idle/3_3-PIRATE_IDLE_002"), 175);
+		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/knife/idle/3_3-PIRATE_IDLE_003"), 175);
+		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/knife/idle/3_3-PIRATE_IDLE_004"), 125);
+		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/knife/idle/3_3-PIRATE_IDLE_005"), 150);
+      anim.addFrame(ImageManager.loadImage("images/myimages/pirates/knife/idle/3_3-PIRATE_IDLE_006"), 150);
 		animations.put("idle", anim);
 	}
 
@@ -91,6 +91,7 @@ public class SwordPirate {
    public void draw (Graphics2D g2) {
 
       g2.drawImage(pirateImage, x, y, width, height, null);
+      
       if(currentAnim != null){
 			if(currentAnim.isStillActive())
 				currentAnim.update();
@@ -116,10 +117,10 @@ public class SwordPirate {
       if (y < player.getY())
  	  y = y + dy;
 
-      if (collidesWithplayer()) {
+     if (collidesWithplayer()) {
          currentAnim = animations.get("attack");
-      }
-      else{
+     }
+     else{
          currentAnim = animations.get("idle");
       }
    }
@@ -145,7 +146,7 @@ public class SwordPirate {
 
      if (!window.isVisible ()) return;
 
-     chase();
+     flee();
 
      if (Math.abs (x - player.getX()) < 50 && !soundPlayed) {
 	// soundManager.playClip ("ghostSound", true);

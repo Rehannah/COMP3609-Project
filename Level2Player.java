@@ -87,14 +87,18 @@ public class Level2Player {
 		if (direction == 1) { //left
 			currentAnim = animations.get("runLeft");
 			x = x - DX;
-			if (x < 2) {			// stuck within the right bounds
-				x = 2;
+			if (x < 250) {			// stuck within the left bounds
+				x = 250;
 			}
 		}
 		else{
 			if (direction == 2) { //right
 				currentAnim = animations.get("runRight");
 				x = x + DX;
+				if (x > window.getWidth() - 200) {			// stuck within the right bounds
+					x = window.getWidth() - 200;
+				}
+
 			}
 		}
 	}	

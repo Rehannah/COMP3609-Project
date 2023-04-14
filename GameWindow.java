@@ -196,6 +196,10 @@ public class GameWindow extends JFrame implements
 			if (panel.swordPirate.isActive()) {
 				panel.swordPirate.draw(imageContext);
 			}
+			if (panel.knifePirate.isActive()) {
+				panel.knifePirate.draw(imageContext);
+				System.out.println("DRAN");
+			}
 		}
 	
 		if (isAnimShown)

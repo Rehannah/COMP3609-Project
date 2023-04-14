@@ -14,11 +14,7 @@ public class GamePanel extends JPanel {
 	private SoundManager soundManager;
 	private Level2Player player;
 	public SwordPirate swordPirate;
-
-	public boolean swordPirateActive;
-	public boolean knifePirateActive;
-	public boolean birdActive;
-	public boolean captainActive;
+	public KnifePirate knifePirate;
 
 	private JFrame window;		// reference to the JFrame on which player is drawn
 	private BufferedImage image;
@@ -34,21 +30,22 @@ public class GamePanel extends JPanel {
 	public void createGameEntities() {
 		player = new Level2Player(window);
 		swordPirate = new SwordPirate(window, player);
+		knifePirate = new KnifePirate(window, player);
 	}
 
 
 	public void gameUpdate() {
-		if (swordPirateActive) {
+		if (swordPirate!=null && swordPirate.isActive()) {
 			swordPirate.move();
 		}
 
-		// if (knifePirateActive) {
-		// 	knifePirate.move();
-		// }
-		// if (birdPirateActive) {
+		if (knifePirate !=null && knifePirate.isActive()) {
+			knifePirate.move();
+		}
+		// if (birdPirate.isActive) {
 		// 	birdPirate.move();
 		// }
-		// if (captainActive) {
+		// if (captain.isActive) {
 		// 	captain.move();
 		// }
 
