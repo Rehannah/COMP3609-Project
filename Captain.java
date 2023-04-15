@@ -126,13 +126,6 @@ public class Captain {
       else
       if (y < player.getY())
  	  y = y + dy;
-
-     if (collidesWithplayer()) {
-         currentAnim = animations.get("attack");
-     }
-     else{
-         currentAnim = animations.get("idle");
-      }
    }
 
 
@@ -156,10 +149,14 @@ public class Captain {
 
      if (!window.isVisible ()) return;
 
-   //   flee()
       if (collidesWithplayer()) {
          currentAnim = animations.get("attack");
       }
+      else{
+         currentAnim = animations.get("idle");
+      }
+
+      
      if (Math.abs (x - player.getX()) < 50 && !soundPlayed) {
 	// soundManager.playClip ("ghostSound", true);
         soundPlayed = true;
