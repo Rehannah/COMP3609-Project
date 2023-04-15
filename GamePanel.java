@@ -16,7 +16,7 @@ public class GamePanel extends JPanel {
 	public SwordPirate swordPirate;
 	public KnifePirate knifePirate;
 	public Captain captain;
-	// public BirdPirate bird;
+	public BirdPirate bird;
 
 	private JFrame window;		// reference to the JFrame on which player is drawn
 	private BufferedImage image;
@@ -34,7 +34,7 @@ public class GamePanel extends JPanel {
 		swordPirate = new SwordPirate(window, player);
 		knifePirate = new KnifePirate(window, player);
 		captain = new Captain(window, player);
-		// bird = new BirdPirate(window, player);
+		bird = new BirdPirate(window, player);
 	}
 
 
@@ -46,9 +46,9 @@ public class GamePanel extends JPanel {
 		if (knifePirate !=null && knifePirate.isActive()) {
 			knifePirate.move();
 		}
-		// if (bird!=null && bird.isActive) {
-		// 	bird.move();
-		// }
+		if (bird!=null && bird.isActive) {
+			bird.move();
+		}
 		if (captain !=null && captain.isActive) {
 			captain.move();
 		}

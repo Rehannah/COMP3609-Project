@@ -18,8 +18,6 @@ public class GameWindow extends JFrame implements
 	private Thread gameThread = null;            	// the thread that controls the game
 	private volatile boolean isRunning = false;    	// used to stop the game thread
 
-	private BirdAnimation animation = null;		// animation sprite
-
 	private BufferedImage image;			// drawing area for each frame
 
 	private Image quit1Image;			// first image for quit button
@@ -74,7 +72,6 @@ public class GameWindow extends JFrame implements
 		addMouseListener(this);
 		addMouseMotionListener(this);
 
-		animation = new BirdAnimation();
 		soundManager = SoundManager.getInstance();
 		image = new BufferedImage (pWidth, pHeight, BufferedImage.TYPE_INT_RGB);
 		
@@ -143,8 +140,8 @@ public class GameWindow extends JFrame implements
 		if (level==1) {
 			tileMap.update();
 		}
-		if (!isPaused && isAnimShown && !isAnimPaused)
-			animation.update();
+		// if (!isPaused && isAnimShown && !isAnimPaused)
+			// animation.update();
 		panel.gameUpdate();
 	}
 
@@ -199,17 +196,14 @@ public class GameWindow extends JFrame implements
 			if (panel.knifePirate.isActive()) {
 				panel.knifePirate.draw(imageContext);
 			}
-			// if (panel.bird.isActive()) {
-			// 	panel.bird.draw(imageContext);
-			// }
+			if (panel.bird.isActive()) {
+				panel.bird.draw(imageContext);
+			}
 			if (panel.captain.isActive()) {
 				panel.captain.draw(imageContext);
 			}
 		}
 	
-		if (isAnimShown)
-			animation.draw(imageContext);		// draw the animation
-
 		//Graphics2D g2 = (Graphics2D) getGraphics();	// get the graphics context for window
 		drawButtons(imageContext);			// draw the buttons
 
@@ -565,17 +559,17 @@ public class GameWindow extends JFrame implements
 		if (isOverShowAnimButton && !isPaused) {// mouse click on Start Anim button
 			isAnimShown = true;
 		 	isAnimPaused = false;
-			animation.start();
+			// animation.start();
 		}
 		else
 		if (isOverPauseAnimButton) {		// mouse click on Pause Anim button
 			if (isAnimPaused) {
 				isAnimPaused = false;
-				animation.playSound();
+				// animation.playSound();
 			}
 			else {
 				isAnimPaused = true;	// toggle pausing
-				animation.stopSound();
+				// animation.stopSound();
 			}
 		}
 		else if (isOverQuitButton) {		// mouse click on Quit button
