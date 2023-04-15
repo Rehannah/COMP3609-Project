@@ -85,6 +85,16 @@ public class SwordPirate {
 		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/sword/idle/1_entity_000_IDLE_005.png"), 150);
       anim.addFrame(ImageManager.loadImage("images/myimages/pirates/sword/idle/1_entity_000_IDLE_006.png"), 150);
 		animations.put("idle", anim);
+
+      anim = new Animation(true);
+		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/sword/walk/1_entity_000_WALK_000.png"), 150);
+		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/sword/walk/1_entity_000_WALK_001.png"), 150);
+		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/sword/walk/1_entity_000_WALK_002.png"), 175);
+		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/sword/walk/1_entity_000_WALK_003.png"), 175);
+		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/sword/walk/1_entity_000_WALK_004.png"), 125);
+		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/sword/walk/1_entity_000_WALK_005.png"), 150);
+      anim.addFrame(ImageManager.loadImage("images/myimages/pirates/sword/walk/1_entity_000_WALK_006.png"), 150);
+		animations.put("walk", anim);
 	}
 
 
@@ -120,7 +130,7 @@ public class SwordPirate {
          currentAnim = animations.get("attack");
       }
       else{
-         currentAnim = animations.get("idle");
+         currentAnim = animations.get("walk");
       }
    }
 
