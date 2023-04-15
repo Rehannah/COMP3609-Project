@@ -126,13 +126,6 @@ public class KnifePirate {
       else
       if (y < player.getY())
  	  y = y + dy;
-
-     if (collidesWithplayer()) {
-         currentAnim = animations.get("attack");
-     }
-     else{
-         currentAnim = animations.get("walk");
-      }
    }
 
 
@@ -149,13 +142,6 @@ public class KnifePirate {
       else
       if (y < player.getY())
  	  y = y - dy;
-
-      if (collidesWithplayer()) {
-         currentAnim = animations.get("attack");
-     }
-     else{
-         currentAnim = animations.get("walk");
-      }
    }
 
 
@@ -165,25 +151,32 @@ public class KnifePirate {
 
      flee();
 
-     if (Math.abs (x - player.getX()) < 50 && !soundPlayed) {
-	// soundManager.playClip ("ghostSound", true);
-        soundPlayed = true;
-     }
+      if (collidesWithplayer()) {
+         currentAnim = animations.get("attack");
+      }
+      else{
+            currentAnim = animations.get("walk");
+      }
 
-     if (Math.abs (x - player.getX()) > 80 && soundPlayed) {
-	// soundManager.stopClip ("ghostSound");
-        soundPlayed = false;
-     }
+      if (Math.abs (x - player.getX()) < 50 && !soundPlayed) {
+      // soundManager.playClip ("ghostSound", true);
+         soundPlayed = true;
+      }
 
-     if (Math.abs (y - player.getY()) < 50 && !soundPlayed) {
-	// soundManager.playClip ("ghostSound", true);
-        soundPlayed = true;
-     }
+      if (Math.abs (x - player.getX()) > 80 && soundPlayed) {
+      // soundManager.stopClip ("ghostSound");
+         soundPlayed = false;
+      }
 
-     if (Math.abs (y - player.getY()) > 80 && soundPlayed) {
-	// soundManager.stopClip ("ghostSound");
-        soundPlayed = false;
-     }
+      if (Math.abs (y - player.getY()) < 50 && !soundPlayed) {
+      // soundManager.playClip ("ghostSound", true);
+         soundPlayed = true;
+      }
+
+      if (Math.abs (y - player.getY()) > 80 && soundPlayed) {
+      // soundManager.stopClip ("ghostSound");
+         soundPlayed = false;
+      }
    }
 
 
