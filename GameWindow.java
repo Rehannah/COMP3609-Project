@@ -58,7 +58,7 @@ public class GameWindow extends JFrame implements
 	private GamePanel panel;
 	private Image backgroundImage;
 
-	private int level=2;
+	private int level=1;
 	public GameWindow() {
  
 		super("Treasure RecovARRy");
