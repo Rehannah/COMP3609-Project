@@ -1,6 +1,7 @@
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.geom.Rectangle2D;
 import java.util.HashMap;
 
 import javax.swing.JFrame;
@@ -12,15 +13,25 @@ public abstract class Sprite implements Cloneable{
     protected int x;			// x-position of sprite
     protected int y;			// y-position of sprite
     protected boolean visible; 
-    protected Graphics2D g2; 
+    protected TileMap map; 
     protected Image image;
     protected Score score;
+    protected Level1Player player;
 
     public Sprite(Image im, Score s){
         image = im;
         visible = true;
         score = s;
     }
+
+    public Sprite(Image im, Score s, Level1Player p){
+        image = im;
+        visible = true;
+        score = s;
+        player = p;
+    }
+
+    public abstract void setPlayer(Level1Player p);
 
     public int getX() {
         return x;
@@ -66,5 +77,8 @@ public abstract class Sprite implements Cloneable{
         }
     }
 
-    public boolean collidesWithPlayer;
+    public abstract boolean collidesWithPlayer();
+
+    public abstract Rectangle2D getBoundingRectangle();
+    
 }

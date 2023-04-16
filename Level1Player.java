@@ -3,6 +3,7 @@ import java.awt.Graphics2D;
 import javax.swing.JFrame;
 import java.awt.Image;
 import java.awt.Point;
+import java.awt.geom.Rectangle2D;
 import java.util.HashMap;
 
 public class Level1Player{			
@@ -77,21 +78,23 @@ public class Level1Player{
 	}
 
 
-	public Point collidesWithTile(int newX, int newY) {
+	// public Point collidesWithTile(int newX, int newY) {
 
-		int playerWidth = playerImage.getWidth(null);
-		int offsetY = tileMap.getOffsetY();
-		int xTile = tileMap.pixelsToTiles(newX - tileMap.getOffsetX());
-		int yTile = tileMap.pixelsToTiles(newY - offsetY);
+	// 	int playerWidth = playerImage.getWidth(null);
+	// 	int offsetY = tileMap.getOffsetY();
+	// 	int xTile = tileMap.pixelsToTiles(newX + playerWidth - tileMap.getOffsetX());
+	// 	int yTile = tileMap.pixelsToTiles(newY - offsetY);
 
-		if (tileMap.getTile(xTile, yTile) != null) {
-			Point tilePos = new Point (xTile, yTile);
-			return tilePos;
-		}
-		else {
-			return null;
-		}
-	}
+	// 	if (tileMap.getTile(xTile, yTile) != null) {
+	// 		Point tilePos = new Point (xTile, yTile);
+	// 		System.out.println("tile exist: Xtile: "+xTile);
+	// 		System.out.println("Ytile: "+yTile);
+	// 		return tilePos;
+	// 	}
+	// 	else {
+	// 		return null;
+	// 	}
+	// }
 
 
 	public Point collidesWithTileDown (int newX, int newY) {
@@ -119,28 +122,11 @@ public class Level1Player{
 				if (tileMap.getTile(xTile+1, yTile) != null) {
 					int leftSide = (xTile + 1) * TILE_SIZE;
 					if ((newX + playerWidth-tileMap.getOffsetX()) > leftSide) {
-						//System.out.println("second");
 						
 						return new Point (xTile+1, yTile);
 					}
 				}
 			}
-		// 	if (tileMap.getTile(xTile2, yTile) != null) {
-		// 		Point tilePos = new Point (xTile2, yTile);
-		// 		//System.out.println("first");
-		// 		return tilePos;
-		// }
-		// else {
-		// 	xTile2 = tileMap.pixelsToTiles(newX - tileMap.getOffsetX());
-		// 	if (tileMap.getTile(xTile2+1, yTile) != null) {
-		// 		int leftSide = (xTile2 + 1) * TILE_SIZE;
-		// 		if (newX + playerWidth > leftSide) {
-		// 			//System.out.println("second");
-		// 			Point tilePos = new Point (xTile+1, yTile);
-		// 			return tilePos;
-		// 		}
-		// 	}
-		// }
 		}
 		return null;
 	}
@@ -172,7 +158,7 @@ public class Level1Player{
 		return null;
 	}
 	
-	/*
+	
 
 	public Point collidesWithTile(int newX, int newY) {
 
@@ -182,25 +168,26 @@ public class Level1Player{
 			int fromX = Math.min (x, newX);
 		int fromY = Math.min (y, newY);
 		int toX = Math.max (x, newX);
-		int toY = Math.max (y, newY);
+		// int toY = Math.max (y, newY);
 
-		int fromTileX = tileMap.pixelsToTiles (fromX);
-		int fromTileY = tileMap.pixelsToTiles (fromY);
-		int toTileX = tileMap.pixelsToTiles (toX + playerWidth - 1);
-		int toTileY = tileMap.pixelsToTiles (toY + playerHeight - 1);
+		int fromTileX = tileMap.pixelsToTiles (fromX + Math.abs(tileMap.getOffsetX()));
+		int fromTileY = tileMap.pixelsToTiles (fromY - tileMap.getOffsetY());
+		int toTileX = tileMap.pixelsToTiles (toX +Math.abs(tileMap.getOffsetX()) + playerWidth - 1);
+		//int toTileY = tileMap.pixelsToTiles (toY - tileMap.getOffsetY() + playerHeight - 1);
 
 		for (int x=fromTileX; x<=toTileX; x++) {
-			for (int y=fromTileY; y<=toTileY; y++) {
-				if (tileMap.getTile(x, y) != null) {
+			//for (int y=fromTileY; y<=toTileY; y++) {
+				if (tileMap.getTile(x, fromTileY) != null) {
+					System.out.println("X " +x + "y " + y);
 					Point tilePos = new Point (x, y);
 					return tilePos;
 				}
-			}
+			//}
 		}
 		
 		return null;
 	}
-	*/
+	
 
 
 	public synchronized void move (int direction) {
@@ -238,10 +225,12 @@ public class Level1Player{
 			playerHeight = playerImage.getHeight(null);
 			tilePos = collidesWithTile(x, y + playerHeight + 1); 	// check below player to see if there is a tile
 			
-			if (tilePos == null)				   	// there is no tile below player, so player is in the air
+			if (tilePos == null){				   	// there is no tile below player, so player is in the air
 				return true;
+			}
 			else							// there is a tile below player, so the player is on a tile
 				return false;
+				
 		}
 		return false;
 	}
@@ -295,8 +284,8 @@ public class Level1Player{
 		
 		timeElapsed++;
 
-		if (jumping) {
-			System.out.println("inAir");
+		if (jumping || inAir) {
+			// System.out.println("inAir");
 			distance = (int) (initialVelocity * timeElapsed - 3.5 * timeElapsed * timeElapsed);
 			newY = startY - distance;
 
@@ -344,7 +333,7 @@ public class Level1Player{
 			}
 		}
 		if (isInAir()){
-			//System.out.println("inair");
+			System.out.println("inair");
 			fall();
 		}
 		
@@ -352,14 +341,6 @@ public class Level1Player{
 	}
 
 	
-
-
-	// public void moveUp () {
-	// 	if (!window.isVisible ()) 
-	// 		return;
-	// 	y = y - DY;
-	// }
-
 	public int getX() {
 		return x;
 	}
@@ -378,5 +359,11 @@ public class Level1Player{
 
 	public Image getImage() {
 		return playerImage;
+	}
+
+
+	public Rectangle2D getBoundingRectangle() {
+		
+		return new Rectangle2D.Double(x,y,getImage().getWidth(null), getImage().getHeight(null));
 	}
 }

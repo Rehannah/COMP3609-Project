@@ -396,11 +396,12 @@ public class GameWindow extends JFrame implements
 
 
 	private void startGame() { 
+		System.out.println("stat");
 		if (gameThread == null) {
 			//soundManager.playSound ("background", true);
 			score =  new Score(this);
 			
-			tileManager = new TileMapManager (this, getScore());
+			tileManager = new TileMapManager (this, score);
 			if (level==1) {
 				try {
 					tileMap = tileManager.loadMap("maps/map.txt");
@@ -593,10 +594,12 @@ public class GameWindow extends JFrame implements
 
 
 	public void setPoints(int points) {
+		System.out.println("Points" +points);
 	}
 
 
     public void setLives(int lives) {
+		System.out.println("Lives" +lives);
     }
 
 }
