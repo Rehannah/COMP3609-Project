@@ -11,12 +11,12 @@ import java.awt.image.BufferedImage;
 
 public class GamePanel extends JPanel {
    
-
 	private SoundManager soundManager;
-	public Level2Player l2Player;
-	private boolean isRunning;
-
-	private Thread gameThread;
+	private Level2Player player;
+	public SwordPirate swordPirate;
+	public KnifePirate knifePirate;
+	public Captain captain;
+	// public BirdPirate bird;
 
 	private JFrame window;		// reference to the JFrame on which player is drawn
 	private BufferedImage image;
@@ -27,91 +27,45 @@ public class GamePanel extends JPanel {
 
 		image = new BufferedImage (400, 400, BufferedImage.TYPE_INT_RGB);
 		backgroundImage = ImageManager.loadImage ("images/myimages/background/level2bg.jpg");
-
 	}
-
 
 	public void createGameEntities() {
-		l2Player = new Level2Player(window);
+		player = new Level2Player(window);
+		swordPirate = new SwordPirate(window, player);
+		knifePirate = new KnifePirate(window, player);
+		captain = new Captain(window, player);
+		// bird = new BirdPirate(window, player);
 	}
+
 
 	public void gameUpdate() {
+		if (swordPirate!=null && swordPirate.isActive()) {
+			swordPirate.move();
+		}
 
-		// for (int i=0; i<NUM_ALIENS; i++) {
-		// 	aliens[i].move();
+		if (knifePirate !=null && knifePirate.isActive()) {
+			knifePirate.move();
+		}
+		// if (bird!=null && bird.isActive) {
+		// 	bird.move();
 		// }
-
-		// if (ghostsActive) {
-		// 	ghost1.move();
-		// 	ghost2.move();
-		// }
-	}
-
-
-	public void updatePlayer (int direction) {
-
-		if (l2Player != null) {
-			l2Player.move(direction);
+		if (captain !=null && captain.isActive) {
+			captain.move();
 		}
 
 	}
 
 
-	public void gameRender() {
+	public void updatePlayer (int direction) {
 
-		
-
-		// render the l2Player
-
-		// render the aliens
-
-		// if (aliens != null) {
-		// 	for (int i=0; i<NUM_ALIENS; i++)
-		// 		aliens[i].draw(imageContext);
-       	// 	}
-
-		// // render the ghosts
-
-		// if (ghost1 != null && ghostsActive) {
-		// 	ghost1.draw(imageContext);
-		// }
-
-		// if (ghost2 != null && ghostsActive) {
-		// 	//ghost2.draw(imageContext);
-		// }
-
-
+		if (player != null) {
+			player.move(direction);
+		}
 	}
 
 
-	// public void dropAlien() {
-
-	// 	if (!alienDropped) {	// start the game thread
-	// 		gameThread = new Thread(this);
-	// 		gameThread.start();
-	// 		//soundManager.playClip("background", true);
-	// 		alienDropped = true;
-	// 	}
-
-	// }
-
-
-	// public void activateGhost() {
-	// 	if (ghostsActive)
-	// 		ghostsActive = false;
-	// 	else
-	// 		ghostsActive = true;
-	// }
-
-
-	// public boolean isOnAlien (int x, int y) {
-		
-	// 	for (int i=0; i<NUM_ALIENS; i++) {
-	// 		if (aliens[i].isOnAlien(x, y))
-	// 			return true;
-	// 	}
-
-	// 	return false;
-	// }
+	public Level2Player getPlayer() {
+		return player;
+	}
 
 }

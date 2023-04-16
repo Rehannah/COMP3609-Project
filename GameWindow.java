@@ -19,7 +19,6 @@ public class GameWindow extends JFrame implements
 	private volatile boolean isRunning = false;    	// used to stop the game thread
 
 	private BirdAnimation animation = null;		// animation sprite
-	private ImageEffect imageEffect;		// sprite demonstrating an image effect
 
 	private BufferedImage image;			// drawing area for each frame
 
@@ -103,9 +102,6 @@ public class GameWindow extends JFrame implements
 					}
 				}
 				screenUpdate();
-				if (level==2) {
-					panel.gameRender();
-				}
 				Thread.sleep (50);
 			}
 		}
@@ -149,8 +145,7 @@ public class GameWindow extends JFrame implements
 		}
 		if (!isPaused && isAnimShown && !isAnimPaused)
 			animation.update();
-		imageEffect.update();
-
+		panel.gameUpdate();
 	}
 
 
@@ -191,15 +186,29 @@ public class GameWindow extends JFrame implements
 			// render the background image first
 			imageContext.drawImage(backgroundImage, 0, 0, pWidth, pHeight, null);
 
-			if (panel.l2Player != null) {
-				panel.l2Player.draw(imageContext);
+			if (panel.getPlayer() != null) {
+				panel.getPlayer().draw(imageContext);
+			}
+			else{
+				panel.createGameEntities();
+			}
+
+			if (panel.swordPirate.isActive()) {
+				panel.swordPirate.draw(imageContext);
+			}
+			if (panel.knifePirate.isActive()) {
+				panel.knifePirate.draw(imageContext);
+			}
+			// if (panel.bird.isActive()) {
+			// 	panel.bird.draw(imageContext);
+			// }
+			if (panel.captain.isActive()) {
+				panel.captain.draw(imageContext);
 			}
 		}
 	
 		if (isAnimShown)
 			animation.draw(imageContext);		// draw the animation
-
-		imageEffect.draw(imageContext);			// draw the image effect
 
 		//Graphics2D g2 = (Graphics2D) getGraphics();	// get the graphics context for window
 		drawButtons(imageContext);			// draw the buttons
@@ -417,11 +426,6 @@ public class GameWindow extends JFrame implements
 				}
 
 			}
-			else{
-				panel.createGameEntities();
-				System.out.println("entities created");
-			}
-			imageEffect = new ImageEffect (this);
 
 			gameThread = new Thread(this);
 			gameThread.start();			
@@ -464,13 +468,17 @@ public class GameWindow extends JFrame implements
 			return;				//  one of these keys (ESC, Q, END)			
          	}
 		else
-		// if (keyCode == KeyEvent.VK_LEFT) {
-		// 	tileMap.moveLeft();
-		// }
-		// else
-		// if (keyCode == KeyEvent.VK_RIGHT) {
-		// 	tileMap.moveRight();
-		// }
+		if (keyCode == KeyEvent.VK_LEFT) {
+			if (level==2) {
+				panel.updatePlayer(1);
+			}
+		}
+		else
+		if (keyCode == KeyEvent.VK_RIGHT) {
+			if (level==2) {
+				panel.updatePlayer(2);
+			}
+		}
 		if (keyCode == KeyEvent.VK_SPACE) {
 			if (level==1) {
 				tileMap.jump();
