@@ -34,7 +34,7 @@ public class BirdPirate {
 
    boolean isActive;
 
-   public BirdPirate (JFrame w, Level2Player player) implements Pirate {
+   public BirdPirate (JFrame w, Level2Player player) {
       window = w;
 
       width = 150;
@@ -45,6 +45,7 @@ public class BirdPirate {
       dx = 3;
       dy = 5;
 
+      x=0;
       y = 200;
 
       this.player = player;
@@ -62,6 +63,17 @@ public class BirdPirate {
    public boolean isActive() {
       return isActive;
    }
+
+   public int getX() {
+      return x;
+   }
+
+   public int getDirection() {
+      if (player.getX() < this.getX())
+         return 1; //left
+      else
+         return 2; //right
+   }
    
 	public void initialiseAnimations(){
 		animations = new HashMap<>();
@@ -71,11 +83,20 @@ public class BirdPirate {
 		anim = stripAnimation(stripImage, anim, 4);
 		animations.put("fly", anim);
 
+      anim = new Animation(true);
+      stripImage = ImageManager.loadImage("images/myimages/pirates/bird/Little Bird Fly Forward Left.png");
+		anim = stripAnimation(stripImage, anim, 4);
+		animations.put("flyLeft", anim);
 
       anim = new Animation(true);
       stripImage = ImageManager.loadImage("images/myimages/pirates/bird/Little Bird Light Attack.png");
       anim = stripAnimation(stripImage, anim, 6);
       animations.put("attack", anim);
+
+      anim = new Animation(true);
+      stripImage = ImageManager.loadImage("images/myimages/pirates/bird/Little Bird Light Attack Left.png");
+      anim = stripAnimation(stripImage, anim, 6);
+      animations.put("attackLeft", anim);
 	}
 
    // load animation from strip file
@@ -147,32 +168,22 @@ public class BirdPirate {
      if (!window.isVisible ()) return;
       
       if (collidesWithplayer()) {
-         currentAnim = animations.get("attack");
+         if (getDirection()==2) {
+            currentAnim = animations.get("attack");
+         }
+         else{
+            currentAnim = animations.get("attackLeft");
+         }
       }
       else{
-         currentAnim = animations.get("fly");
+         if (getDirection()==2) {
+            currentAnim = animations.get("fly");
+         }
+         else{
+            currentAnim = animations.get("flyLeft");
+         }
          chase();
       }
-
-   //   if (Math.abs (x - player.getX()) < 50 && !soundPlayed) {
-	// // soundManager.playClip ("ghostSound", true);
-   //      soundPlayed = true;
-   //   }
-
-   //   if (Math.abs (x - player.getX()) > 80 && soundPlayed) {
-	// // soundManager.stopClip ("ghostSound");
-   //      soundPlayed = false;
-   //   }
-
-   //   if (Math.abs (y - player.getY()) < 50 && !soundPlayed) {
-	// // soundManager.playClip ("ghostSound", true);
-   //      soundPlayed = true;
-   //   }
-
-   //   if (Math.abs (y - player.getY()) > 80 && soundPlayed) {
-	// // soundManager.stopClip ("ghostSound");
-   //      soundPlayed = false;
-   //   }
    }
 
    public Rectangle2D.Double getBoundingRectangle() {
