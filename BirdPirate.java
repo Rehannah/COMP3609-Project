@@ -34,7 +34,7 @@ public class BirdPirate {
 
    boolean isActive;
 
-   public BirdPirate (JFrame w, Level2Player player) {
+   public BirdPirate (JFrame w, Level2Player player) implements Pirate {
       window = w;
 
       width = 150;
@@ -42,7 +42,7 @@ public class BirdPirate {
 
       random = new Random();
 
-      dx = 5;
+      dx = 3;
       dy = 5;
 
       y = 200;

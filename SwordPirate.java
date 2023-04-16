@@ -35,13 +35,13 @@ public class SwordPirate {
    public SwordPirate (JFrame w, Level2Player player) {
       window = w;
 
-      width = 200;
-      height = 200;
+      width = 250;
+      height = 250;
 
       random = new Random();
 
       x = window.getWidth()/2;
-      y = window.getHeight()/2;
+      y = window.getHeight()/2-50;
 
       dx = 1;
       dy = 1;
@@ -125,13 +125,6 @@ public class SwordPirate {
       else
       if (y < player.getY())
  	  y = y + dy;
-
-      if (collidesWithplayer()) {
-         currentAnim = animations.get("attack");
-      }
-      else{
-         currentAnim = animations.get("walk");
-      }
    }
 
 
@@ -156,6 +149,20 @@ public class SwordPirate {
      if (!window.isVisible ()) return;
 
      chase();
+
+     if (collidesWithplayer()) {
+      currentAnim = animations.get("attack");
+      }
+      else{
+         currentAnim = animations.get("walk");
+      }
+
+      if (x<150) {
+         x=150;
+      }
+      if (x > window.getWidth() - 250) {
+         x = window.getWidth() - 250;
+      }
 
      if (Math.abs (x - player.getX()) < 50 && !soundPlayed) {
 	// soundManager.playClip ("ghostSound", true);

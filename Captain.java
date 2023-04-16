@@ -35,16 +35,16 @@ public class Captain {
    public Captain (JFrame w, Level2Player player) {
       window = w;
 
-      width = 200;
-      height = 200;
+      width = 250;
+      height = 250;
 
       random = new Random();
 
       x = window.getWidth()-300;
-      y = window.getHeight()/2;
+      y = window.getHeight()/2-50;
 
-      dx = 1;
-      dy = 1;
+      dx = 0;
+      dy = 0;
 
       this.player = player;
 

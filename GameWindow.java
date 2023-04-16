@@ -208,6 +208,7 @@ public class GameWindow extends JFrame implements
 		drawButtons(imageContext);			// draw the buttons
 
 		Graphics2D g2 = (Graphics2D) gScr;
+
 		g2.drawImage(image, 0, 0, pWidth, pHeight, null);
 
 		imageContext.dispose();

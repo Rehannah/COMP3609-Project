@@ -30,20 +30,23 @@ public class KnifePirate {
    private Animation currentAnim;
 	private HashMap<String, Animation> animations;
 
+   private Coconut coconut;
+
    boolean isActive;
 
    public KnifePirate (JFrame w, Level2Player player) {
       window = w;
+      this.coconut = coconut;
 
-      width = 200;
-      height = 200;
+      width = 230;
+      height = 230;
 
       random = new Random();
 
       x = window.getWidth()/2;
-      y = window.getHeight()/2;
+      y = window.getHeight()/2-50;
 
-      dx = 1;
+      dx = 2;
       dy = 1;
 
       this.player = player;
@@ -142,6 +145,9 @@ public class KnifePirate {
       else
       if (y < player.getY())
  	  y = y - dy;
+
+     if (y<=window.getHeight()/2)
+      y = window.getHeight()/2;
    }
 
 
@@ -149,13 +155,19 @@ public class KnifePirate {
 
      if (!window.isVisible ()) return;
 
-     flee();
-
-      if (collidesWithplayer()) {
+      if (collidesWithPlayer()) {
          currentAnim = animations.get("attack");
       }
       else{
-            currentAnim = animations.get("walk");
+         currentAnim = animations.get("walk");
+         flee();
+      }
+
+      if (x<150) {
+         x=150;
+      }
+      if (x > window.getWidth() - 250) {
+         x = window.getWidth() - 250;
       }
 
       if (Math.abs (x - player.getX()) < 50 && !soundPlayed) {
@@ -185,7 +197,7 @@ public class KnifePirate {
    }
 
    
-   public boolean collidesWithplayer() {
+   public boolean collidesWithPlayer() {
       Rectangle2D.Double myRect = getBoundingRectangle();
       Rectangle2D.Double playerRect = player.getBoundingRectangle();
       
