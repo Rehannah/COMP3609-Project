@@ -79,6 +79,8 @@ public abstract class Sprite implements Cloneable{
 
     public abstract boolean collidesWithPlayer();
 
-    public abstract Rectangle2D getBoundingRectangle();
+    public Rectangle2D getBoundingRectangle() {
+        return new Rectangle2D.Double(x+40, y+33, getWidth() - 80, getHeight()-33);
+    }
     
 }

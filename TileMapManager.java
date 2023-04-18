@@ -31,12 +31,21 @@ public class TileMapManager {
 
 
     public TileMapManager(JFrame window, Score s) {
+        if(s == null){
+            System.out.println("tmm");
+            
+        }
+        
 	this.window = window;
+    
+    score = s;
         poisonSprite = new PoisonSprite(score);
         nutritiousSprite = new NutritiousSprite(score);
-        score = s;
         loadTileImages();
-
+        if(score == null){
+            System.out.println("tmm 2");
+            
+        }
         //loadCreatureSprites();
         // loadPowerUpSprites();
     }

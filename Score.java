@@ -10,7 +10,7 @@ public class Score {
 
     public Score(GameWindow window){
         this.window = window;
-        points = 10;
+        points = 0;
         lives = 3;
     }
 

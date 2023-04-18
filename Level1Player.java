@@ -115,28 +115,28 @@ public class Level1Player{
 		int offsetY = tileMap.getOffsetY();
 		int yTileFrom = tileMap.pixelsToTiles(y - offsetY);
 		
-		System.out.println("newY: "+newY);
+		// System.out.println("newY: "+newY);
 		
-		System.out.println("Ytile From: "+yTileFrom);
+		// System.out.println("Ytile From: "+yTileFrom);
 		int yTileTo = tileMap.pixelsToTiles(newY - offsetY + playerHeight);
-		System.out.println("Y ttile to: "+yTileTo);
+		// System.out.println("Y ttile to: "+yTileTo);
 
 		for (int yTile=yTileFrom; yTile<=yTileTo; yTile++) {
 			int xTile = tileMap.pixelsToTiles(newX - tileMap.getOffsetX());
 			//System.out.println("offset: "+tileMap.getOffsetX());
-		System.out.println("Xtile: "+xTile);
-			System.out.println("x, y "+xTile + " "+ yTile);
+		// System.out.println("Xtile: "+xTile);
+			// System.out.println("x, y "+xTile + " "+ yTile);
 			if (tileMap.getTile(xTile, yTile) != null) {
 
 				if(newY < window.getHeight() - TILE_SIZE - getImage().getHeight(null)){
-					System.out.println("1st working");
+					// System.out.println("1st working");
 					if(newY < yTile * TILE_SIZE +tileMap.getOffsetY() + 32)					
 					//System.out.println("first");
 						return new Point (xTile, yTile);
-					System.out.println("no return");
+					// System.out.println("no return");
 					return null;
 				}
-				System.out.println("regular x "+xTile + " y "+yTile);
+				// System.out.println("regular x "+xTile + " y "+yTile);
 				return new Point (xTile, yTile);
 
 			}
@@ -146,14 +146,14 @@ public class Level1Player{
 					int leftSide = (xTile + 1) * TILE_SIZE;
 					if ((newX + playerWidth-tileMap.getOffsetX()) > leftSide) {
 						if(newY < window.getHeight() - TILE_SIZE - getImage().getHeight(null)){
-							System.out.println("1st work");
+							// System.out.println("1st work");
 							if(newY < yTile * TILE_SIZE +tileMap.getOffsetY() + 32)					
 							//System.out.println("first");
 								return new Point (xTile+1, yTile);
 							else
 								return null;
 						}
-						System.out.println("second");
+						// System.out.println("second");
 						return new Point (xTile+1, yTile);
 					}
 				}
@@ -172,10 +172,10 @@ public class Level1Player{
 		int yTileTo = tileMap.pixelsToTiles(newY -1 - offsetY);
 			
 		for (int yTile=yTileFrom; yTile>=yTileTo; yTile--) {
-			System.out.println("x "+ xTile + " y "+yTile);
+			// System.out.println("x "+ xTile + " y "+yTile);
 			if (tileMap.getTile(xTile, yTile) != null) {
 				Point tilePos = new Point (xTile, yTile);
-				System.out.println("up collide 1");
+				// System.out.println("up collide 1");
 				return tilePos;
 			}
 			else {
@@ -183,7 +183,7 @@ public class Level1Player{
 					int leftSide = (xTile + 1) * TILE_SIZE;
 					if (newX + playerWidth > leftSide) {
 						Point tilePos = new Point (xTile+1, yTile);
-						System.out.println("up collide 2");
+						// System.out.println("up collide 2");
 						return tilePos;
 					}
 				}
@@ -412,6 +412,6 @@ public class Level1Player{
 
 	public Rectangle2D getBoundingRectangle() {
 		
-		return new Rectangle2D.Double(x,y,getImage().getWidth(null), getImage().getHeight(null));
+		return new Rectangle2D.Double(x - tileMap.getOffsetX(),y,getImage().getWidth(null), getImage().getHeight(null));
 	}
 }

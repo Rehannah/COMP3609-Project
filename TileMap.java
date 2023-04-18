@@ -187,7 +187,7 @@ public class TileMap {
             while(iter.hasNext()){
                 Sprite sprite = (Sprite)iter.next();
                 if(!sprite.collidesWithPlayer())
-                isEnd = true;;
+                isEnd = true;
             }
         }
     }
