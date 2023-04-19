@@ -68,7 +68,7 @@ public class Captain {
    }
 
    public int getDirection() {
-      if (player.getX() < this.getX())
+      if (player.getX() <= this.getX())
          return 1; //left
       else
          return 2; //right
@@ -179,7 +179,7 @@ public class Captain {
 
      if (!window.isVisible ()) return;
 
-      if (collidesWithplayer()) {
+      if (collidesWithPlayer()) {
          if (getDirection()==1) {
             currentAnim = animations.get("attackLeft");
          }
@@ -204,7 +204,7 @@ public class Captain {
    }
 
    
-   public boolean collidesWithplayer() {
+   public boolean collidesWithPlayer() {
       Rectangle2D.Double myRect = getBoundingRectangle();
       Rectangle2D.Double playerRect = player.getBoundingRectangle();
       

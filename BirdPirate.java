@@ -69,7 +69,7 @@ public class BirdPirate {
    }
 
    public int getDirection() {
-      if (player.getX() < this.getX())
+      if (player.getX() <= this.getX())
          return 1; //left
       else
          return 2; //right
