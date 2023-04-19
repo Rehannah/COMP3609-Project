@@ -18,15 +18,15 @@ public class Score {
     public void resetScore(){
         points = 10;
         lives = 3;
-        setPoints();
-        setLives();
+        setPoints(0);
+        setLives(3);
     }
 
 
     //display initial points
     public void initialise(){
-        setPoints();
-        setLives();
+        setPoints(0);
+        setLives(3);
     }
 
 
@@ -59,32 +59,35 @@ public class Score {
 
 
     public boolean updatePoints(){
-        setPoints();
         if (points <= 0)
             return false;
         return true;
     }
 
 
-    public void setPoints(){
-        window.setPoints(points);
+    public void setPoints(int p){
+        points = p;
     }
 
 
     public boolean updateLives(){
-        setLives();
         if (lives <= 0)          
             return false;        
         return true;
     }
 
     
-    public void setLives(){
-        window.setLives(lives);
+    public void setLives(int l){
+        lives = l;
     }
 
 
     public int getPoints(){
         return points;
+    }
+
+
+    public int getLives(){
+        return lives;
     }
 }
