@@ -24,6 +24,8 @@ public class GameWindow extends JFrame implements
 	private Image quit2Image;			// second image for quit button
 	private Image lifeImage;
 	private Image noLifeImage;
+	private BufferedImage pause1Image;
+	private BufferedImage pause2Image;
 
 	private boolean finishedOff = false;		// used when the game terminates
 
@@ -72,6 +74,7 @@ public class GameWindow extends JFrame implements
 		quit2Image = ImageManager.loadImage("images/Quit2.png");
 		lifeImage = ImageManager.loadImage("images/myimages/lives/life.png");
 		noLifeImage = ImageManager.loadImage("images/myimages/lives/nolife.png");
+		pause1Image = ImageManager.loadBufferedImage("images/myimages/pause.png");
 
 		setButtonAreas();
 
@@ -258,26 +261,6 @@ public class GameWindow extends JFrame implements
 			i++;
 		}
 
-		// pointsL.setText("Points Scored");
-		// pointsL.setHorizontalAlignment(JLabel.CENTER);		
-		// pointsL.setForeground(textColour);
-		// pointsL.setBackground(colour);
-		// pointsL.setOpaque(true);
-
-		// livesL.setText("Lives");		
-		// livesL.setHorizontalAlignment(JLabel.CENTER);
-		// livesL.setFont(new Font("Cambria", Font.BOLD, 20));
-		// livesL.setForeground(textColour);
-		// livesL.setBackground(colour);
-		// livesL.setOpaque(true);
-		
-		// pointsTF.setHorizontalAlignment(JLabel.CENTER);
-		// pointsTF.setFont(new Font("Cambria", Font.BOLD, 20));
-		// pointsTF.setEditable(false);
-		// pointsTF.setBackground(colour);
-		// pointsTF.setForeground(textColour);
-		// pointsTF.setBorder(BorderFactory.createEmptyBorder());	 
-
 
 	}
 
@@ -351,22 +334,10 @@ public class GameWindow extends JFrame implements
 		//  leftOffset is the distance of a button from the left side of the window.
 		//  Buttons are placed at the top of the window.
 
-		int leftOffset = (pWidth - (5 * 150) - (4 * 20)) / 2;
+		int leftOffset = (pWidth - (2 * 150) - 20) / 2;
 		pauseButtonArea = new Rectangle(leftOffset, 60, 150, 40);
 
-		// leftOffset = leftOffset + 170;
-		// stopButtonArea = new Rectangle(leftOffset, 60, 150, 40);
-
-		// leftOffset = leftOffset + 170;
-		// showAnimButtonArea = new Rectangle(leftOffset, 60, 150, 40);
-
-		// leftOffset = leftOffset + 170;
-		// pauseAnimButtonArea = new Rectangle(leftOffset, 60, 150, 40);
-
 		leftOffset = leftOffset + 170;
-		// int quitLength = quit1Image.getWidth(null);
-		// int quitHeight = quit1Image.getHeight(null);
-		// quitButtonArea = new Rectangle(leftOffset, 55, 180, 50);
 		
 		quitButtonArea = new Rectangle(leftOffset, 60, 150, 40);
 	}
@@ -400,54 +371,33 @@ public class GameWindow extends JFrame implements
 
 		// draw the stop 'button'
 
-		g.setColor(Color.BLACK);
-		g.drawOval(quitButtonArea.x, quitButtonArea.y, 
-			   quitButtonArea.width, quitButtonArea.height);
-
-		if (isOverQuitButton)
-			g.setColor(Color.WHITE);
-		else
-			g.setColor(Color.RED);
-
-		g.drawString("Quit", quitButtonArea.x+60, quitButtonArea.y+25);
-
-		// draw the show animation 'button'
-
 		// g.setColor(Color.BLACK);
-		// g.drawOval(showAnimButtonArea.x, showAnimButtonArea.y, 
-		// 	   showAnimButtonArea.width, showAnimButtonArea.height);
+		// g.drawOval(quitButtonArea.x, quitButtonArea.y, 
+		// 	   quitButtonArea.width, quitButtonArea.height);
 
-		// if (isOverShowAnimButton && !isPaused && !isStopped)
-		// 	g.setColor(Color.WHITE);
-		// else
-		// 	g.setColor(Color.RED);
-      	// 	g.drawString("Start Anim", showAnimButtonArea.x+35, showAnimButtonArea.y+25);
-
-		// draw the pause anim 'button'
-
-		// g.setColor(Color.BLACK);
-		// g.drawOval(pauseAnimButtonArea.x, pauseAnimButtonArea.y, 
-		// 	   pauseAnimButtonArea.width, pauseAnimButtonArea.height);
-
-		// if (isOverPauseAnimButton && isAnimShown && !isPaused && !isStopped)
+		// if (isOverQuitButton)
 		// 	g.setColor(Color.WHITE);
 		// else
 		// 	g.setColor(Color.RED);
 
-		// if (isAnimShown && isAnimPaused && !isStopped)
-		// 	g.drawString("Anim Paused", pauseAnimButtonArea.x+30, pauseAnimButtonArea.y+25);
-		// else
-		// 	g.drawString("Pause Anim", pauseAnimButtonArea.x+35, pauseAnimButtonArea.y+25);
+		// g.drawString("Quit", quitButtonArea.x+60, quitButtonArea.y+25);
+
+		
 
 		// draw the quit button (an actual image that changes when the mouse moves over it)
 
-		// if (isOverQuitButton)
-		//    g.drawImage(quit1Image, quitButtonArea.x, quitButtonArea.y, 180, 50, null);
-		//     	       //quitButtonArea.width, quitButtonArea.height, null);
+		if (isOverQuitButton){
+			if(pause2Image == null){
+				pause2Image = makeTransparent(ImageManager.copyImage(pause1Image));		
+			}
+			g.drawImage(pause2Image, quitButtonArea.x, quitButtonArea.y, 180, 50, null);
+		    	       //quitButtonArea.width, quitButtonArea.height, null);
+		}
+		   
 				
-		// else
-		//    g.drawImage(quit2Image, quitButtonArea.x, quitButtonArea.y, 180, 50, null);
-		//     	       //quitButtonArea.width, quitButtonArea.height, null);
+		else
+		   g.drawImage(pause1Image, quitButtonArea.x, quitButtonArea.y, 180, 50, null);
+		    	       //quitButtonArea.width, quitButtonArea.height, null);
 
 		// g.setColor(Color.BLACK);
 		// g.drawOval(quitButtonArea.x, quitButtonArea.y, 
@@ -463,9 +413,33 @@ public class GameWindow extends JFrame implements
 
 	}
 
+	public BufferedImage makeTransparent(BufferedImage im){
+		
+		int imWidth = im.getWidth(null);
+		int imHeight = im.getHeight(null);
+		int pixels[] = new int[imWidth * imHeight];
+        int a, red, green, blue, newValue;
 
+        im.getRGB(0, 0, imWidth, imHeight, pixels, 0, imWidth);
+         
+        for (int i=0; i<pixels.length; i++) {
+			a = pixels[i] >> 24;
+			red = pixels[i] >> 16;			
+            green = (pixels[i] >> 8) & 255;
+            blue = pixels[i] & 255;
+			
+        	if(a > 0){
+				newValue = blue | (green << 8) | (red << 16) | (a << 24);
+				pixels[i] = newValue;
+			}
+		}
+		
+		im.setRGB(0, 0, imWidth, imHeight, pixels, 0, imWidth);	
+		return im;
+    }
+
+	
 	private void startGame() { 
-		System.out.println("stat");
 		if (gameThread == null) {
 			//soundManager.playSound ("background", true);
 			score =  new Score(this);
@@ -612,13 +586,7 @@ public class GameWindow extends JFrame implements
 
 		if (isStopped && !isOverQuitButton) 	// don't do anything if game stopped
 			return;
-
-		// if (isOverStopButton) {			// mouse click on Stop button
-		// 	isStopped = true;
-		// 	isPaused = false;
-		// }
-		else
-		if (isOverPauseButton) {		// mouse click on Pause button
+		else if (isOverPauseButton) {		// mouse click on Pause button
 			isPaused = !isPaused;     	// toggle pausing
 		}
 		else if (isOverQuitButton) {		// mouse click on Quit button
@@ -635,21 +603,7 @@ public class GameWindow extends JFrame implements
 	private void testMouseMove(int x, int y) { 
 		if (isRunning) {
 			isOverPauseButton = pauseButtonArea.contains(x,y) ? true : false;
-			// isOverStopButton = stopButtonArea.contains(x,y) ? true : false;
-			// isOverShowAnimButton = showAnimButtonArea.contains(x,y) ? true : false;
-			// isOverPauseAnimButton = pauseAnimButtonArea.contains(x,y) ? true : false;
 			isOverQuitButton = quitButtonArea.contains(x,y) ? true : false;
 		}
 	}
-
-
-	// public void setPoints(int points) {
-	// 	score.setPoints(points);
-	// }
-
-
-    // public void setLives(int lives) {
-	// 	score.setLives(lives);
-    // }
-
 }
