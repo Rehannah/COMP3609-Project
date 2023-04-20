@@ -18,7 +18,7 @@ public class GamePanel extends JPanel {
 	public KnifePirate knifePirate;
 	public Captain captain;
 	public BirdPirate bird;
-	private ArrayList pirates;
+	// private ArrayList pirates;
 
 	private Coconut coconut;
 
@@ -35,7 +35,7 @@ public class GamePanel extends JPanel {
 	}
 
 	public void createGameEntities() {
-		// coconuts = new ArrayList<Coconut>();
+		coconuts = new ArrayList<Coconut>();
 		player = new Level2Player(window);
 		swordPirate = new SwordPirate(window, player);
 		knifePirate = new KnifePirate(window, player);
@@ -64,6 +64,14 @@ public class GamePanel extends JPanel {
 			captain.move();
 		}
 
+		if (coconuts!=null && coconuts.size()!=0) {
+			for (int i=0; i<coconuts.size(); i++) {
+				Coconut c = coconuts.get(i);
+				if (c.isActive()) {
+					coconut.update();
+				}
+			}
+		}
 	}
 
 
@@ -79,15 +87,18 @@ public class GamePanel extends JPanel {
 		return player;
 	}
 
-	// public void throwCoconut(){
-	// 	if (coconut==null) {
-	// 		coconut =  new Coconut(window, player, pirates);
-	// 		// soundManager.playClip("pew", false);
-	// 		coconuts.add(coconut);
-	// 		if (coconuts.size()>3) {
-	// 			coconuts.remove(coconuts.size());
-	// 		}
-	// 	}
-	// }
+	public void throwCoconut(){
+		coconut =  new Coconut(window, player);
+		coconut.activate();
+		coconuts.add(coconut);
+	}
+
+	public ArrayList<Coconut> getCoconuts() {
+		return coconuts;
+	}
+
+	public Coconut getCoconut() {
+		return coconut;
+	}
 
 }
