@@ -41,10 +41,10 @@ public class KnifePirate {
       random = new Random();
 
       x = window.getWidth()/2;
-      y = window.getHeight()/2-50;
+      y = window.getHeight()/2-30;
 
       dx = 2;
-      dy = 4;
+      dy = 0;
 
       this.player = player;
 

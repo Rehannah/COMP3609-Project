@@ -43,7 +43,7 @@ public class SwordPirate {
       x = window.getWidth()/2;
       y = window.getHeight()/2-50;
 
-      dx = 1;
+      dx = 6;
       dy = 1;
 
       this.player = player;
@@ -196,11 +196,13 @@ public class SwordPirate {
          }
       }
 
+      int Wwidth = window.getWidth();
+
       if (x<150) {
          x=150;
       }
-      if (x > window.getWidth() - 250) {
-         x = window.getWidth() - 250;
+      if (x >= Wwidth - (width+250)) {
+         x = Wwidth - (width+250);
       }
    }
 
