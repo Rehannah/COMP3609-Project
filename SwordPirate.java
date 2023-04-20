@@ -35,20 +35,19 @@ public class SwordPirate {
    public SwordPirate (JFrame w, Level2Player player) {
       window = w;
 
-      width = 200;
-      height = 200;
+      width = 250;
+      height = 250;
 
       random = new Random();
 
       x = window.getWidth()/2;
-      y = window.getHeight()/2;
+      y = window.getHeight()/2-50;
 
-      dx = 1;
+      dx = 6;
       dy = 1;
 
       this.player = player;
 
-      pirateImage = ImageManager.loadImage ("images/myimages/pirates/sword/idle/1_entity_000_IDLE_000.png");
       soundManager = SoundManager.getInstance();
 
       soundPlayed = false;
@@ -56,13 +55,23 @@ public class SwordPirate {
       isActive = true;
 
       initialiseAnimations();
-		currentAnim = animations.get("idle");
+		currentAnim = animations.get("walk");
    }
 
    public boolean isActive() {
       return isActive;
    }
 
+   public int getX() {
+      return x;
+   }
+
+   public int getDirection() {
+      if (player.getX() <= this.getX())
+         return 1; //left
+      else
+         return 2; //right
+   }
    
 	public void initialiseAnimations(){
 		animations = new HashMap<>();
@@ -75,6 +84,16 @@ public class SwordPirate {
 		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/sword/attack/1_entity_000_ATTACK_005.png"), 150);
       anim.addFrame(ImageManager.loadImage("images/myimages/pirates/sword/attack/1_entity_000_ATTACK_006.png"), 150);
 		animations.put("attack", anim);
+
+      anim = new Animation(true);
+		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/sword/attack left/1_entity_000_ATTACK_000.png"), 150);
+		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/sword/attack left/1_entity_000_ATTACK_001.png"), 150);
+		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/sword/attack left/1_entity_000_ATTACK_002.png"), 175);
+		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/sword/attack left/1_entity_000_ATTACK_003.png"), 175);
+		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/sword/attack left/1_entity_000_ATTACK_004.png"), 125);
+		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/sword/attack left/1_entity_000_ATTACK_005.png"), 150);
+      anim.addFrame(ImageManager.loadImage("images/myimages/pirates/sword/attack left/1_entity_000_ATTACK_006.png"), 150);
+		animations.put("attackLeft", anim);
 		
 		anim = new Animation(true);
 		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/sword/idle/1_entity_000_IDLE_000.png"), 150);
@@ -95,6 +114,16 @@ public class SwordPirate {
 		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/sword/walk/1_entity_000_WALK_005.png"), 150);
       anim.addFrame(ImageManager.loadImage("images/myimages/pirates/sword/walk/1_entity_000_WALK_006.png"), 150);
 		animations.put("walk", anim);
+
+      anim = new Animation(true);
+		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/sword/walk left/1_entity_000_WALK_000.png"), 150);
+		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/sword/walk left/1_entity_000_WALK_001.png"), 150);
+		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/sword/walk left/1_entity_000_WALK_002.png"), 175);
+		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/sword/walk left/1_entity_000_WALK_003.png"), 175);
+		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/sword/walk left/1_entity_000_WALK_004.png"), 125);
+		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/sword/walk left/1_entity_000_WALK_005.png"), 150);
+      anim.addFrame(ImageManager.loadImage("images/myimages/pirates/sword/walk left/1_entity_000_WALK_006.png"), 150);
+		animations.put("walkLeft", anim);
 	}
 
 
@@ -125,13 +154,6 @@ public class SwordPirate {
       else
       if (y < player.getY())
  	  y = y + dy;
-
-      if (collidesWithplayer()) {
-         currentAnim = animations.get("attack");
-      }
-      else{
-         currentAnim = animations.get("walk");
-      }
    }
 
 
@@ -157,25 +179,31 @@ public class SwordPirate {
 
      chase();
 
-     if (Math.abs (x - player.getX()) < 50 && !soundPlayed) {
-	// soundManager.playClip ("ghostSound", true);
-        soundPlayed = true;
-     }
+     if (collidesWithplayer()) {
+         if (getDirection()==1) {
+            currentAnim = animations.get("attack");
+         }
+         else{
+            currentAnim = animations.get("attackLeft");
+         }
+      }
+      else{
+         if (getDirection()==2) {
+            currentAnim = animations.get("walk");
+         }
+         else {
+            currentAnim = animations.get("walkLeft");
+         }
+      }
 
-     if (Math.abs (x - player.getX()) > 80 && soundPlayed) {
-	// soundManager.stopClip ("ghostSound");
-        soundPlayed = false;
-     }
+      int Wwidth = window.getWidth();
 
-     if (Math.abs (y - player.getY()) < 50 && !soundPlayed) {
-	// soundManager.playClip ("ghostSound", true);
-        soundPlayed = true;
-     }
-
-     if (Math.abs (y - player.getY()) > 80 && soundPlayed) {
-	// soundManager.stopClip ("ghostSound");
-        soundPlayed = false;
-     }
+      if (x<150) {
+         x=150;
+      }
+      if (x >= Wwidth - (width+250)) {
+         x = Wwidth - (width+250);
+      }
    }
 
 

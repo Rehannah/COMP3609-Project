@@ -30,6 +30,7 @@ public class Level2Player {
 	private Animation currentAnim;
 	private HashMap<String, Animation> animations;
 
+	private int direction;
 
 	public Level2Player (JFrame window) {
 		this.window = window;
@@ -40,6 +41,8 @@ public class Level2Player {
 		currentAnim = animations.get("idle");
 		x = window.getWidth()/4;
 		y = window.getHeight()/2;
+
+		direction=2;
 	}
 
 	public void initialiseAnimations(){
@@ -80,15 +83,17 @@ public class Level2Player {
 		return playerImage;
 	}
 
-	public synchronized void move (int direction) {;
+	public synchronized void move (int direction) {
+		this.direction=direction;
+
 	    if (!window.isVisible ()) 
 			return;
 
 		if (direction == 1) { //left
 			currentAnim = animations.get("runLeft");
 			x = x - DX;
-			if (x < 250) {			// stuck within the left bounds
-				x = 250;
+			if (x < 280) {			// stuck within the left bounds
+				x = 280;
 			}
 		}
 		else{
@@ -114,7 +119,7 @@ public class Level2Player {
 			playerImage = currentAnim.getImage();
 		}
 	}
-  
+	
 	public boolean collidesWithPlayer (int x, int y) {
 		Rectangle2D.Double myRectangle = getBoundingRectangle();
 		return myRectangle.contains(x, y);
@@ -124,4 +129,7 @@ public class Level2Player {
 		return new Rectangle2D.Double (x, y, playerImage.getWidth(null), playerImage.getHeight(null));
 	}	
 
+	public int getDirection() {
+		return direction;
+	}
 }

@@ -35,16 +35,16 @@ public class KnifePirate {
    public KnifePirate (JFrame w, Level2Player player) {
       window = w;
 
-      width = 200;
-      height = 200;
+      width = 230;
+      height = 230;
 
       random = new Random();
 
       x = window.getWidth()/2;
-      y = window.getHeight()/2;
+      y = window.getHeight()/2-30;
 
-      dx = 1;
-      dy = 1;
+      dx = 2;
+      dy = 0;
 
       this.player = player;
 
@@ -56,13 +56,23 @@ public class KnifePirate {
       isActive = true;
 
       initialiseAnimations();
-		currentAnim = animations.get("idle");
+		currentAnim = animations.get("walk");
    }
 
    public boolean isActive() {
       return isActive;
    }
 
+   public int getX() {
+      return x;
+   }
+
+   public int getDirection() {
+      if (dx<0)
+         return 1; //left
+      else
+         return 2; //right
+   }
    
 	public void initialiseAnimations(){
 		animations = new HashMap<>();
@@ -75,16 +85,16 @@ public class KnifePirate {
 		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/knife/attack/3_3-PIRATE_ATTACK_005.png"), 150);
       anim.addFrame(ImageManager.loadImage("images/myimages/pirates/knife/attack/3_3-PIRATE_ATTACK_006.png"), 150);
 		animations.put("attack", anim);
-		
-		anim = new Animation(true);
-		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/knife/idle/3_3-PIRATE_IDLE_000.png"), 150);
-		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/knife/idle/3_3-PIRATE_IDLE_001.png"), 150);
-		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/knife/idle/3_3-PIRATE_IDLE_002.png"), 175);
-		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/knife/idle/3_3-PIRATE_IDLE_003.png"), 175);
-		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/knife/idle/3_3-PIRATE_IDLE_004.png"), 125);
-		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/knife/idle/3_3-PIRATE_IDLE_005.png"), 150);
-      anim.addFrame(ImageManager.loadImage("images/myimages/pirates/knife/idle/3_3-PIRATE_IDLE_006.png"), 150);
-		animations.put("idle", anim);
+
+      anim = new Animation(true);
+		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/knife/attack left/3_3-PIRATE_ATTACK_000.png"), 150);
+		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/knife/attack left/3_3-PIRATE_ATTACK_001.png"), 150);
+		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/knife/attack left/3_3-PIRATE_ATTACK_002.png"), 175);
+		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/knife/attack left/3_3-PIRATE_ATTACK_003.png"), 175);
+		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/knife/attack left/3_3-PIRATE_ATTACK_004.png"), 125);
+		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/knife/attack left/3_3-PIRATE_ATTACK_005.png"), 150);
+      anim.addFrame(ImageManager.loadImage("images/myimages/pirates/knife/attack left/3_3-PIRATE_ATTACK_006.png"), 150);
+		animations.put("attackLeft", anim);
 
       anim = new Animation(true);
 		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/knife/walk/3_3-PIRATE_WALK_000.png"), 150);
@@ -95,6 +105,26 @@ public class KnifePirate {
 		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/knife/walk/3_3-PIRATE_WALK_005.png"), 150);
       anim.addFrame(ImageManager.loadImage("images/myimages/pirates/knife/walk/3_3-PIRATE_WALK_006.png"), 150);
 		animations.put("walk", anim);
+
+      anim = new Animation(true);
+		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/knife/walk left/3_3-PIRATE_WALK_000.png"), 150);
+		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/knife/walk left/3_3-PIRATE_WALK_001.png"), 150);
+		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/knife/walk left/3_3-PIRATE_WALK_002.png"), 175);
+		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/knife/walk left/3_3-PIRATE_WALK_003.png"), 175);
+		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/knife/walk left/3_3-PIRATE_WALK_004.png"), 125);
+		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/knife/walk left/3_3-PIRATE_WALK_005.png"), 150);
+      anim.addFrame(ImageManager.loadImage("images/myimages/pirates/knife/walk left/3_3-PIRATE_WALK_006.png"), 150);
+		animations.put("walkLeft", anim);
+
+      anim = new Animation(true);
+		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/knife/idle left/3_3-PIRATE_IDLE_000.png"), 150);
+		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/knife/idle left/3_3-PIRATE_IDLE_001.png"), 150);
+		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/knife/idle left/3_3-PIRATE_IDLE_002.png"), 175);
+		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/knife/idle left/3_3-PIRATE_IDLE_003.png"), 175);
+		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/knife/idle left/3_3-PIRATE_IDLE_004.png"), 125);
+		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/knife/idle left/3_3-PIRATE_IDLE_005.png"), 150);
+      anim.addFrame(ImageManager.loadImage("images/myimages/pirates/knife/idle left/3_3-PIRATE_IDLE_006.png"), 150);
+		animations.put("idleLeft", anim);
 	}
 
 
@@ -112,50 +142,18 @@ public class KnifePirate {
 
    }
 
+   public void movePattern() {
+      x = x + dx;
+      // y = y + dy;
 
-   private void chase() {
+      int Wwidth = window.getWidth();
 
-      if (x > player.getX())
-	  x = x - dx;
-      else
-      if (x < player.getX())
- 	  x = x + dx;
-
-      if (y > player.getY())
-	  y = y - dy;
-      else
-      if (y < player.getY())
- 	  y = y + dy;
-
-     if (collidesWithplayer()) {
-         currentAnim = animations.get("attack");
-     }
-     else{
-         currentAnim = animations.get("walk");
+   
+      if (x>=Wwidth - (width+200) || x<=500){
+         dx=dx*-1;
       }
-   }
 
-
-   private void flee() {
-
-      if (x > player.getX())
-	  x = x + dx;
-      else
-      if (x < player.getX())
- 	  x = x - dx;
-
-      if (y > player.getY())
-	  y = y + dy;
-      else
-      if (y < player.getY())
- 	  y = y - dy;
-
-      if (collidesWithplayer()) {
-         currentAnim = animations.get("attack");
-     }
-     else{
-         currentAnim = animations.get("walk");
-      }
+      x=x+dx;
    }
 
 
@@ -163,27 +161,23 @@ public class KnifePirate {
 
      if (!window.isVisible ()) return;
 
-     flee();
-
-     if (Math.abs (x - player.getX()) < 50 && !soundPlayed) {
-	// soundManager.playClip ("ghostSound", true);
-        soundPlayed = true;
-     }
-
-     if (Math.abs (x - player.getX()) > 80 && soundPlayed) {
-	// soundManager.stopClip ("ghostSound");
-        soundPlayed = false;
-     }
-
-     if (Math.abs (y - player.getY()) < 50 && !soundPlayed) {
-	// soundManager.playClip ("ghostSound", true);
-        soundPlayed = true;
-     }
-
-     if (Math.abs (y - player.getY()) > 80 && soundPlayed) {
-	// soundManager.stopClip ("ghostSound");
-        soundPlayed = false;
-     }
+      if (collidesWithPlayer()) {
+         if (getDirection()==2) {
+            currentAnim = animations.get("attackLeft");
+         }
+         else {
+            currentAnim = animations.get("attack");
+         }
+      }
+      else{
+         if (getDirection()==1) {
+            currentAnim = animations.get("walkLeft");
+         }
+         else {
+            currentAnim = animations.get("walk");
+         }
+         movePattern();
+      }      
    }
 
 
@@ -192,7 +186,7 @@ public class KnifePirate {
    }
 
    
-   public boolean collidesWithplayer() {
+   public boolean collidesWithPlayer() {
       Rectangle2D.Double myRect = getBoundingRectangle();
       Rectangle2D.Double playerRect = player.getBoundingRectangle();
       
