@@ -43,7 +43,7 @@ public class SwordPirate {
       x = window.getWidth()/2;
       y = window.getHeight()/2-50;
 
-      dx = 6;
+      dx = 7;
       dy = 1;
 
       this.player = player;

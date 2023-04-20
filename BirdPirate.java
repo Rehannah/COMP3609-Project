@@ -42,7 +42,7 @@ public class BirdPirate {
 
       random = new Random();
 
-      dx = 3;
+      dx = 2;
       dy = 5;
 
       x=0;
