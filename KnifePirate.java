@@ -68,7 +68,7 @@ public class KnifePirate {
    }
 
    public int getDirection() {
-      if (player.getX() <= this.getX())
+      if (dx<0)
          return 1; //left
       else
          return 2; //right
@@ -143,16 +143,17 @@ public class KnifePirate {
    }
 
    public void movePattern() {
+      x = x + dx;
+      // y = y + dy;
 
-      if (y>=window.getWidth() - 500 || y<=500){
-         dy=dy*-1;
-      }
-      if (x>=window.getHeight() - 500 || x<=500){
+      int Wwidth = window.getWidth();
+
+   
+      if (x>=Wwidth - (width+200) || x<=500){
          dx=dx*-1;
       }
 
       x=x+dx;
-      y=y-dx;
    }
 
 
@@ -161,7 +162,7 @@ public class KnifePirate {
      if (!window.isVisible ()) return;
 
       if (collidesWithPlayer()) {
-         if (getDirection()==1) {
+         if (getDirection()==2) {
             currentAnim = animations.get("attackLeft");
          }
          else {
@@ -176,7 +177,7 @@ public class KnifePirate {
             currentAnim = animations.get("walk");
          }
          movePattern();
-      }
+      }      
    }
 
 
