@@ -20,15 +20,29 @@ public class ImageManager {
 		return new ImageIcon(fileName).getImage();
 	}
 
-	public static BufferedImage loadBufferedImage(String filename) {
+
+	public static void writeBufferedImage (BufferedImage im, String fileName) {
+
+		File file = new File (fileName);
+
+		try {
+			ImageIO.write(im, "png", file);
+		} 
+		catch (IOException ioe) {
+			System.out.println ("Error opening file " + fileName + ":" + ioe);
+		}
+	}
+
+
+	public static BufferedImage loadBufferedImage(String fileName) {
 		BufferedImage bi = null;
 
-		File file = new File (filename);
+		File file = new File (fileName);
 		try {
 			bi = ImageIO.read(file);
 		}
 		catch (IOException ioe) {
-			System.out.println ("Error opening file " + filename + ":" + ioe);
+			System.out.println ("Error opening file " + fileName + ":" + ioe);
 		}
 		return bi;
 	}

@@ -31,6 +31,7 @@ public class TileMap {
 
     private JFrame window;
     private Dimension dimension;
+    private boolean isEnd;
 
     /**
         Creates a new TileMap with the specified width and
@@ -46,6 +47,7 @@ public class TileMap {
 
 	mapWidth = width;
 	mapHeight = height;
+    isEnd = false;
 
         // get the y offset to draw all sprites and tiles
 
@@ -55,6 +57,10 @@ public class TileMap {
 	bgManager = new BackgroundManager (window);
 
         tiles = new Image[mapWidth][mapHeight];
+        for(int i=0; i<mapWidth; i++)
+            for(int j=0; j<mapHeight; j++)
+                tiles[i][j] = null;
+        
 	player = new Level1Player (window, this, bgManager);
         sprites = new ArrayList();
         offsetX = 0;
@@ -177,6 +183,12 @@ public class TileMap {
         else{
             bgManager.update();
             player.update();
+            Iterator iter = getSprites();
+            while(iter.hasNext()){
+                Sprite sprite = (Sprite)iter.next();
+                if(!sprite.collidesWithPlayer())
+                isEnd = true;
+            }
         }
     }
 
@@ -276,6 +288,7 @@ public class TileMap {
 
 
     public void addSprite(Sprite sprite) {
+        sprite.setPlayer(player);
         sprites.add(sprite);
     }
 
