@@ -4,6 +4,7 @@ import java.awt.geom.Rectangle2D;
 import javax.swing.JFrame;
 import java.util.Random;
 import java.awt.Image;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Captain {
@@ -31,10 +32,13 @@ public class Captain {
 	private HashMap<String, Animation> animations;
 
    boolean isActive;
+   private ArrayList<Bullet> bullets;
 
    public Captain (JFrame w, Level2Player player) {
       window = w;
 
+      bullets = new ArrayList<Bullet>();
+      
       width = 250;
       height = 250;
 
@@ -67,6 +71,10 @@ public class Captain {
       return x;
    }
 
+   public int getY() {
+      return y;
+   }
+
    public int getDirection() {
       if (player.getX() <= this.getX())
          return 1; //left
@@ -77,20 +85,20 @@ public class Captain {
 	public void initialiseAnimations(){
 		animations = new HashMap<>();
 		Animation anim = new Animation(true);
-		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/captain/attack/2_entity_000_ATTACK_000.png"), 150);
+		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/captain/attack/2_entity_000_ATTACK_000.png"), 450);
 		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/captain/attack/2_entity_000_ATTACK_001.png"), 150);
-		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/captain/attack/2_entity_000_ATTACK_002.png"), 175);
-		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/captain/attack/2_entity_000_ATTACK_003.png"), 175);
+		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/captain/attack/2_entity_000_ATTACK_002.png"), 155);
+		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/captain/attack/2_entity_000_ATTACK_003.png"), 155);
 		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/captain/attack/2_entity_000_ATTACK_004.png"), 125);
 		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/captain/attack/2_entity_000_ATTACK_005.png"), 150);
       anim.addFrame(ImageManager.loadImage("images/myimages/pirates/captain/attack/2_entity_000_ATTACK_006.png"), 150);
 		animations.put("attack", anim);
 		
       anim = new Animation(true);
-      anim.addFrame(ImageManager.loadImage("images/myimages/pirates/captain/attack left/2_entity_000_ATTACK_000.png"), 150);
+      anim.addFrame(ImageManager.loadImage("images/myimages/pirates/captain/attack left/2_entity_000_ATTACK_000.png"), 450);
 		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/captain/attack left/2_entity_000_ATTACK_001.png"), 150);
-		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/captain/attack left/2_entity_000_ATTACK_002.png"), 175);
-		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/captain/attack left/2_entity_000_ATTACK_003.png"), 175);
+		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/captain/attack left/2_entity_000_ATTACK_002.png"), 155);
+		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/captain/attack left/2_entity_000_ATTACK_003.png"), 155);
 		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/captain/attack left/2_entity_000_ATTACK_004.png"), 125);
 		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/captain/attack left/2_entity_000_ATTACK_005.png"), 150);
       anim.addFrame(ImageManager.loadImage("images/myimages/pirates/captain/attack left/2_entity_000_ATTACK_006.png"), 150);
@@ -139,7 +147,23 @@ public class Captain {
 				currentAnim.start();
          pirateImage = currentAnim.getImage();
 		}
-
+      Image imageLeft = ImageManager.loadImage("images/myimages/pirates/captain/attack left/2_entity_000_ATTACK_005.png");
+      Image imageRight = ImageManager.loadImage("images/myimages/pirates/captain/attack/2_entity_000_ATTACK_005.png");
+      if (pirateImage==imageLeft || pirateImage==imageRight) {
+         Bullet bullet = new Bullet(window, player, this);
+         bullets.add(bullet);
+      }
+      if (bullets.size()!=0){
+         for (int i=0; i<bullets.size(); i++) {
+            Bullet bullet = bullets.get(i);
+            if (bullet!=null && bullet.isActive()) {
+               bullet.draw(g2);
+            }
+            if (bullet.isActive()==false) {
+               bullets.remove(i);
+            }
+         }
+      }
    }
 
 
@@ -179,21 +203,23 @@ public class Captain {
 
      if (!window.isVisible ()) return;
 
-      if (collidesWithPlayer()) {
-         if (getDirection()==1) {
-            currentAnim = animations.get("attackLeft");
-         }
-            
-         else {
-            currentAnim = animations.get("attack");
-         }
+      if (getDirection()==1) {
+         currentAnim = animations.get("attackLeft");
       }
-      else{
-         if (getDirection()==1) {
-            currentAnim = animations.get("idleLeft");
-         }
-         else {
-            currentAnim = animations.get("idle");
+         
+      else {
+         currentAnim = animations.get("attack");
+      }
+
+      if (bullets.size()!=0){
+         for (int i=0; i<bullets.size(); i++) {
+            Bullet bullet = bullets.get(i);
+            if (bullet!=null && bullet.isActive()) {
+               bullet.move();
+            }
+            if (bullet.isActive()==false) {
+               bullets.remove(i);
+            }
          }
       }
    }
