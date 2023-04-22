@@ -1,4 +1,3 @@
-import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import javax.swing.JFrame;
@@ -19,8 +18,6 @@ public class Captain {
 
    private int dx;		// increment to move along x-axis
    private int dy;		// increment to move along y-axis
-
-   private Random random;
 
    private Level2Player player;
    private SoundManager soundManager;
@@ -43,8 +40,6 @@ public class Captain {
       
       width = 250;
       height = 250;
-
-      random = new Random();
 
       x = window.getWidth()-350;
       y = window.getHeight()/2-50;

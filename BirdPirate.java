@@ -1,10 +1,8 @@
-import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
 import javax.swing.JFrame;
-import java.util.Random;
 import java.awt.Image;
 import java.util.HashMap;
 
@@ -20,8 +18,6 @@ public class BirdPirate {
 
    private int dx;		// increment to move along x-axis
    private int dy;		// increment to move along y-axis
-
-   private Random random;
 
    private Level2Player player;
    private SoundManager soundManager;
@@ -42,8 +38,6 @@ public class BirdPirate {
 
       width = 150;
       height = 150;
-
-      random = new Random();
 
       dx = 2;
       dy = 5;

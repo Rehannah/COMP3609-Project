@@ -1,11 +1,7 @@
-import java.awt.Color;
-import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -36,7 +32,6 @@ public class Coconut {  //Projectile Motion
     private Image coconutImage;
     private Animation currentAnim;
 	private HashMap<String, Animation> animations;
-    private ArrayList pirates;
 
 	public Coconut (JFrame w, Level2Player player) {
         window = w;

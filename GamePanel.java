@@ -1,9 +1,5 @@
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import java.awt.Image;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 /**
