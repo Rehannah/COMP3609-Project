@@ -1,6 +1,7 @@
 import javax.swing.*;			// need this for GUI objects
 import java.awt.*;			// need this for certain AWT classes
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import java.awt.event.*;
 import java.awt.image.BufferStrategy;	// need this to implement page flipping
 
@@ -86,9 +87,6 @@ public class GameWindow extends JFrame implements
 		image = new BufferedImage (pWidth, pHeight, BufferedImage.TYPE_INT_RGB);
 		
 		backgroundImage = ImageManager.loadImage ("images/myimages/background/pirateship.gif");
-
-		panel = new GamePanel(this);
-        panel.setPreferredSize(new Dimension(getWidth(), getHeight()));
 
 		startGame();
 	}
@@ -212,6 +210,25 @@ public class GameWindow extends JFrame implements
 			if (panel.captain.isActive()) {
 				panel.captain.draw(imageContext);
 			}
+
+			// ArrayList<Coconut> coconuts;
+			// coconuts = panel.getCoconuts();
+			// if (coconuts != null && coconuts.size()!=0) {
+			// 	for (int i=0; i<coconuts.size(); i++) {
+			// 		Coconut c = coconuts.get(i);
+			// 		if (c!=null && c.isActive()) {
+			// 			c.draw(imageContext);
+			// 			System.out.println("coco drawn");
+			// 		}
+			// 	}
+			// }
+
+			Coconut coconut;
+			coconut = panel.getCoconut();
+			if (coconut!=null && coconut.isActive()) {
+				coconut.draw(imageContext);
+			}
+			
 		}
 	
 		//Graphics2D g2 = (Graphics2D) getGraphics();	// get the graphics context for window
@@ -459,6 +476,10 @@ public class GameWindow extends JFrame implements
 				}
 
 			}
+			else{
+				panel = new GamePanel(this, score);
+       	 		panel.setPreferredSize(new Dimension(getWidth(), getHeight()));
+			}
 
 			gameThread = new Thread(this);
 			gameThread.start();			
@@ -515,6 +536,9 @@ public class GameWindow extends JFrame implements
 		if (keyCode == KeyEvent.VK_SPACE) {
 			if (level==1) {
 				tileMap.jump();
+			}
+			else{
+				panel.throwCoconut();
 			}
 		}
 		else

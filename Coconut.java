@@ -14,16 +14,17 @@ import java.awt.Dimension;
 
 public class Coconut {  //Projectile Motion
 
-   	private static final int XSIZE = 10;
-   	private static final int YSIZE = 10;
+   	private static final int XSIZE = 40;
+   	private static final int YSIZE = 40;
 
    	private JFrame window;
 	private Level2Player player;
-   	private int x = 0;
-   	private int y = 200;
+   	private int x;
+   	private int y;
    	private int dx = 2;
    	private int dy = 2;
-	private int xPos, yPos;			// location from which to generate projectile
+	private int xPos, yPos; 	// location from which to generate projectile
+
    	private int initialVelocityX = 25;
    	private int initialVelocityY = 25;
 
@@ -37,24 +38,22 @@ public class Coconut {  //Projectile Motion
 	private HashMap<String, Animation> animations;
     private ArrayList pirates;
 
-	public Coconut (JFrame w, Level2Player player, ArrayList pirates) {
+	public Coconut (JFrame w, Level2Player player) {
         window = w;
         this.player = player;
-        this.pirates=pirates;
+        // this.pirates=pirates;
 
 		active = false;
 		timeElapsed = 0;
       	dimension = window.getSize();
-		xPos = 25;
-		yPos = 425 - YSIZE;
+
+		x = 800;
+		y = 800;
+		xPos = player.getX()+50;
+		yPos = player.getY() - (YSIZE+25);
 
         initialiseAnimations();
 		currentAnim = animations.get("roll");
-	}
-
-
-	public boolean isActive() {
-		return active;
 	}
 
     public void initialiseAnimations(){
@@ -67,7 +66,7 @@ public class Coconut {  //Projectile Motion
 
 
       anim = new Animation(true);
-      stripImage = ImageManager.loadImage("images/myimages/coconut split.png");
+      anim.addFrame(ImageManager.loadImage("images/myimages/coconut split.png"), 150);
       animations.put("split", anim);
 	}
 
@@ -90,9 +89,14 @@ public class Coconut {  //Projectile Motion
     return anim;
     }
  
+	
+	public boolean isActive() {
+		return active;
+	}
+
 	public void activate() {
-		xPos = player.getX();
-		yPos = player.getY();
+		x = player.getX();
+		y = player.getY();
 		active = true;
 		timeElapsed = 0;
 	}
@@ -104,7 +108,6 @@ public class Coconut {  //Projectile Motion
 
 
    	public void update () {  
-
 		int oldY;
 
       		if (!window.isVisible ()) return;
@@ -117,12 +120,12 @@ public class Coconut {  //Projectile Motion
       		y = (int) (initialVelocityY * timeElapsed - 4.9 * timeElapsed * timeElapsed);
 
       		if (y > 0)
-	 		y = yPos - y;			// yPos is the height at which ball is thrown
+	 		y = yPos - y;			// y is the height at which ball is thrown
       		else
          		y = yPos + y * -1;
 
          	if (x < -XSIZE || x > dimension.width) {		// outside left and right boundaries
-	    		active = false;
+	    		deActivate();
 			return;
 		}
 
@@ -134,8 +137,8 @@ public class Coconut {  //Projectile Motion
             		double fractionOver = (amountOver * 1.0) / (y - oldY);
 	    		timeElapsed = timeElapsed - (1 - fractionOver) * 0.5;
 	    		x = (int) (initialVelocityX * timeElapsed);
-            		active = false;
-		}
+            		deActivate();
+			}
          }
 	
 
@@ -148,6 +151,14 @@ public class Coconut {  //Projectile Motion
             g2.drawImage(coconutImage, x+xPos, y, XSIZE, YSIZE, null);
 		else					// going left: subtract x from xPos
             g2.drawImage(coconutImage, xPos-x, y, XSIZE, YSIZE, null);
+		
+		if(currentAnim != null) {
+			if(currentAnim.isStillActive())
+				currentAnim.update();
+			else
+				currentAnim.start();
+			coconutImage = currentAnim.getImage();
+		}
    	}
 
 

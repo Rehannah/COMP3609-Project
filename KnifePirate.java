@@ -32,8 +32,11 @@ public class KnifePirate {
 
    boolean isActive;
 
-   public KnifePirate (JFrame w, Level2Player player) {
+   private Score score;
+
+   public KnifePirate (JFrame w, Level2Player player, Score s) {
       window = w;
+      this.score = s;
 
       width = 230;
       height = 230;
@@ -139,7 +142,6 @@ public class KnifePirate {
 				currentAnim.start();
          pirateImage = currentAnim.getImage();
 		}
-
    }
 
    public void movePattern() {
@@ -168,6 +170,10 @@ public class KnifePirate {
          else {
             currentAnim = animations.get("attack");
          }
+         Image imageLeft = ImageManager.loadImage("images/myimages/pirates/knife/attack left/3_3-PIRATE_ATTACK_005.png");
+         Image imageRight = ImageManager.loadImage("images/myimages/pirates/knife/attack/3_3-PIRATE_ATTACK_005.png");
+         if (pirateImage ==imageLeft || pirateImage ==imageRight)
+            score.decreaseLives();
       }
       else{
          if (getDirection()==1) {
