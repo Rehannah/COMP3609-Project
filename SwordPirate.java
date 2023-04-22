@@ -32,7 +32,9 @@ public class SwordPirate {
 
    boolean isActive;
 
-   public SwordPirate (JFrame w, Level2Player player) {
+   private Score score;
+
+   public SwordPirate (JFrame w, Level2Player player, Score score) {
       window = w;
 
       width = 250;
@@ -43,10 +45,11 @@ public class SwordPirate {
       x = window.getWidth()/2;
       y = window.getHeight()/2-50;
 
-      dx = 7;
+      dx = 3;
       dy = 1;
 
       this.player = player;
+      this.score = score;
 
       soundManager = SoundManager.getInstance();
 
@@ -137,7 +140,6 @@ public class SwordPirate {
 				currentAnim.start();
          pirateImage = currentAnim.getImage();
 		}
-
    }
 
 
@@ -179,13 +181,17 @@ public class SwordPirate {
 
      chase();
 
-     if (collidesWithplayer()) {
+      if (collidesWithplayer()) {
          if (getDirection()==1) {
             currentAnim = animations.get("attack");
          }
          else{
             currentAnim = animations.get("attackLeft");
          }
+         Image imageLeft = ImageManager.loadImage("images/myimages/pirates/sword/attack left/1_entity_000_ATTACK_004.png");
+         Image imageRight = ImageManager.loadImage("images/myimages/pirates/sword/attack/1_entity_000_ATTACK_004.png");
+         if (pirateImage ==imageLeft || pirateImage ==imageRight)
+            score.decreaseLives();
       }
       else{
          if (getDirection()==2) {

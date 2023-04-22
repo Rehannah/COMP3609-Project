@@ -26,21 +26,24 @@ public class GamePanel extends JPanel {
 
 	private JFrame window;		// reference to the JFrame on which player is drawn
 	
+	private Score s;
 	
-	public GamePanel (JFrame window) {
+	public GamePanel (JFrame window, Score s) {
 		this.window = window;
 
 		coconut=null;
 		coconuts=null;
+
+		this.s=s;
 	}
 
 	public void createGameEntities() {
 		coconuts = new ArrayList<Coconut>();
 		player = new Level2Player(window);
-		swordPirate = new SwordPirate(window, player);
-		knifePirate = new KnifePirate(window, player);
-		captain = new Captain(window, player);
-		bird = new BirdPirate(window, player);
+		swordPirate = new SwordPirate(window, player, s);
+		knifePirate = new KnifePirate(window, player, s);
+		captain = new Captain(window, player, s);
+		bird = new BirdPirate(window, player, s);
 
 		// pirates.add(swordPirate);
 		// pirates.add(knifePirate);

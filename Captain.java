@@ -34,10 +34,12 @@ public class Captain {
    boolean isActive;
    private ArrayList<Bullet> bullets;
 
-   public Captain (JFrame w, Level2Player player) {
+   private Score s;
+   public Captain (JFrame w, Level2Player player, Score s) {
       window = w;
 
       bullets = new ArrayList<Bullet>();
+      this.s=s;
       
       width = 250;
       height = 250;
@@ -150,7 +152,7 @@ public class Captain {
       Image imageLeft = ImageManager.loadImage("images/myimages/pirates/captain/attack left/2_entity_000_ATTACK_005.png");
       Image imageRight = ImageManager.loadImage("images/myimages/pirates/captain/attack/2_entity_000_ATTACK_005.png");
       if (pirateImage==imageLeft || pirateImage==imageRight) {
-         Bullet bullet = new Bullet(window, player, this);
+         Bullet bullet = new Bullet(window, player, this, s);
          bullets.add(bullet);
       }
       if (bullets.size()!=0){

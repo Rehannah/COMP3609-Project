@@ -34,8 +34,11 @@ public class BirdPirate {
 
    boolean isActive;
 
-   public BirdPirate (JFrame w, Level2Player player) {
+   private Score score;
+
+   public BirdPirate (JFrame w, Level2Player player, Score s) {
       window = w;
+      this.score = s;
 
       width = 150;
       height = 150;
@@ -174,6 +177,10 @@ public class BirdPirate {
          else{
             currentAnim = animations.get("attackLeft");
          }
+         Image imageLeft = ImageManager.loadImage("images/myimages/pirates/bird/Little Bird Light Attack Left.png");
+         Image imageRight = ImageManager.loadImage("images/myimages/pirates/bird/Little Bird Light Attack.png");
+         if (pirateImage ==imageLeft || pirateImage ==imageRight)
+            score.decreaseLives();
       }
       else{
          if (getDirection()==2) {

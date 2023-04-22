@@ -33,11 +33,14 @@ public class Bullet {
 
    boolean isActive;
 
-   public Bullet (JFrame w, Level2Player player, Captain captain) {
+   private Score s;
+
+   public Bullet (JFrame w, Level2Player player, Captain captain, Score s) {
       window = w;
 
       this.player = player;
       this.captain = captain;
+      this.s = s;
 
       width = 80;
       height = 20;
@@ -107,6 +110,8 @@ public class Bullet {
       chase();
       if (collidesWithPlayer()){
          deActivate();
+         // s.decreasePoints();
+         s.decreaseLives();
       }
    }
 
