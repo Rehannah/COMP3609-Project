@@ -150,7 +150,9 @@ public class GameWindow extends JFrame implements
 		}
 		// if (!isPaused && isAnimShown && !isAnimPaused)
 			// animation.update();
-		panel.gameUpdate();
+		if (level==2) {
+			panel.gameUpdate();
+		}
 	}
 
 
