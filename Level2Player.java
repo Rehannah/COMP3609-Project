@@ -38,7 +38,7 @@ public class Level2Player {
 		initialiseAnimations();
 		currentAnim = animations.get("idle");
 		x = window.getWidth()/4;
-		y = window.getHeight()/2;
+		y = window.getHeight()-400;
 
 		direction=2;
 	}
@@ -90,16 +90,16 @@ public class Level2Player {
 		if (direction == 1) { //left
 			currentAnim = animations.get("runLeft");
 			x = x - DX;
-			if (x < 280) {			// stuck within the left bounds
-				x = 280;
+			if (x < 290) {			// stuck within the left bounds
+				x = 290;
 			}
 		}
 		else{
 			if (direction == 2) { //right
 				currentAnim = animations.get("runRight");
 				x = x + DX;
-				if (x > window.getWidth() - 200) {			// stuck within the right bounds
-					x = window.getWidth() - 200;
+				if (x > window.getWidth()-getImage().getWidth(null)) {			// stuck within the right bounds
+					x = window.getWidth()-getImage().getWidth(null);
 				}
 
 			}
