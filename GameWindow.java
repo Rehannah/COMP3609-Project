@@ -1,6 +1,7 @@
 import javax.swing.*;			// need this for GUI objects
 import java.awt.*;			// need this for certain AWT classes
 import java.awt.image.BufferedImage;
+import java.nio.file.PathMatcher;
 import java.awt.event.*;
 import java.awt.image.BufferStrategy;	// need this to implement page flipping
 
@@ -476,9 +477,9 @@ public class GameWindow extends JFrame implements
 		if (gameThread == null) {
 			//soundManager.playSound ("background", true);
 			score =  new Score(this);
-			tileManager = new TileMapManager (this, score);
 			if (level==1) {
-				try {
+				try {					
+					tileManager = new TileMapManager (this, score);
 					tileMap = tileManager.loadMap("maps/map.txt");
 					int w, h;
 					w = tileMap.getWidth();
@@ -638,5 +639,12 @@ public class GameWindow extends JFrame implements
 			isOverPauseButton = pauseButtonArea.contains(x,y) ? true : false;
 			isOverQuitButton = quitButtonArea.contains(x,y) ? true : false;
 		}
+	}
+
+
+	public void increaseLevel() {
+		level++;
+		score.setLives(3);
+		panel = new GamePanel(this, score);
 	}
 }

@@ -33,4 +33,8 @@ public class PoisonSprite extends Sprite {
     public void setPlayer(Level1Player p) {
         player = p;
     } 
+
+    public void setMap(TileMap tm) {
+        map = tm;
+    } 
 }

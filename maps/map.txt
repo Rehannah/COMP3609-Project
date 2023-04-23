@@ -8,11 +8,12 @@
 #   D	    Tile for ground
 #   *       Nutritious plant
 #   !       Poisonous plant
+#   0       Token for progression to next level
 
                           
-                               *****                     **!                             ABBC **!********                  !**!**                
-                               ABBBC                     ABBBBC             ABBC              ABBBBBBBBBC                  ABBBBC                            
+                               *****                     **!                             ABBC !**********                  !**!**                
+                               ABBBC                     ABBBBC             ABBC             ABBBBBBBBBBC                  ABBBBC                            
                                                                                                    
                                                                                                     
-              **!!!     ****         !!***           !   *****              **!***!   ******     *****        ***!       *****            *****    ****
+              **!       ****       !!***           !   *****              **!***!   ******     *****        ***!       *****            *****     ****0
 DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD

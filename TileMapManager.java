@@ -26,21 +26,18 @@ public class TileMapManager {
     private PoisonSprite poisonSprite;
     //private Sprite coinSprite;
     private NutritiousSprite nutritiousSprite;
+    private LevelSprite levelSprite;
     // private Sprite grubSprite;
     // private Sprite flySprite;
 
 
     public TileMapManager(GameWindow window, Score s) {
-        if(s == null){
-            System.out.println("tmm");
-            
-        }
+        this.window = window;
         
-	this.window = window;
-    
-    score = s;
+        score = s;
         poisonSprite = new PoisonSprite(score);
         nutritiousSprite = new NutritiousSprite(score);
+        levelSprite = new LevelSprite();
         loadTileImages();
         //loadCreatureSprites();
         // loadPowerUpSprites();
@@ -95,7 +92,9 @@ public class TileMapManager {
                 else if (ch == '*') {
                     addSprite(newMap, nutritiousSprite, x, y);
                 }
-
+                else if (ch == '0') {
+                    addSprite(newMap, levelSprite, x, y);
+                }
             }
         }
 

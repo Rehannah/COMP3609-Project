@@ -7,19 +7,9 @@ public class NutritiousSprite extends Sprite {
        
     public NutritiousSprite(Score s){
         
-        super(ImageManager.loadImage("images/myimages/tiles/nutritious.png"),s);
-        if(s == null){
-            System.out.println("sp1");
-            
-        }
-        // image = ImageManager.loadImage(null);
+        super(ImageManager.loadImage("images/myimages/tiles/nutritious.png"),s);        
         visible = true;
         score = s;
-        if(score == null){
-            System.out.println("sp");
-            
-        }
-        
     }
     
     public boolean collidesWithPlayer(){
@@ -41,5 +31,8 @@ public class NutritiousSprite extends Sprite {
         player = p;
     }   
 
-    
+    public void setMap(TileMap tm) {
+        map = tm;
+    }   
+
 }

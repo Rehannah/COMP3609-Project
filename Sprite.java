@@ -24,14 +24,16 @@ public abstract class Sprite implements Cloneable{
         score = s;
     }
 
-    public Sprite(Image im, Score s, Level1Player p){
-        image = im;
-        visible = true;
-        score = s;
-        player = p;
-    }
+    // public Sprite(Image im, Score s, Level1Player p){
+    //     image = im;
+    //     visible = true;
+    //     score = s;
+    //     player = p;
+    // }
 
     public abstract void setPlayer(Level1Player p);
+
+    public abstract void setMap(TileMap tm);
 
     public int getX() {
         return x;

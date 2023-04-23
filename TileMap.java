@@ -1,7 +1,6 @@
 import java.awt.Image;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
-import java.util.LinkedList;
 import java.util.ArrayList;
 import java.util.Iterator;
 import javax.swing.JFrame;
@@ -199,12 +198,8 @@ public class TileMap {
     public void draw(Graphics2D g2){
 	// draw the background first
 	bgManager.draw (g2);
-        // draw player
 
-        g2.drawImage(player.getImage(),
-        Math.round(player.getX()),
-        Math.round(player.getY()), 
-        null);
+        
 
 
         // draw the visible tiles
@@ -240,6 +235,13 @@ public class TileMap {
             // {
             //     ((Creature)sprite).wakeUp();
             // }
+
+
+        // draw player
+        g2.drawImage(player.getImage(),
+        Math.round(player.getX()),
+        Math.round(player.getY()), 
+        null);
         }
 
 
@@ -290,7 +292,13 @@ public class TileMap {
 
     public void addSprite(Sprite sprite) {
         sprite.setPlayer(player);
+        sprite.setMap(this);
         sprites.add(sprite);
+    }
+
+
+    public void changeLevel() {
+        window.increaseLevel();
     }
 
 }
