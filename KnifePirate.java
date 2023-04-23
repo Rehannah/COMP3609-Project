@@ -33,6 +33,7 @@ public class KnifePirate {
    boolean isActive;
 
    private Score score;
+   private int lives=3;
 
    public KnifePirate (JFrame w, Level2Player player, Score s) {
       window = w;
@@ -41,10 +42,8 @@ public class KnifePirate {
       width = 230;
       height = 230;
 
-      random = new Random();
-
-      x = window.getWidth()/2;
-      y = window.getHeight()/2-30;
+      x = window.getWidth()-350;
+      y = window.getHeight()/2-50;
 
       dx = 2;
       dy = 0;

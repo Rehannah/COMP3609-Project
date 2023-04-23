@@ -29,6 +29,7 @@ public class SwordPirate {
    boolean isActive;
 
    private Score score;
+   private int lives=3;
 
    public SwordPirate (JFrame w, Level2Player player, Score score) {
       window = w;
@@ -36,7 +37,7 @@ public class SwordPirate {
       width = 250;
       height = 250;
 
-      x = window.getWidth()/2;
+      x = window.getWidth()-350;
       y = window.getHeight()/2-50;
 
       dx = 3;
