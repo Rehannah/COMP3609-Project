@@ -29,7 +29,7 @@ public class TileMap {
 
     BackgroundManager bgManager;
 
-    private JFrame window;
+    private GameWindow window;
     private Dimension dimension;
     private boolean isEnd;
 
@@ -37,7 +37,7 @@ public class TileMap {
         Creates a new TileMap with the specified width and
         height (in number of tiles) of the map.
     */
-    public TileMap(JFrame window, int width, int height) {
+    public TileMap(GameWindow window, int width, int height) {
 
 	this.window = window;
 	dimension = window.getSize();
@@ -187,6 +187,7 @@ public class TileMap {
             while(iter.hasNext()){
                 Sprite sprite = (Sprite)iter.next();
                 if(!sprite.collidesWithPlayer())
+                window.endGame();
                 isEnd = true;
             }
         }

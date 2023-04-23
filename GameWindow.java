@@ -243,6 +243,18 @@ public class GameWindow extends JFrame implements
 		g2.dispose();
 	}
 
+	public void endGame(){
+		
+		screenUpdate();
+		gameOverMessage(this.getGraphics());
+		try {
+			Thread.sleep(5000);
+		} 
+		catch (InterruptedException e) {}
+		isRunning = false;
+		
+	}
+
 
 	private void drawScore(Graphics2D g) {
 
@@ -404,57 +416,60 @@ public class GameWindow extends JFrame implements
 
 		// draw the quit button (an actual image that changes when the mouse moves over it)
 
-		if (isOverQuitButton){
-			if(pause2Image == null){
-				pause2Image = makeTransparent(ImageManager.copyImage(pause1Image));		
-			}
-			g.drawImage(pause2Image, quitButtonArea.x, quitButtonArea.y, 180, 50, null);
-		    	       //quitButtonArea.width, quitButtonArea.height, null);
-		}
+		// if (isOverQuitButton){
+		// 	if(pause2Image == null){
+		// 		pause2Image = ImageManager.copyImage(pause1Image);
+		// 		pause2Image = makeTransparent(pause2Image);		
+		// 	}
+		// 	g.drawImage(pause2Image, quitButtonArea.x, quitButtonArea.y, 180, 50, null);
+		//     	       //quitButtonArea.width, quitButtonArea.height, null);
+		// }
 		   
 				
-		else
-		   g.drawImage(pause1Image, quitButtonArea.x, quitButtonArea.y, 180, 50, null);
-		    	       //quitButtonArea.width, quitButtonArea.height, null);
-
-		// g.setColor(Color.BLACK);
-		// g.drawOval(quitButtonArea.x, quitButtonArea.y, 
-		// 	   quitButtonArea.width, quitButtonArea.height);
-		// if (isOverQuitButton)
-		// 	g.setColor(Color.WHITE);
 		// else
-		// 	g.setColor(Color.RED);
+		//    g.drawImage(pause1Image, quitButtonArea.x, quitButtonArea.y, 180, 50, null);
+		//     	       //quitButtonArea.width, quitButtonArea.height, null);
 
-		// g.drawString("Quit", quitButtonArea.x+60, quitButtonArea.y+25);
+		g.setColor(Color.BLACK);
+		g.drawOval(quitButtonArea.x, quitButtonArea.y, 
+			   quitButtonArea.width, quitButtonArea.height);
+		if (isOverQuitButton)
+			g.setColor(Color.WHITE);
+		else
+			g.setColor(Color.RED);
+
+		g.drawString("Quit", quitButtonArea.x+60, quitButtonArea.y+25);
 
 		g.setFont(oldFont);		// reset font
 
 	}
 
-	public BufferedImage makeTransparent(BufferedImage im){
-		
-		int imWidth = im.getWidth(null);
-		int imHeight = im.getHeight(null);
-		int pixels[] = new int[imWidth * imHeight];
-        int a, red, green, blue, newValue;
+// 	public BufferedImage makeTransparent(BufferedImage im){
+// 		int imWidth = im.getWidth(null);
+// 		int imHeight = im.getHeight(null);
+// 		int pixels[] = new int[imWidth * imHeight];
+//         int a, red, green, blue, newValue;
 
-        im.getRGB(0, 0, imWidth, imHeight, pixels, 0, imWidth);
+//         im.getRGB(0, 0, imWidth, imHeight, pixels, 0, imWidth);
          
-        for (int i=0; i<pixels.length; i++) {
-			a = pixels[i] >> 24;
-			red = pixels[i] >> 16;			
-            green = (pixels[i] >> 8) & 255;
-            blue = pixels[i] & 255;
+//         for (int i=0; i<pixels.length; i++) {
+// 			a = pixels[i] >> 24;
+// 			a = a*2;
+// 			red = (pixels[i] >> 16) & 255;			
+//             green = (pixels[i] >> 8) & 255;
+//             blue = pixels[i] & 255;
 			
-        	if(a > 0){
-				newValue = blue | (green << 8) | (red << 16) | (a << 24);
-				pixels[i] = newValue;
-			}
-		}
+//         	if(a > 0){
+// 				newValue = blue | (green << 8) | (red << 16) | (a << 24);
+// 				pixels[i] = newValue;
+// 			}
+// 		}
 		
-		im.setRGB(0, 0, imWidth, imHeight, pixels, 0, imWidth);	
-		return im;
-    }
+// 		im.setRGB(0, 0, imWidth, imHeight, pixels, 0, imWidth);
+// 		Graphics g = this.getGraphics();
+// g.drawImage(im, 0, 0, null);
+// 		return im;
+//     }
 
 	
 	private void startGame() { 
@@ -493,17 +508,10 @@ public class GameWindow extends JFrame implements
 
 	private void gameOverMessage(Graphics g) {
 		
-		Font font = new Font("SansSerif", Font.BOLD, 24);
-		FontMetrics metrics = this.getFontMetrics(font);
-
-		String msg = "Game Over. Thanks for playing!";
-
-		int x = (pWidth - metrics.stringWidth(msg)) / 2; 
-		int y = (pHeight - metrics.getHeight()) / 2;
-
-		g.setColor(Color.BLUE);
-		g.setFont(font);
-		g.drawString(msg, x, y);
+		Image gameOver = ImageManager.loadImage("images/myimages/gameOver.png");
+		int x = (pWidth - gameOver.getWidth(null)) / 2; 
+		int y = (pHeight - gameOver.getHeight(null)) / 2;
+		g.drawImage(gameOver, x,y, 300,200,null);
 
 	}
 
