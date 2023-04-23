@@ -6,16 +6,13 @@
 #   B	    Tile for top middle
 #   C	    Tile for top left
 #   D	    Tile for ground
-#   E       Nutritious plant
-#   F       Poisonous plant
-#   *       Goal
-#   1       Bad Guy 1 (grub)
-#   2       Bad Guy 2 (fly)
+#   *       Nutritious plant
+#   !       Poisonous plant
 
                           
-                               ******         
-        ABBBBC                 ABBBC                               
-        A
-
-              **!     ****         !!***           !*** 
-DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
+                               *****                     **!                             ABBC **!********                  !**!**                
+                               ABBBC                     ABBBBC             ABBC              ABBBBBBBBBC                  ABBBBC                            
+                                                                                                   
+                                                                                                    
+              **!!!     ****         !!***           !   *****              **!***!   ******     *****        ***!       *****            *****    ****
+DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD

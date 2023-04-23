@@ -33,9 +33,9 @@ public class NutritiousSprite extends Sprite {
         return true;
     }
 
-    // public Rectangle2D getBoundingRectangle() {
-    //     return new Rectangle2D.Double(x, y+33, getWidth(), getHeight()-33);
-    // }
+    public Rectangle2D getBoundingRectangle()  {
+        return new Rectangle2D.Double(x+40, y+33, getWidth() - 80, getHeight()-33);
+    }
 
     public void setPlayer(Level1Player p) {
         player = p;

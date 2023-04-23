@@ -175,15 +175,15 @@ public class Level1Player{
 			// System.out.println("x "+ xTile + " y "+yTile);
 			if (tileMap.getTile(xTile, yTile) != null) {
 				Point tilePos = new Point (xTile, yTile);
-				// System.out.println("up collide 1");
+				System.out.println("up collide 1");
 				return tilePos;
 			}
 			else {
 				if (tileMap.getTile(xTile+1, yTile) != null) {
 					int leftSide = (xTile + 1) * TILE_SIZE;
-					if (newX + playerWidth > leftSide) {
+					if (newX -tileMap.getOffsetX() + playerWidth > leftSide) {
 						Point tilePos = new Point (xTile+1, yTile);
-						// System.out.println("up collide 2");
+						System.out.println("up collide 2");
 						return tilePos;
 					}
 				}
@@ -274,14 +274,10 @@ public class Level1Player{
 
 
 	private void fall() {
-		
-		System.out.println("fall start");
 		jumping = false;
 		inAir = true;
 		timeElapsed = 0;
-		// currentAnim.stop();
 		currentAnim = animations.get("fall");
-		// System.out.println("fall start");
 		goingUp = false;
 		goingDown = true;
 
@@ -298,9 +294,7 @@ public class Level1Player{
 			return;
 		
 		jumping = true;
-		currentAnim.stop();
 		currentAnim = animations.get("jump");
-		// System.out.println("jump start");
 		currentAnim.start();
 		timeElapsed = 0;
 

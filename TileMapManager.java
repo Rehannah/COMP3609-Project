@@ -16,7 +16,7 @@ public class TileMapManager {
     private ArrayList<Image> tiles;
     private int currentMap = 0;
 
-    private JFrame window;
+    private GameWindow window;
     private Score score;
 
     private GraphicsConfiguration gc;
@@ -30,7 +30,7 @@ public class TileMapManager {
     // private Sprite flySprite;
 
 
-    public TileMapManager(JFrame window, Score s) {
+    public TileMapManager(GameWindow window, Score s) {
         if(s == null){
             System.out.println("tmm");
             
@@ -42,10 +42,6 @@ public class TileMapManager {
         poisonSprite = new PoisonSprite(score);
         nutritiousSprite = new NutritiousSprite(score);
         loadTileImages();
-        if(score == null){
-            System.out.println("tmm 2");
-            
-        }
         //loadCreatureSprites();
         // loadPowerUpSprites();
     }
