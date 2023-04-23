@@ -190,7 +190,7 @@ public class GameWindow extends JFrame implements
 		}
 		else{
 			// render the background image first
-			imageContext.drawImage(backgroundImage, 0, 0, pWidth, pHeight, null);
+			imageContext.drawImage(backgroundImage, 0, 0, pWidth+350, pHeight+80, null);
 
 			if (panel.getPlayer() != null) {
 				panel.getPlayer().draw(imageContext);
