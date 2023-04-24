@@ -1,8 +1,6 @@
-import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import javax.swing.JFrame;
-import java.util.Random;
 import java.awt.Image;
 import java.util.HashMap;
 
@@ -18,8 +16,6 @@ public class KnifePirate {
 
    private int dx;		// increment to move along x-axis
    private int dy;		// increment to move along y-axis
-
-   private Random random;
 
    private Level2Player player;
    private SoundManager soundManager;
@@ -42,10 +38,10 @@ public class KnifePirate {
       width = 230;
       height = 230;
 
-      x = window.getWidth()-350;
-      y = window.getHeight()/2-50;
+      x = window.getWidth();
+      y = window.getHeight()-400;
 
-      dx = 2;
+      dx = 4;
       dy = 0;
 
       this.player = player;
@@ -70,12 +66,16 @@ public class KnifePirate {
    }
 
    public int getDirection() {
-      if (dx<0)
+      if (player.getX() <= this.getX())
          return 1; //left
       else
          return 2; //right
    }
    
+   public int getLives() {
+      return lives;
+   }
+
 	public void initialiseAnimations(){
 		animations = new HashMap<>();
 		Animation anim = new Animation(true);
@@ -130,6 +130,10 @@ public class KnifePirate {
 	}
 
 
+   public void activate() {
+      isActive=true;
+   }
+
    public void draw (Graphics2D g2) {
 
       g2.drawImage(pirateImage, x, y, width, height, null);
@@ -143,18 +147,19 @@ public class KnifePirate {
 		}
    }
 
-   public void movePattern() {
-      x = x + dx;
-      // y = y + dy;
+   private void chase() {
 
-      int Wwidth = window.getWidth();
+      if (x > player.getX())
+	  x = x - dx;
+      else
+      if (x < player.getX())
+ 	  x = x + dx;
 
-   
-      if (x>=Wwidth - (width+200) || x<=500){
-         dx=dx*-1;
-      }
-
-      x=x+dx;
+      if (y >= player.getY())
+	  y = y - dy;
+      else
+      if (y <= player.getY())
+ 	  y = y + dy;
    }
 
 
@@ -162,8 +167,14 @@ public class KnifePirate {
 
      if (!window.isVisible ()) return;
 
+     chase();
+
       if (collidesWithPlayer()) {
-         if (getDirection()==2) {
+         lives--;
+         if (lives<=0) {
+            isActive=false;
+         }
+         if (getDirection()==1) {
             currentAnim = animations.get("attackLeft");
          }
          else {
@@ -181,8 +192,7 @@ public class KnifePirate {
          else {
             currentAnim = animations.get("walk");
          }
-         movePattern();
-      }      
+      }   
    }
 
 

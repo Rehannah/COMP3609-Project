@@ -25,6 +25,8 @@ public class GamePanel extends JPanel {
 	private JFrame window;		// reference to the JFrame on which player is drawn
 	
 	private Score s;
+
+	public TreasureAnimation treasure;
 	
 	public GamePanel (JFrame window, Score s) {
 		this.window = window;
@@ -42,11 +44,7 @@ public class GamePanel extends JPanel {
 		knifePirate = new KnifePirate(window, player, s);
 		captain = new Captain(window, player, s);
 		bird = new BirdPirate(window, player, s);
-
-		// pirates.add(swordPirate);
-		// pirates.add(knifePirate);
-		// pirates.add(bird);
-		// pirates.add(captain);
+		treasure = new TreasureAnimation(window, player);
 	}
 
 
@@ -73,11 +71,16 @@ public class GamePanel extends JPanel {
 				}
 			}
 		}
+
+		if (treasure!=null && treasure.isActive()) {
+			treasure.update();
+		}
+
+		nextPirate();
 	}
 
 
 	public void updatePlayer (int direction) {
-
 		if (player != null) {
 			player.move(direction);
 		}
@@ -103,6 +106,23 @@ public class GamePanel extends JPanel {
 		return coconut;
 	}
 
+	public void nextPirate() {
+		if (swordPirate!=null) {
+			if (swordPirate.isActive()==false && knifePirate.getLives()==3) {
+				knifePirate.activate();
+			}
+			if (swordPirate.getLives()<=0 && knifePirate.getLives()<=0 && bird.getLives()==3) {
+				bird.activate();
+			}
+			if (swordPirate.getLives()<=0 && knifePirate.getLives()<=0 && bird.getLives()<=0 && captain.getLives()==3) {
+				captain.activate();
+			}
+
+			if (captain.getLives()<=0) {
+				treasure.activate();
+			}
+		}
+	}
 	public void gameRender(Graphics2D imageContext) {
 		if (player != null) {
 			player.draw(imageContext);
