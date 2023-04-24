@@ -37,11 +37,11 @@ public class SwordPirate {
       width = 250;
       height = 250;
 
-      x = window.getWidth()-350;
-      y = window.getHeight()/2-50;
+      x = window.getWidth()+50;
+      y = window.getHeight()-400;
 
       dx = 3;
-      dy = 1;
+      dy = 0;
 
       this.player = player;
       this.score = score;
@@ -71,6 +71,10 @@ public class SwordPirate {
          return 2; //right
    }
    
+   public int getLives() {
+      return lives;
+   }
+
 	public void initialiseAnimations(){
 		animations = new HashMap<>();
 		Animation anim = new Animation(true);
@@ -176,7 +180,11 @@ public class SwordPirate {
 
      chase();
 
-      if (collidesWithplayer()) {
+      if (collidesWithPlayer()) {
+         lives--;
+         if (lives<=0) {
+            isActive=false;
+         }
          if (getDirection()==1) {
             currentAnim = animations.get("attack");
          }
@@ -213,7 +221,7 @@ public class SwordPirate {
    }
 
    
-   public boolean collidesWithplayer() {
+   public boolean collidesWithPlayer() {
       Rectangle2D.Double myRect = getBoundingRectangle();
       Rectangle2D.Double playerRect = player.getBoundingRectangle();
       

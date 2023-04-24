@@ -40,7 +40,7 @@ public class Bullet {
       height = 20;
 
       x = captain.getX();
-      y = captain.getY()+ (captain.getY()/3);
+      y = captain.getY()+300;
 
       dx = 20;
       dy = 0;

@@ -2,11 +2,14 @@ import java.awt.Image;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 
+import javax.swing.JFrame;
+
 
 /**
     The TreasureAnimation class creates an animation of a flying bird. 
 */
 public class TreasureAnimation {
+	private JFrame window;
 	
 	Animation animation;
 
@@ -20,10 +23,11 @@ public class TreasureAnimation {
 
 	private Level2Player player;
 
-	public TreasureAnimation(Level2Player player) {
+	public TreasureAnimation(JFrame w, Level2Player player) {
 		this.player = player;
+		window=w;
 
-		// load images for flying bird animation
+		// load images for animation
 
 		Image animImage1 = ImageManager.loadImage("images/treasure/treasure chest0000.png");
 		Image animImage2 = ImageManager.loadImage("images/treasure/treasure chest0001.png");
@@ -53,8 +57,8 @@ public class TreasureAnimation {
 
 
 	public void start() {
-		x = 100;
-        y = 300;
+		x = window.getWidth()-500;
+        y = window.getHeight()-300;
 		animation.start();
 		playSound();
 	}
