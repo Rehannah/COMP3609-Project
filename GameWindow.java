@@ -20,13 +20,9 @@ public class GameWindow extends JFrame implements
 	private volatile boolean isRunning = false;    	// used to stop the game thread
 
 	private BufferedImage image;			// drawing area for each frame
-
-	private Image quit1Image;			// first image for quit button
-	private Image quit2Image;			// second image for quit button
+	
 	private Image lifeImage;
 	private Image noLifeImage;
-	private BufferedImage pause1Image;
-	private BufferedImage pause2Image;
 
 	private boolean finishedOff = false;		// used when the game terminates
 
@@ -36,18 +32,6 @@ public class GameWindow extends JFrame implements
 	private volatile boolean isOverPauseButton = false;
 	private Rectangle pauseButtonArea;		// used by the pause 'button'
 	private volatile boolean isPaused = false;
-
-	private volatile boolean isOverStopButton = false;
-	private Rectangle stopButtonArea;		// used by the stop 'button'
-	private volatile boolean isStopped = false;
-
-	private volatile boolean isOverShowAnimButton = false;
-	private Rectangle showAnimButtonArea;		// used by the show animation 'button'
-	private volatile boolean isAnimShown = false;
-
-	private volatile boolean isOverPauseAnimButton = false;
-	private Rectangle pauseAnimButtonArea;		// used by the pause animation 'button'
-	private volatile boolean isAnimPaused = false;
    
 	private GraphicsDevice device;			// used for full-screen exclusive mode 
 	private Graphics gScr;
@@ -61,7 +45,7 @@ public class GameWindow extends JFrame implements
 	private GamePanel panel;
 	private Image backgroundImage;
 
-	private int level=1;
+	private int level=2;
 
 
 
@@ -71,11 +55,8 @@ public class GameWindow extends JFrame implements
 
 		initFullScreen();
 
-		quit1Image = ImageManager.loadImage("images/Quit1.png");
-		quit2Image = ImageManager.loadImage("images/Quit2.png");
 		lifeImage = ImageManager.loadImage("images/myimages/lives/life.png");
 		noLifeImage = ImageManager.loadImage("images/myimages/lives/nolife.png");
-		pause1Image = ImageManager.loadBufferedImage("images/myimages/pause.png");
 
 		setButtonAreas();
 
@@ -186,50 +167,13 @@ public class GameWindow extends JFrame implements
 
 		Graphics2D imageContext = (Graphics2D) image.getGraphics();
 
-		if (level==1) {
+		if (level == 1) {
 			tileMap.draw(imageContext);
 		}
 		else{
 			// render the background image first
 			imageContext.drawImage(backgroundImage, 0, 0, pWidth+350, pHeight+80, null);
-
-			if (panel.getPlayer() != null) {
-				panel.getPlayer().draw(imageContext);
-			}
-			else{
-				panel.createGameEntities();
-			}
-
-			if (panel.swordPirate.isActive()) {
-				panel.swordPirate.draw(imageContext);
-			}
-			if (panel.knifePirate.isActive()) {
-				panel.knifePirate.draw(imageContext);
-			}
-			if (panel.bird.isActive()) {
-				panel.bird.draw(imageContext);
-			}
-			if (panel.captain.isActive()) {
-				panel.captain.draw(imageContext);
-			}
-
-			// ArrayList<Coconut> coconuts;
-			// coconuts = panel.getCoconuts();
-			// if (coconuts != null && coconuts.size()!=0) {
-			// 	for (int i=0; i<coconuts.size(); i++) {
-			// 		Coconut c = coconuts.get(i);
-			// 		if (c!=null && c.isActive()) {
-			// 			c.draw(imageContext);
-			// 			System.out.println("coco drawn");
-			// 		}
-			// 	}
-			// }
-
-			Coconut coconut;
-			coconut = panel.getCoconut();
-			if (coconut!=null && coconut.isActive()) {
-				coconut.draw(imageContext);
-			}
+			panel.gameRender(imageContext);
 			
 		}
 	
@@ -337,19 +281,6 @@ public class GameWindow extends JFrame implements
 	// This method provides details about the current display mode.
 
 	private void showCurrentMode() {
-/*
-		DisplayMode dm[] = device.getDisplayModes();
-
-		for (int i=0; i<dm.length; i++) {
-			System.out.println("Current Display Mode: (" + 
-                           dm[i].getWidth() + "," + dm[i].getHeight() + "," +
-                           dm[i].getBitDepth() + "," + dm[i].getRefreshRate() + ")  " );			
-		}
-
-		//DisplayMode d = new DisplayMode (800, 600, 32, 60);
-		//device.setDisplayMode(d);
-*/
-
 		DisplayMode dm = device.getDisplayMode();
 
 		System.out.println("Current Display Mode: (" + 
@@ -382,58 +313,29 @@ public class GameWindow extends JFrame implements
 		newFont = new Font ("TimesRoman", Font.ITALIC + Font.BOLD, 18);
 		g.setFont(newFont);		// set this as font for text on buttons
 
-    		g.setColor(Color.black);	// set outline colour of button
+    	g.setColor(Color.black);	// set outline colour of button
 
 		// draw the pause 'button'
-
 		g.setColor(Color.BLACK);
 		g.drawOval(pauseButtonArea.x, pauseButtonArea.y, 
 			   pauseButtonArea.width, pauseButtonArea.height);
 
-		if (isOverPauseButton && !isStopped)
+		if (isOverPauseButton)
 			g.setColor(Color.WHITE);
 		else
 			g.setColor(Color.RED);	
 
-		if (isPaused && !isStopped)
+		if (isPaused)
 			g.drawString("Resume", pauseButtonArea.x+45, pauseButtonArea.y+25);
 		else
 			g.drawString("Pause", pauseButtonArea.x+50, pauseButtonArea.y+25);
 
-		// draw the stop 'button'
 
-		// g.setColor(Color.BLACK);
-		// g.drawOval(quitButtonArea.x, quitButtonArea.y, 
-		// 	   quitButtonArea.width, quitButtonArea.height);
-
-		// if (isOverQuitButton)
-		// 	g.setColor(Color.WHITE);
-		// else
-		// 	g.setColor(Color.RED);
-
-		// g.drawString("Quit", quitButtonArea.x+60, quitButtonArea.y+25);
-
-		
-
-		// draw the quit button (an actual image that changes when the mouse moves over it)
-
-		// if (isOverQuitButton){
-		// 	if(pause2Image == null){
-		// 		pause2Image = ImageManager.copyImage(pause1Image);
-		// 		pause2Image = makeTransparent(pause2Image);		
-		// 	}
-		// 	g.drawImage(pause2Image, quitButtonArea.x, quitButtonArea.y, 180, 50, null);
-		//     	       //quitButtonArea.width, quitButtonArea.height, null);
-		// }
-		   
-				
-		// else
-		//    g.drawImage(pause1Image, quitButtonArea.x, quitButtonArea.y, 180, 50, null);
-		//     	       //quitButtonArea.width, quitButtonArea.height, null);
-
+		// draw the quit 'button'
 		g.setColor(Color.BLACK);
 		g.drawOval(quitButtonArea.x, quitButtonArea.y, 
 			   quitButtonArea.width, quitButtonArea.height);
+
 		if (isOverQuitButton)
 			g.setColor(Color.WHITE);
 		else
@@ -444,34 +346,6 @@ public class GameWindow extends JFrame implements
 		g.setFont(oldFont);		// reset font
 
 	}
-
-// 	public BufferedImage makeTransparent(BufferedImage im){
-// 		int imWidth = im.getWidth(null);
-// 		int imHeight = im.getHeight(null);
-// 		int pixels[] = new int[imWidth * imHeight];
-//         int a, red, green, blue, newValue;
-
-//         im.getRGB(0, 0, imWidth, imHeight, pixels, 0, imWidth);
-         
-//         for (int i=0; i<pixels.length; i++) {
-// 			a = pixels[i] >> 24;
-// 			a = a*2;
-// 			red = (pixels[i] >> 16) & 255;			
-//             green = (pixels[i] >> 8) & 255;
-//             blue = pixels[i] & 255;
-			
-//         	if(a > 0){
-// 				newValue = blue | (green << 8) | (red << 16) | (a << 24);
-// 				pixels[i] = newValue;
-// 			}
-// 		}
-		
-// 		im.setRGB(0, 0, imWidth, imHeight, pixels, 0, imWidth);
-// 		Graphics g = this.getGraphics();
-// g.drawImage(im, 0, 0, null);
-// 		return im;
-//     }
-
 	
 	private void startGame() { 
 		if (gameThread == null) {
@@ -505,7 +379,7 @@ public class GameWindow extends JFrame implements
 	}
 
 
-	// displays a message to the screen when the user stops the game
+	// displays a message to the screen when the user loses the game
 
 	private void gameOverMessage(Graphics g) {
 		
@@ -520,92 +394,110 @@ public class GameWindow extends JFrame implements
 	// implementation of methods in KeyListener interface
 
 	public void keyPressed (KeyEvent e) {
-
-		if (isPaused)
-			return;
-
+		
 		int keyCode = e.getKeyCode();
 
-		if ((keyCode == KeyEvent.VK_ESCAPE) || (keyCode == KeyEvent.VK_Q) ||
-             	   (keyCode == KeyEvent.VK_END)) {
-           		isRunning = false;		// user can quit anytime by pressing
+		if ((keyCode == KeyEvent.VK_ESCAPE) || (keyCode == KeyEvent.VK_Q) || (keyCode == KeyEvent.VK_END)) {
+           	isRunning = false;		// user can quit anytime by pressing
 			return;				//  one of these keys (ESC, Q, END)			
-         	}
-		else
-		if (keyCode == KeyEvent.VK_LEFT) {
-			if (level==2) {
-				panel.updatePlayer(1);
-			}
-		}
-		else
-		if (keyCode == KeyEvent.VK_RIGHT) {
-			if (level==2) {
-				panel.updatePlayer(2);
-			}
-		}
+        }
+		
+		if (isPaused)
+			return; 
+		
 		if (keyCode == KeyEvent.VK_SPACE) {
 			if (level==1) {
 				tileMap.jump();
 			}
 			else{
+				panel.updatePlayer(3);
+			}
+			return;
+		}
+
+		if (keyCode == KeyEvent.VK_LEFT) {
+			if (level==2) {
+				panel.updatePlayer(1);
+			}
+			return;
+		}
+		
+		if (keyCode == KeyEvent.VK_RIGHT) {
+			if (level==2) {
+				panel.updatePlayer(2);
+			}
+			return;
+		}
+
+		if (keyCode == KeyEvent.VK_ENTER) {
+			if (level==2) {
 				panel.throwCoconut();
 			}
-		}
-		else
-		if (keyCode == KeyEvent.VK_UP) {
-			//bat.moveUp();
-		}
-		else
-		if (keyCode == KeyEvent.VK_DOWN) {
-			//bat.moveDown();
+			return;
 		}
 
 	}
 
 
-	public void keyReleased (KeyEvent e) {
+	public void keyReleased (KeyEvent e) {		
+
+		int keyCode = e.getKeyCode();
+		
+		if (keyCode == KeyEvent.VK_LEFT) {
+			if (level==2) {
+				panel.updatePlayer(0);
+			}
+			return;
+		}
+		
+		if (keyCode == KeyEvent.VK_RIGHT) {
+			if (level==2) {
+				panel.updatePlayer(0);
+			}
+			return;
+		}
 
 	}
 
 
 	public void keyTyped (KeyEvent e) {
 
+		// int keyCode = e.getKeyCode();
+		
+		// if (keyCode == KeyEvent.VK_LEFT) {
+		// 	if (level==2) {
+		// 		panel.updatePlayer(1);
+		// 	}
+		// 	return;
+		// }
+		
+		// if (keyCode == KeyEvent.VK_RIGHT) {
+		// 	if (level==2) {
+		// 		panel.updatePlayer(2);
+		// 	}
+		// 	return;
+		// }
+
 	}
 
 
 	// implement methods of MouseListener interface
 
-	public void mouseClicked(MouseEvent e) {
+	public void mouseClicked(MouseEvent e) {}
 
-	}
+	public void mouseEntered(MouseEvent e) {}
 
-
-	public void mouseEntered(MouseEvent e) {
-
-	}
-
-
-	public void mouseExited(MouseEvent e) {
-
-	}
-
+	public void mouseExited(MouseEvent e) {}
 
 	public void mousePressed(MouseEvent e) {
 		testMousePress(e.getX(), e.getY());
 	}
 
-
-	public void mouseReleased(MouseEvent e) {
-
-	}
-
+	public void mouseReleased(MouseEvent e) {}
 
 	// implement methods of MouseMotionListener interface
 
-	public void mouseDragged(MouseEvent e) {
-
-	}	
-
+	public void mouseDragged(MouseEvent e) {}	
 
 	public void mouseMoved(MouseEvent e) {
 		testMouseMove(e.getX(), e.getY()); 
@@ -613,14 +505,12 @@ public class GameWindow extends JFrame implements
 
 
 	/* This method handles mouse clicks on one of the buttons
-	   (Pause, Stop, Start Anim, Pause Anim, and Quit).
+	   (Pause and Quit).
 	*/
 
 	private void testMousePress(int x, int y) {
 
-		if (isStopped && !isOverQuitButton) 	// don't do anything if game stopped
-			return;
-		else if (isOverPauseButton) {		// mouse click on Pause button
+		if (isOverPauseButton) {		// mouse click on Pause button
 			isPaused = !isPaused;     	// toggle pausing
 		}
 		else if (isOverQuitButton) {		// mouse click on Quit button
@@ -630,8 +520,8 @@ public class GameWindow extends JFrame implements
 
 
 	/* This method checks to see if the mouse is currently moving over one of
-	   the buttons (Pause, Stop, Show Anim, Pause Anim, and Quit). It sets a
-	   boolean value which will cause the button to be displayed accordingly.
+	   the buttons (Pause and Quit). It sets a boolean value which will cause 
+	   the button to be displayed accordingly.
 	*/
 
 	private void testMouseMove(int x, int y) { 
@@ -641,10 +531,9 @@ public class GameWindow extends JFrame implements
 		}
 	}
 
-
 	public void increaseLevel() {
 		level++;
-		score.setLives(3);
+		score.resetLives();
 		panel = new GamePanel(this, score);
 	}
 }

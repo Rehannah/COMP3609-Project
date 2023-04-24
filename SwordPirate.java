@@ -50,7 +50,7 @@ public class SwordPirate {
 
       soundPlayed = false;
 
-      isActive = true;
+      isActive = false;
 
       initialiseAnimations();
 		currentAnim = animations.get("walk");

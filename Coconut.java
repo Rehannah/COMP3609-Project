@@ -21,8 +21,8 @@ public class Coconut {  //Projectile Motion
    	private int dy = 2;
 	private int xPos, yPos; 	// location from which to generate projectile
 
-   	private int initialVelocityX = 25;
-   	private int initialVelocityY = 25;
+   	private int initialVelocityX = 50;
+   	private int initialVelocityY = 10;
 
    	private Dimension dimension;
 
@@ -41,11 +41,7 @@ public class Coconut {  //Projectile Motion
 		active = false;
 		timeElapsed = 0;
       	dimension = window.getSize();
-
-		x = 800;
-		y = 800;
-		xPos = player.getX()+50;
-		yPos = player.getY() - (YSIZE+25);
+		
 
         initialiseAnimations();
 		currentAnim = animations.get("roll");
@@ -54,20 +50,23 @@ public class Coconut {  //Projectile Motion
     public void initialiseAnimations(){
 		animations = new HashMap<>();
 		Animation anim = new Animation(true);
-      
-		Image stripImage = ImageManager.loadImage("images/myimages/coconut.png");
-		anim = stripAnimation(stripImage, anim, 5);
+		anim.addFrame(ImageManager.loadImage("images/myimages/boy/Coconut/1.png"), 100);
+		anim.addFrame(ImageManager.loadImage("images/myimages/boy/Coconut/2.png"), 100);
+		anim.addFrame(ImageManager.loadImage("images/myimages/boy/Coconut/3.png"), 100);
+		anim.addFrame(ImageManager.loadImage("images/myimages/boy/Coconut/4.png"), 100);
+		anim.addFrame(ImageManager.loadImage("images/myimages/boy/Coconut/5.png"), 100);
+		anim.addFrame(ImageManager.loadImage("images/myimages/boy/Coconut/6.png"), 100);
 		animations.put("roll", anim);
 
 
-      anim = new Animation(true);
-      anim.addFrame(ImageManager.loadImage("images/myimages/coconut split.png"), 150);
-      animations.put("split", anim);
+		anim = new Animation(true);
+		anim.addFrame(ImageManager.loadImage("images/myimages/coconut split.png"), 150);
+		animations.put("split", anim);
 	}
 
     // load animation from strip file
-   public Animation stripAnimation(Image stripImage, Animation anim, int num) {
-    int imageWidth = (int) stripImage.getWidth(null) / num;
+    public Animation stripAnimation(Image stripImage, Animation anim, int num) {
+    	int imageWidth = (int) stripImage.getWidth(null) / num;
         int imageHeight = stripImage.getHeight(null);
 
         for (int i=0; i<num; i++) {
@@ -81,7 +80,7 @@ public class Coconut {  //Projectile Motion
 
             anim.addFrame(frameImage, 100);
         }
-    return anim;
+    	return anim;
     }
  
 	
@@ -90,8 +89,9 @@ public class Coconut {  //Projectile Motion
 	}
 
 	public void activate() {
-		x = player.getX();
-		y = player.getY();
+		
+		xPos = player.getX()+20;
+		yPos = player.getY() + 20;
 		active = true;
 		timeElapsed = 0;
 	}
@@ -105,36 +105,33 @@ public class Coconut {  //Projectile Motion
    	public void update () {  
 		int oldY;
 
-      		if (!window.isVisible ()) return;
+      	if (!window.isVisible ()) return;
      
 		timeElapsed = timeElapsed + 0.5;
 
-      		x = (int) (initialVelocityX * timeElapsed);
+      	x = (int) (initialVelocityX * timeElapsed);
 
 		oldY = y;
-      		y = (int) (initialVelocityY * timeElapsed - 4.9 * timeElapsed * timeElapsed);
+      	y = (int) (initialVelocityY * timeElapsed - 4.9 * timeElapsed * timeElapsed);
 
-      		if (y > 0)
-	 		y = yPos - y;			// y is the height at which ball is thrown
-      		else
-         		y = yPos + y * -1;
-
-         	if (x < -XSIZE || x > dimension.width) {		// outside left and right boundaries
-	    		deActivate();
+      	y = yPos - y;			// y is the height at which ball is thrown
+      		
+        if (x < -XSIZE || x > dimension.width) {		// outside left and right boundaries
+	    	deActivate();
 			return;
 		}
-
-         	if (y > 425 - YSIZE) {	 		// below floor; extrapolate to bring ball on top of floor.
-	    		System.out.println ("Y = " + y);
-	    		int amountOver = y - (425 - YSIZE); 
-	    		y = 425 - YSIZE;
-	    		System.out.println ("New Y = " + y);
-            		double fractionOver = (amountOver * 1.0) / (y - oldY);
-	    		timeElapsed = timeElapsed - (1 - fractionOver) * 0.5;
-	    		x = (int) (initialVelocityX * timeElapsed);
-            		deActivate();
-			}
-         }
+		// System.out.println ("x = " + x + " y "+y);
+        if (y > window.getHeight() - 200 - YSIZE) {	 		// below floor; extrapolate to bring ball on top of floor.
+	    	// System.out.println ("Y = " + y);
+	    	int amountOver = y - (200 - YSIZE); 
+	    	y = 200 - YSIZE;
+	    	// System.out.println ("New Y = " + y);
+            double fractionOver = (amountOver * 1.0) / (y - oldY);
+	    	timeElapsed = timeElapsed - (1 - fractionOver) * 0.5;
+	    	x = (int) (initialVelocityX * timeElapsed);
+            deActivate();
+		}
+    }
 	
 
    	public void draw (Graphics2D g2) { 
@@ -142,11 +139,6 @@ public class Coconut {  //Projectile Motion
 		if (!active)
 			return;
 			
-		if (player.getDirection() == 2)		// going right: add x to xPos
-            g2.drawImage(coconutImage, x+xPos, y, XSIZE, YSIZE, null);
-		else					// going left: subtract x from xPos
-            g2.drawImage(coconutImage, xPos-x, y, XSIZE, YSIZE, null);
-		
 		if(currentAnim != null) {
 			if(currentAnim.isStillActive())
 				currentAnim.update();
@@ -154,11 +146,20 @@ public class Coconut {  //Projectile Motion
 				currentAnim.start();
 			coconutImage = currentAnim.getImage();
 		}
+
+		if(coconutImage == null)
+		System.out.println("null im");
+
+		if (player.getDirection() == 2)		// going right: add x to xPos
+            g2.drawImage(coconutImage, x+xPos, y, XSIZE, YSIZE, null);
+		else					// going left: subtract x from xPos
+            g2.drawImage(coconutImage, xPos-x, y, XSIZE, YSIZE, null);
+		
    	}
 
 
 	public Rectangle2D.Double getBoundingRectangle() {
-		return new Rectangle2D.Double (x, y, coconutImage.getWidth(null), coconutImage.getHeight(null));
+		return new Rectangle2D.Double (x, y, XSIZE, YSIZE);
 	}	
 
     // public boolean collidesWithPirate() {

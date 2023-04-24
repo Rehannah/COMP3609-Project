@@ -1,5 +1,7 @@
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
+import java.awt.Graphics2D;
 import java.util.ArrayList;
 
 /**
@@ -67,7 +69,7 @@ public class GamePanel extends JPanel {
 			for (int i=0; i<coconuts.size(); i++) {
 				Coconut c = coconuts.get(i);
 				if (c.isActive()) {
-					coconut.update();
+					c.update();
 				}
 			}
 		}
@@ -87,9 +89,10 @@ public class GamePanel extends JPanel {
 	}
 
 	public void throwCoconut(){
-		coconut =  new Coconut(window, player);
-		coconut.activate();
-		coconuts.add(coconut);
+		Coconut c =  new Coconut(window, player);
+		c.activate();
+		coconuts.add(c);
+		// System.out.println("coco active");
 	}
 
 	public ArrayList<Coconut> getCoconuts() {
@@ -98,6 +101,44 @@ public class GamePanel extends JPanel {
 
 	public Coconut getCoconut() {
 		return coconut;
+	}
+
+	public void gameRender(Graphics2D imageContext) {
+		if (player != null) {
+			player.draw(imageContext);
+		}
+		else{
+			createGameEntities();
+		}
+
+		if (swordPirate.isActive()) {
+			swordPirate.draw(imageContext);
+		}
+		if (knifePirate.isActive()) {
+			knifePirate.draw(imageContext);
+		}
+		if (bird.isActive()) {
+			bird.draw(imageContext);
+		}
+		if (captain.isActive()) {
+			captain.draw(imageContext);
+		}
+
+		if (coconuts != null && coconuts.size()!=0) {
+			for (int i=0; i<coconuts.size(); i++) {
+				Coconut c = coconuts.get(i);
+				if (c!=null && c.isActive()) {
+					c.draw(imageContext);
+				}
+			}
+		}
+
+		// Coconut coconut;
+		// coconut = panel.getCoconut();
+		// if (coconut!=null && coconut.isActive()) {
+		// 	coconut.draw(imageContext);
+		// }
+		
 	}
 
 }

@@ -15,6 +15,12 @@ public class Score {
     }
 
 
+    public void initialise(){
+        setPoints(0);
+        setLives(3);
+    }
+
+
     public void resetScore(){
         points = 10;
         lives = 3;
@@ -22,10 +28,8 @@ public class Score {
         setLives(3);
     }
 
-
-    //display initial points
-    public void initialise(){
-        setPoints(0);
+    public void resetLives(){
+        lives = 3;
         setLives(3);
     }
 
@@ -65,7 +69,7 @@ public class Score {
     }
 
 
-    public void setPoints(int p){
+    private void setPoints(int p){
         points = p;
     }
 
@@ -77,7 +81,7 @@ public class Score {
     }
 
     
-    public void setLives(int l){
+    private void setLives(int l){
         lives = l;
     }
 

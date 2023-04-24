@@ -54,7 +54,7 @@ public class Captain {
 
       soundPlayed = false;
 
-      isActive = true;
+      isActive = false;
 
       initialiseAnimations();
 		currentAnim = animations.get("idle");
