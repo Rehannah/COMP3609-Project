@@ -1,7 +1,6 @@
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import javax.swing.JFrame;
-import java.util.Random;
 import java.awt.Image;
 import java.util.HashMap;
 
@@ -17,8 +16,6 @@ public class KnifePirate {
 
    private int dx;		// increment to move along x-axis
    private int dy;		// increment to move along y-axis
-
-   private Random random;
 
    private Level2Player player;
    private SoundManager soundManager;

@@ -59,6 +59,7 @@ public class Captain {
 
       initialiseAnimations();
 		currentAnim = animations.get("idle");
+
    }
 
    public boolean isActive() {
@@ -197,14 +198,16 @@ public class Captain {
 
    public void move() {
 
-     if (!window.isVisible ()) return;
+      if (!window.isVisible ()) return;
 
      chase();
+     
 
       if (collidesWithPlayer()) {
          lives--;
          if (lives<=0) {
             isActive=false;
+            
          }
       }
      else{
@@ -223,9 +226,7 @@ public class Captain {
                currentAnim = animations.get("attack");
             }
          }
-      }   
-
-      
+      }
 
       if (bullets.size()!=0){
          for (int i=0; i<bullets.size(); i++) {
