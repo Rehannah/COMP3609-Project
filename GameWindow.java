@@ -410,7 +410,7 @@ public class GameWindow extends JFrame implements
 				tileMap.jump();
 			}
 			else{
-				panel.updatePlayer(3);
+				panel.updatePlayer(5);
 			}
 			return;
 		}
@@ -445,14 +445,14 @@ public class GameWindow extends JFrame implements
 		
 		if (keyCode == KeyEvent.VK_LEFT) {
 			if (level==2) {
-				panel.updatePlayer(0);
+				panel.updatePlayer(3);
 			}
 			return;
 		}
 		
 		if (keyCode == KeyEvent.VK_RIGHT) {
 			if (level==2) {
-				panel.updatePlayer(0);
+				panel.updatePlayer(4);
 			}
 			return;
 		}
