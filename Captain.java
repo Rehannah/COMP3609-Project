@@ -1,7 +1,6 @@
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import javax.swing.JFrame;
-import java.util.Random;
 import java.awt.Image;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,6 +31,8 @@ public class Captain {
    private ArrayList<Bullet> bullets;
 
    private Score s;
+   private int lives=3;
+
    public Captain (JFrame w, Level2Player player, Score s) {
       window = w;
 
@@ -41,10 +42,10 @@ public class Captain {
       width = 250;
       height = 250;
 
-      x = window.getWidth()-350;
-      y = window.getHeight()/2-50;
+      x = window.getWidth();
+      y = window.getHeight()-400;
 
-      dx = 0;
+      dx = 5;
       dy = 0;
 
       this.player = player;
@@ -54,7 +55,7 @@ public class Captain {
 
       soundPlayed = false;
 
-      isActive = true;
+      isActive = false;
 
       initialiseAnimations();
 		currentAnim = animations.get("idle");
@@ -78,7 +79,15 @@ public class Captain {
       else
          return 2; //right
    }
+
+   public int getLives() {
+      return lives;
+   }
    
+   public void activate() {
+      isActive=true;
+   }
+
 	public void initialiseAnimations(){
 		animations = new HashMap<>();
 		Animation anim = new Animation(true);
@@ -101,26 +110,6 @@ public class Captain {
       anim.addFrame(ImageManager.loadImage("images/myimages/pirates/captain/attack left/2_entity_000_ATTACK_006.png"), 150);
 		animations.put("attackLeft", anim);
 
-		anim = new Animation(true);
-		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/captain/idle/2_entity_000_IDLE_000.png"), 150);
-		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/captain/idle/2_entity_000_IDLE_001.png"), 150);
-		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/captain/idle/2_entity_000_IDLE_002.png"), 175);
-		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/captain/idle/2_entity_000_IDLE_003.png"), 175);
-		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/captain/idle/2_entity_000_IDLE_004.png"), 125);
-		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/captain/idle/2_entity_000_IDLE_005.png"), 150);
-      anim.addFrame(ImageManager.loadImage("images/myimages/pirates/captain/idle/2_entity_000_IDLE_006.png"), 150);
-		animations.put("idle", anim);
-
-      anim = new Animation(true);
-		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/captain/idle left/2_entity_000_IDLE_000.png"), 150);
-		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/captain/idle left/2_entity_000_IDLE_001.png"), 150);
-		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/captain/idle left/2_entity_000_IDLE_002.png"), 175);
-		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/captain/idle left/2_entity_000_IDLE_003.png"), 175);
-		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/captain/idle left/2_entity_000_IDLE_004.png"), 125);
-		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/captain/idle left/2_entity_000_IDLE_005.png"), 150);
-      anim.addFrame(ImageManager.loadImage("images/myimages/pirates/captain/idle left/2_entity_000_IDLE_006.png"), 150);
-		animations.put("idleLeft", anim);
-
       anim = new Animation(true);
 		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/captain/walk/2_entity_000_WALK_000.png"), 150);
 		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/captain/walk/2_entity_000_WALK_001.png"), 150);
@@ -130,6 +119,16 @@ public class Captain {
 		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/captain/walk/2_entity_000_WALK_005.png"), 150);
       anim.addFrame(ImageManager.loadImage("images/myimages/pirates/captain/walk/2_entity_000_WALK_006.png"), 150);
 		animations.put("walk", anim);
+
+      anim = new Animation(true);
+		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/captain/walk left/2_entity_000_WALK_000.png"), 150);
+		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/captain/walk left/2_entity_000_WALK_001.png"), 150);
+		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/captain/walk left/2_entity_000_WALK_002.png"), 175);
+		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/captain/walk left/2_entity_000_WALK_003.png"), 175);
+		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/captain/walk left/2_entity_000_WALK_004.png"), 125);
+		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/captain/walk left/2_entity_000_WALK_005.png"), 150);
+      anim.addFrame(ImageManager.loadImage("images/myimages/pirates/captain/walk left/2_entity_000_WALK_006.png"), 150);
+		animations.put("walkLeft", anim);
 	}
 
 
@@ -200,13 +199,33 @@ public class Captain {
 
      if (!window.isVisible ()) return;
 
-      if (getDirection()==1) {
-         currentAnim = animations.get("attackLeft");
+     chase();
+
+      if (collidesWithPlayer()) {
+         lives--;
+         if (lives<=0) {
+            isActive=false;
+         }
       }
-         
-      else {
-         currentAnim = animations.get("attack");
-      }
+     else{
+         if (getDirection()==1) {
+            currentAnim = animations.get("walkLeft");
+         }
+         else {
+            currentAnim = animations.get("walk");
+         }
+         if (x<=window.getWidth()-300){
+            x=window.getWidth()-300;
+            if (getDirection()==1) {
+               currentAnim = animations.get("attackLeft");
+            }
+            else {
+               currentAnim = animations.get("attack");
+            }
+         }
+      }   
+
+      
 
       if (bullets.size()!=0){
          for (int i=0; i<bullets.size(); i++) {

@@ -31,6 +31,7 @@ public class BirdPirate {
    boolean isActive;
 
    private Score score;
+   private int lives=3;
 
    public BirdPirate (JFrame w, Level2Player player, Score s) {
       window = w;
@@ -39,10 +40,10 @@ public class BirdPirate {
       width = 150;
       height = 150;
 
-      dx = 2;
+      dx = 5;
       dy = 5;
 
-      x=0;
+      x = window.getWidth()+50;
       y = 200;
 
       this.player = player;
@@ -51,7 +52,7 @@ public class BirdPirate {
 
       soundPlayed = false;
 
-      isActive = true;
+      isActive = false;
 
       initialiseAnimations();
 		currentAnim = animations.get("fly");
@@ -70,6 +71,14 @@ public class BirdPirate {
          return 1; //left
       else
          return 2; //right
+   }
+
+   public int getLives() {
+      return lives;
+   }
+
+   public void activate() {
+      isActive=true;
    }
    
 	public void initialiseAnimations(){
@@ -165,6 +174,10 @@ public class BirdPirate {
      if (!window.isVisible ()) return;
       
       if (collidesWithplayer()) {
+         lives--;
+         if (lives<=0) {
+            isActive=false;
+         }
          if (getDirection()==2) {
             currentAnim = animations.get("attack");
          }

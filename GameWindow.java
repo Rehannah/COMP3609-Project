@@ -203,15 +203,18 @@ public class GameWindow extends JFrame implements
 			if (panel.swordPirate.isActive()) {
 				panel.swordPirate.draw(imageContext);
 			}
-			if (panel.knifePirate.isActive()) {
-				panel.knifePirate.draw(imageContext);
+			else{
+				if (panel.knifePirate.isActive()) {
+					panel.knifePirate.draw(imageContext);
+				}
+				if (panel.bird.isActive()) {
+					panel.bird.draw(imageContext);
+				}
+				if (panel.captain.isActive()) {
+					panel.captain.draw(imageContext);
+				}
 			}
-			if (panel.bird.isActive()) {
-				panel.bird.draw(imageContext);
-			}
-			if (panel.captain.isActive()) {
-				panel.captain.draw(imageContext);
-			}
+			
 
 			// ArrayList<Coconut> coconuts;
 			// coconuts = panel.getCoconuts();
