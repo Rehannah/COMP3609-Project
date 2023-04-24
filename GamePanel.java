@@ -18,8 +18,6 @@ public class GamePanel extends JPanel {
 	public BirdPirate bird;
 	// private ArrayList pirates;
 
-	private Coconut coconut;
-
 	private ArrayList<Coconut> coconuts;
 
 	private JFrame window;		// reference to the JFrame on which player is drawn
@@ -30,16 +28,12 @@ public class GamePanel extends JPanel {
 	
 	public GamePanel (JFrame window, Score s) {
 		this.window = window;
-
-		coconut=null;
-		coconuts=null;
-
 		this.s=s;
 	}
 
 	public void createGameEntities() {
 		coconuts = new ArrayList<Coconut>();
-		player = new Level2Player(window);
+		player = new Level2Player(window, this);
 		swordPirate = new SwordPirate(window, player, s);
 		knifePirate = new KnifePirate(window, player, s);
 		captain = new Captain(window, player, s);
@@ -92,19 +86,20 @@ public class GamePanel extends JPanel {
 	}
 
 	public void throwCoconut(){
-		Coconut c =  new Coconut(window, player);
-		c.activate();
-		coconuts.add(c);
-		// System.out.println("coco active");
+		player.startThrow();
 	}
 
 	public ArrayList<Coconut> getCoconuts() {
 		return coconuts;
 	}
 
-	public Coconut getCoconut() {
-		return coconut;
+	public void addCoconut(Coconut c){
+		if(coconuts!= null){
+			coconuts.add(c);
+		}
+
 	}
+
 
 	public void nextPirate() {
 		if (swordPirate!=null) {
@@ -148,17 +143,12 @@ public class GamePanel extends JPanel {
 			for (int i=0; i<coconuts.size(); i++) {
 				Coconut c = coconuts.get(i);
 				if (c!=null && c.isActive()) {
+					System.out.print(i);
 					c.draw(imageContext);
+
 				}
 			}
 		}
-
-		// Coconut coconut;
-		// coconut = panel.getCoconut();
-		// if (coconut!=null && coconut.isActive()) {
-		// 	coconut.draw(imageContext);
-		// }
-		
 	}
 
 }

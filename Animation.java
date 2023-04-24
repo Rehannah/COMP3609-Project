@@ -85,8 +85,8 @@ public class Animation {
 		}
             }
 
-	    // if (!isActive)
-	    //    return;
+	    if (!isActive)
+	       return;
 
             while (animTime > getFrame(currFrameIndex).endTime) {
                 currFrameIndex++;				// set frame corresponding to time animation has run for

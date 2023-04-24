@@ -435,9 +435,7 @@ public class GameWindow extends JFrame implements
 			}
 			return;
 		}
-
 	}
-
 
 	public void keyReleased (KeyEvent e) {		
 
@@ -456,29 +454,9 @@ public class GameWindow extends JFrame implements
 			}
 			return;
 		}
-
 	}
 
-
-	public void keyTyped (KeyEvent e) {
-
-		// int keyCode = e.getKeyCode();
-		
-		// if (keyCode == KeyEvent.VK_LEFT) {
-		// 	if (level==2) {
-		// 		panel.updatePlayer(1);
-		// 	}
-		// 	return;
-		// }
-		
-		// if (keyCode == KeyEvent.VK_RIGHT) {
-		// 	if (level==2) {
-		// 		panel.updatePlayer(2);
-		// 	}
-		// 	return;
-		// }
-
-	}
+	public void keyTyped (KeyEvent e) {}
 
 
 	// implement methods of MouseListener interface
