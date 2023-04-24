@@ -62,8 +62,6 @@ public class GameWindow extends JFrame implements
 
 	private int level=1;
 
-
-
 	public GameWindow() {
  
 		super("Treasure RecovARRy");
@@ -199,6 +197,10 @@ public class GameWindow extends JFrame implements
 				panel.createGameEntities();
 			}
 
+			if (panel.treasure.isActive()) {
+				panel.treasure.draw(imageContext);
+			}
+
 			if (panel.swordPirate.isActive()) {
 				panel.swordPirate.draw(imageContext);
 			}
@@ -212,8 +214,7 @@ public class GameWindow extends JFrame implements
 				if (panel.captain.isActive()) {
 					panel.captain.draw(imageContext);
 				}
-			}
-			
+			}			
 
 			// ArrayList<Coconut> coconuts;
 			// coconuts = panel.getCoconuts();

@@ -23,6 +23,8 @@ public class GamePanel extends JPanel {
 	private JFrame window;		// reference to the JFrame on which player is drawn
 	
 	private Score s;
+
+	public TreasureAnimation treasure;
 	
 	public GamePanel (JFrame window, Score s) {
 		this.window = window;
@@ -40,6 +42,7 @@ public class GamePanel extends JPanel {
 		knifePirate = new KnifePirate(window, player, s);
 		captain = new Captain(window, player, s);
 		bird = new BirdPirate(window, player, s);
+		treasure = new TreasureAnimation(window, player);
 	}
 
 
@@ -65,6 +68,10 @@ public class GamePanel extends JPanel {
 					coconut.update();
 				}
 			}
+		}
+
+		if (treasure!=null && treasure.isActive()) {
+			treasure.update();
 		}
 
 		nextPirate();
@@ -106,6 +113,10 @@ public class GamePanel extends JPanel {
 			}
 			if (swordPirate.getLives()<=0 && knifePirate.getLives()<=0 && bird.getLives()<=0 && captain.getLives()==3) {
 				captain.activate();
+			}
+
+			if (captain.getLives()<=0) {
+				treasure.activate();
 			}
 		}
 	}
