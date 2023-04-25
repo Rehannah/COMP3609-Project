@@ -159,7 +159,6 @@ public class Coconut {  //Projectile Motion
 		}
 
 		g2.drawImage(coconutImage, x, y, XSIZE, YSIZE, null);
-		System.out.println("draw x "+ x+ " y "+y);
    	}
 
 

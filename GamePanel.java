@@ -57,6 +57,7 @@ public class GamePanel extends JPanel {
 			captain.move();
 		}
 
+		updatePlayer(-1);
 		if (coconuts!=null && coconuts.size()!=0) {
 			for (int i=0; i<coconuts.size(); i++) {
 				Coconut c = coconuts.get(i);
@@ -143,7 +144,6 @@ public class GamePanel extends JPanel {
 			for (int i=0; i<coconuts.size(); i++) {
 				Coconut c = coconuts.get(i);
 				if (c!=null && c.isActive()) {
-					System.out.print(i);
 					c.draw(imageContext);
 
 				}

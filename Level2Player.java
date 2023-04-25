@@ -1,22 +1,16 @@
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import javax.swing.JFrame;
-
-import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
-import java.awt.image.AffineTransformOp;
-import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.awt.Image;
 
 public class Level2Player {
 
 	private static final int DX = 8;	// amount of X pixels to move in one keystroke
-	private static final int DY = 32;	// amount of Y pixels to move in one keystroke
-
+	
 	private JFrame window;		// reference to the JFrame on which player is drawn
 	private GamePanel panel;
-	private BackgroundManager bgManager;
 
 	private int x;			// x-position of player's sprite
 	private int y;			// y-position of player's sprite
@@ -28,7 +22,19 @@ public class Level2Player {
 	private Animation currentAnim;
 	private HashMap<String, Animation> animations;
 
+	private boolean jumping;
+	private boolean goingUp;
+	private boolean goingDown;
+	private boolean inAir;
+	private int initialVelocityX;
+	private int initialVelocityY;
+
 	private int direction;
+	private double timeElapsed;
+	private int startY;
+	private int startX;
+
+	private boolean overBoard;
 
 	public Level2Player (JFrame window) {
 		this.window = window;
@@ -39,6 +45,10 @@ public class Level2Player {
 		currentAnim = animations.get("idle");
 		x = window.getWidth()/4;
 		y = window.getHeight()-400;
+
+		jumping = false;
+		initialVelocityX = 50;
+		initialVelocityY = 70;
 
 		direction=2;
 	}
@@ -53,6 +63,10 @@ public class Level2Player {
 		currentAnim = animations.get("idle");
 		x = window.getWidth()/4;
 		y = window.getHeight()-400;
+		
+		jumping = false;
+		initialVelocityX = 30;
+		initialVelocityY = 50;
 
 		direction=2;
 	}
@@ -86,15 +100,15 @@ public class Level2Player {
 		animations.put("idleLeft", anim);
 
 		anim = new Animation(false);
-		anim.addFrame(ImageManager.loadImage("images/myimages/boy/Throw/1.png"), 75);
-		anim.addFrame(ImageManager.loadImage("images/myimages/boy/Throw/2.png"), 75);
-		anim.addFrame(ImageManager.loadImage("images/myimages/boy/Throw/3.png"), 75);
+		anim.addFrame(ImageManager.loadImage("images/myimages/boy/Throw/1.png"), 100);
+		anim.addFrame(ImageManager.loadImage("images/myimages/boy/Throw/2.png"), 100);
+		anim.addFrame(ImageManager.loadImage("images/myimages/boy/Throw/3.png"), 100);
 		animations.put("throw", anim);
 
 		anim = new Animation(false);
-		anim.addFrame(ImageManager.loadImage("images/myimages/boy/ThrowLeft/1.png"), 75);
-		anim.addFrame(ImageManager.loadImage("images/myimages/boy/ThrowLeft/2.png"), 75);
-		anim.addFrame(ImageManager.loadImage("images/myimages/boy/ThrowLeft/3.png"), 75);
+		anim.addFrame(ImageManager.loadImage("images/myimages/boy/ThrowLeft/1.png"), 100);
+		anim.addFrame(ImageManager.loadImage("images/myimages/boy/ThrowLeft/2.png"), 100);
+		anim.addFrame(ImageManager.loadImage("images/myimages/boy/ThrowLeft/3.png"), 100);
 		animations.put("throwLeft", anim);
 		
 		anim = new Animation(false);
@@ -129,24 +143,33 @@ public class Level2Player {
 	}
 
 	public synchronized void move (int direction) {
-		this.direction=direction;
 
+		if(jumping){
+			updateJumping();
+			return;
+		}
+
+		if(direction == -1)
+			return;
+				
 	    if (!window.isVisible ()) 
 			return;
 			
 
 		if (direction == 1) { //left
+			this.direction=direction;
 			currentAnim = animations.get("runLeft");
 			if(!currentAnim.isStillActive())
 				currentAnim.start();
 
 			x = x - DX;
-			if (x < 290) {			// stuck within the left bounds
-				x = 290;
+			if (x < 70) {			// stuck within the left bounds
+				x = 70;
 			}
 		}
 		else{
 			if (direction == 2) { //right
+				this.direction=direction;
 				currentAnim = animations.get("runRight");
 				if(!currentAnim.isStillActive())
 					currentAnim.start();
@@ -162,13 +185,83 @@ public class Level2Player {
 					currentAnim = animations.get("idleLeft");
 					currentAnim.start();
 				}
-				else if(direction == 4){
-					currentAnim = animations.get("idle");
-					currentAnim.start();
-				}
+				else{
+					if(direction == 4){
+						currentAnim = animations.get("idle");
+						currentAnim.start();
+					}
+					else if(direction == 5){
+						jump();
+					}
+				} 
 			}
 		}
 	}	
+
+	private void jump () { 
+		if(!window.isVisible()) 
+			return;
+
+		if(direction%2 == 0){
+			if(x+292 > dimension.width - getImage().getWidth(null) - 20)	//not enough space to jump
+				return;	
+		}
+		else if(x -292 < 70)
+			return;		//not enough space to jump
+		
+		jumping = true;
+		overBoard = false;
+		if(direction % 2 == 0)
+			currentAnim = animations.get("jump");
+		else
+			currentAnim = animations.get("jumpLeft");
+		currentAnim.start();
+
+		timeElapsed = 0;		
+
+		startY = y;
+		startX = x;
+	}
+
+	private void updateJumping() {
+
+		if (!window.isVisible ()) 
+			return;
+		
+		timeElapsed += 0.5;
+		
+		int oldX = x;
+		int oldY = y;
+		int dx, dy;
+		int playerHeight = getImage().getHeight(null);	 		// below floor; extrapolate to bring player on top of floor.
+      	
+      	dx = (int) (initialVelocityX * timeElapsed);
+		dy = (int) (initialVelocityY * timeElapsed - 4.9 * timeElapsed * timeElapsed);
+
+		y = startY - dy;			// y is the height at which ball is thrown
+      		
+        if (y > window.getHeight() - 200 - playerHeight){// System.out.println ("Y = " + y);
+	    	int amountOver = y - (window.getHeight() - 200 - playerHeight); 
+	    	y = window.getHeight() - 200 - playerHeight;
+	    	// System.out.println ("New Y = " + y);
+            double fractionOver = (amountOver * 1.0) / (y - oldY);
+	    	timeElapsed = timeElapsed - (1 - fractionOver) * 0.5;
+	    	dx = (int) (initialVelocityX * timeElapsed);
+			jumping = false;
+		}
+		
+		if(direction % 2 == 0)
+			x = startX + dx;
+		else
+			x = startX - dx;		
+        
+		timeElapsed = timeElapsed + 0.5;
+		
+		if(!jumping)
+			currentAnim.stop();
+	}
+
+	
 
 	public void startThrow(){
 		if(direction % 2 == 0)
@@ -182,7 +275,6 @@ public class Level2Player {
 	public void draw(Graphics2D g2){
 		
 		Image oldImage = playerImage;
-
 		if(currentAnim != null){
 			if(currentAnim.isStillActive())
 				currentAnim.update();
@@ -203,6 +295,7 @@ public class Level2Player {
 			c.activate();	
 			panel.addCoconut(c);		
 		}
+		
 		g2.drawImage(playerImage, x, y, null);
 	}
 	
@@ -219,193 +312,3 @@ public class Level2Player {
 		return direction;
 	}
 }
-
-
-// import java.awt.Dimension;
-// import java.awt.Graphics2D;
-// import javax.swing.JFrame;
-
-// import java.awt.geom.AffineTransform;
-// import java.awt.geom.Rectangle2D;
-// import java.awt.image.AffineTransformOp;
-// import java.awt.image.BufferedImage;
-// import java.util.HashMap;
-// import java.awt.Image;
-
-// public class Level2Player {
-
-// 	private static final int DX = 8;	// amount of X pixels to move in one keystroke
-// 	private static final int DY = 32;	// amount of Y pixels to move in one keystroke
-
-// 	private JFrame window;		// reference to the JFrame on which player is drawn
-// 	private BackgroundManager bgManager;
-
-// 	private int x;			// x-position of player's sprite
-// 	private int y;			// y-position of player's sprite
-// 	//private int position;
-
-// 	private Graphics2D g2;
-// 	private Dimension dimension;
-
-// 	private Image playerImage;
-// 	private Image idleImage;
-// 	private Animation currentAnim;
-// 	private HashMap<String, Animation> animations;
-
-// 	private int direction;
-
-// 	public Level2Player (JFrame window) {
-// 		this.window = window;
-
-// 		idleImage = ImageManager.loadImage("images/myimages/boy/Idle/1.png");	
-// 		playerImage = idleImage;  
-// 		dimension = window.getSize();
-// 		initialiseAnimations();
-// 		currentAnim = animations.get("idle");
-// 		currentAnim.start();
-// 		x = window.getWidth()/4;
-// 		y = window.getHeight()-400;
-
-// 		direction=2;
-// 	}
-
-// 	public void initialiseAnimations(){
-// 		animations = new HashMap<>();
-// 		Animation anim = new Animation(false);
-// 		anim.addFrame(ImageManager.loadImage("images/myimages/boy/Run/1.png"), 150);
-// 		anim.addFrame(ImageManager.loadImage("images/myimages/boy/Run/2.png"), 150);
-// 		anim.addFrame(ImageManager.loadImage("images/myimages/boy/Run/3.png"), 175);
-// 		anim.addFrame(ImageManager.loadImage("images/myimages/boy/Run/4.png"), 175);
-// 		anim.addFrame(ImageManager.loadImage("images/myimages/boy/Run/5.png"), 125);
-// 		anim.addFrame(ImageManager.loadImage("images/myimages/boy/Run/6.png"), 150);
-// 		animations.put("runRightOnce", anim);
-
-// 		anim = new Animation(true);
-// 		anim.addFrame(ImageManager.loadImage("images/myimages/boy/Run/1.png"), 150);
-// 		anim.addFrame(ImageManager.loadImage("images/myimages/boy/Run/2.png"), 150);
-// 		anim.addFrame(ImageManager.loadImage("images/myimages/boy/Run/3.png"), 175);
-// 		anim.addFrame(ImageManager.loadImage("images/myimages/boy/Run/4.png"), 175);
-// 		anim.addFrame(ImageManager.loadImage("images/myimages/boy/Run/5.png"), 125);
-// 		anim.addFrame(ImageManager.loadImage("images/myimages/boy/Run/6.png"), 150);
-// 		animations.put("runRight", anim);
-		
-// 		anim = new Animation(false);
-// 		anim.addFrame(ImageManager.loadImage("images/myimages/boy/RunLeft/1.png"), 150);
-// 		anim.addFrame(ImageManager.loadImage("images/myimages/boy/RunLeft/2.png"), 150);
-// 		anim.addFrame(ImageManager.loadImage("images/myimages/boy/RunLeft/3.png"), 175);
-// 		anim.addFrame(ImageManager.loadImage("images/myimages/boy/RunLeft/4.png"), 175);
-// 		anim.addFrame(ImageManager.loadImage("images/myimages/boy/RunLeft/5.png"), 125);
-// 		anim.addFrame(ImageManager.loadImage("images/myimages/boy/RunLeft/6.png"), 150);
-// 		animations.put("runLeftOnce", anim);
-
-// 		anim = new Animation(true);
-// 		anim.addFrame(ImageManager.loadImage("images/myimages/boy/RunLeft/1.png"), 150);
-// 		anim.addFrame(ImageManager.loadImage("images/myimages/boy/RunLeft/2.png"), 150);
-// 		anim.addFrame(ImageManager.loadImage("images/myimages/boy/RunLeft/3.png"), 175);
-// 		anim.addFrame(ImageManager.loadImage("images/myimages/boy/RunLeft/4.png"), 175);
-// 		anim.addFrame(ImageManager.loadImage("images/myimages/boy/RunLeft/5.png"), 125);
-// 		anim.addFrame(ImageManager.loadImage("images/myimages/boy/RunLeft/6.png"), 150);
-// 		animations.put("runLeft", anim);
-
-// 		anim = new Animation(false);
-// 		anim.addFrame(ImageManager.loadImage("images/myimages/boy/Throw/1.png"), 50);
-// 		anim.addFrame(ImageManager.loadImage("images/myimages/boy/Throw/2.png"), 75);
-// 		anim.addFrame(ImageManager.loadImage("images/myimages/boy/Throw/3.png"), 50);
-// 		animations.put("throw", anim);
-
-		
-
-// 		anim = new Animation(true);
-// 		anim.addFrame(ImageManager.loadImage("images/myimages/boy/Idle/1.png"), 150);
-// 		animations.put("idle", anim);
-
-// 	}
-
-// 	public int getX() {
-// 		return x;
-// 	}
-
-// 	public int getY() {
-// 		return y;
-// 	}
-
-// 	public Image getImage() {
-// 		return playerImage;
-// 	}
-
-// 	public synchronized void move (int direction) {
-// 		this.direction=direction;
-
-// 	    if (!window.isVisible ()) 
-// 			return;
-
-// 		if(direction == 0){
-// 			currentAnim = animations.get("idle");
-// 			currentAnim.start();
-// 		}
-// 		else{
-// 			if (direction == 1) { //left once
-// 				currentAnim = animations.get("runLeft");				
-// 				currentAnim.start();
-// 				x = x - DX;
-// 				if (x < 290) 		// stuck within the left bounds
-// 					x = 290;
-// 			}
-// 			else{
-// 				if (direction == 2) { //right once 
-// 					currentAnim = animations.get("runRight");
-// 					currentAnim.start();
-// 					x = x + DX;
-// 					if (x > window.getWidth()-getImage().getWidth(null)) 			// stuck within the right bounds
-// 						x = window.getWidth()-getImage().getWidth(null);					
-
-// 				}
-// 				// else{
-// 				// 	if(direction == 3){	//left continuously
-// 				// 		currentAnim = animations.get("runLeft");
-// 				// 		currentAnim.start();
-// 				// 		x = x - DX;
-// 				// 		if (x < 290) 			// stuck within the left bounds
-// 				// 			x = 290;
-// 				// 	}
-// 				// 	else{
-// 				// 		if (direction == 4) { //right continuously 
-// 				// 			currentAnim = animations.get("runRight");
-// 				// 			currentAnim.start();
-// 				// 			x = x + DX;
-// 				// 			if (x > window.getWidth()-getImage().getWidth(null)) 			// stuck within the right bounds
-// 				// 				x = window.getWidth()-getImage().getWidth(null);
-// 				// 		}
-// 				// 	}
-// 				// }
-// 			}
-// 		}
-// 	}	
-
-// 	public void draw(Graphics2D g2){
-// 		g2.drawImage(playerImage, x, y, null);
-		
-// 		if(currentAnim != null){
-// 			if(currentAnim.isStillActive())
-// 				currentAnim.update();
-// 			else{
-// 				currentAnim = animations.get("idle");
-// 				currentAnim.start();
-// 			}
-// 			playerImage = currentAnim.getImage();
-// 		}
-// 	}
-	
-// 	public boolean collidesWithPlayer (int x, int y) {
-// 		Rectangle2D.Double myRectangle = getBoundingRectangle();
-// 		return myRectangle.contains(x, y);
-// 	}
-
-// 	public Rectangle2D.Double getBoundingRectangle() {
-// 		return new Rectangle2D.Double (x, y, playerImage.getWidth(null), playerImage.getHeight(null));
-// 	}	
-
-// 	public int getDirection() {
-// 		return direction;
-// 	}
-// }

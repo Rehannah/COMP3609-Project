@@ -204,7 +204,7 @@ public class GameWindow extends JFrame implements
 	private void drawScore(Graphics2D g) {
 
 		Font oldFont, newFont;
-		int leftOffset = pWidth - 425;
+		int leftOffset = pWidth - 375;
 
 		oldFont = g.getFont();		// save current font to restore when finished
 	
