@@ -43,18 +43,25 @@ public class GamePanel extends JPanel {
 
 
 	public void gameUpdate() {
+
+		ArrayList<Pirate> pirates = new ArrayList<>(4);
+
 		if (swordPirate!=null && swordPirate.isActive()) {
 			swordPirate.move();
+			pirates.add(swordPirate);
 		}
 
 		if (knifePirate !=null && knifePirate.isActive()) {
 			knifePirate.move();
+			pirates.add(knifePirate);
 		}
 		if (bird!=null && bird.isActive) {
 			bird.move();
+			pirates.add(bird);
 		}
 		if (captain !=null && captain.isActive) {
 			captain.move();
+			pirates.add(captain);
 		}
 
 		updatePlayer(-1);
@@ -63,6 +70,8 @@ public class GamePanel extends JPanel {
 				Coconut c = coconuts.get(i);
 				if (c.isActive()) {
 					c.update();
+					if(c.collidesWithPirate(pirates))
+						s.increasePoints();
 				}
 			}
 		}
@@ -100,7 +109,6 @@ public class GamePanel extends JPanel {
 		}
 
 	}
-
 
 	public void nextPirate() {
 		if (swordPirate!=null) {

@@ -5,7 +5,7 @@ import java.awt.Image;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Captain {
+public class Captain implements Pirate{
 
    private JFrame window;
 

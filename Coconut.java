@@ -1,11 +1,8 @@
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.geom.Rectangle2D;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.HashMap;
-
-import javax.lang.model.util.ElementScanner6;
 import javax.swing.JFrame;
 import java.awt.Dimension;
 
@@ -32,6 +29,7 @@ public class Coconut {  //Projectile Motion
     private Animation currentAnim;
 	private HashMap<String, Animation> animations;
 	private int direction;
+	private boolean collision;
 
 	public Coconut (JFrame w, Level2Player player) {
         window = w;
@@ -116,6 +114,12 @@ public class Coconut {  //Projectile Motion
 
       	if (!window.isVisible ()) return;
 
+		if(collision){
+			collision = false;
+			deActivate();
+			return;
+		}
+
       	dx = (int) (initialVelocityX * timeElapsed);
 		dy = (int) (initialVelocityY * timeElapsed - 4.9 * timeElapsed * timeElapsed);
 
@@ -163,19 +167,22 @@ public class Coconut {  //Projectile Motion
 
 
 	public Rectangle2D.Double getBoundingRectangle() {
-		return new Rectangle2D.Double (x, y, XSIZE, YSIZE);
+		Rectangle2D.Double rect = new Rectangle2D.Double (x, y, XSIZE, YSIZE);
+		// System.out.println("coco"+rect);
+		return rect;
 	}	
 
-    // public boolean collidesWithPirate() {
-    //     boolean collidesWith = false;
-    //     Rectangle2D.Double myRect = getBoundingRectangle();
+    public boolean collidesWithPirate(ArrayList<Pirate> pirates) {        
 
-    //     for (int i=0;i<=pirates.size();i++) {
-    //         Object pirate = pirates.get(i);
-    //         Rectangle2D.Double pirateRect = pirate.getBoundingRectangle();
-    //     }
-        
-    //     if (myRect.intersects(coconutRect) || myRect.intersects(coconutRect); 
-    // }
+        for (int i=0;i<pirates.size();i++) {
+            Pirate pirate = pirates.get(i);				
+			if (getBoundingRectangle().intersects(pirate.getBoundingRectangle())){
+				collision = true;
+				//pirate.decreaseLives
+				return true;
+			}
+		}
+		return false;
+    }
 
 }

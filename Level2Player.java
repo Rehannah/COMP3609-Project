@@ -23,9 +23,6 @@ public class Level2Player {
 	private HashMap<String, Animation> animations;
 
 	private boolean jumping;
-	private boolean goingUp;
-	private boolean goingDown;
-	private boolean inAir;
 	private int initialVelocityX;
 	private int initialVelocityY;
 
@@ -33,8 +30,6 @@ public class Level2Player {
 	private double timeElapsed;
 	private int startY;
 	private int startX;
-
-	private boolean overBoard;
 
 	public Level2Player (JFrame window) {
 		this.window = window;
@@ -47,8 +42,8 @@ public class Level2Player {
 		y = window.getHeight()-400;
 
 		jumping = false;
-		initialVelocityX = 50;
-		initialVelocityY = 70;
+		initialVelocityX = 30;
+		initialVelocityY = 75;
 
 		direction=2;
 	}
@@ -66,7 +61,7 @@ public class Level2Player {
 		
 		jumping = false;
 		initialVelocityX = 30;
-		initialVelocityY = 50;
+		initialVelocityY = 75;
 
 		direction=2;
 	}
@@ -111,22 +106,37 @@ public class Level2Player {
 		anim.addFrame(ImageManager.loadImage("images/myimages/boy/ThrowLeft/3.png"), 100);
 		animations.put("throwLeft", anim);
 		
+		// anim = new Animation(false);
+		// anim.addFrame(ImageManager.loadImage("images/myimages/boy/Jump/1.png"), 50);
+		// anim.addFrame(ImageManager.loadImage("images/myimages/boy/Jump/2.png"), 300);
+		// anim.addFrame(ImageManager.loadImage("images/myimages/boy/Jump/3.png"), 300);
+		// anim.addFrame(ImageManager.loadImage("images/myimages/boy/Jump/4.png"), 300);
+		// anim.addFrame(ImageManager.loadImage("images/myimages/boy/Jump/5.png"), 150);
+		// anim.addFrame(ImageManager.loadImage("images/myimages/boy/Jump/6.png"), 100);
+		// animations.put("jump", anim);
 		anim = new Animation(false);
-		anim.addFrame(ImageManager.loadImage("images/myimages/boy/Jump/1.png"), 50);
-		anim.addFrame(ImageManager.loadImage("images/myimages/boy/Jump/2.png"), 300);
-		anim.addFrame(ImageManager.loadImage("images/myimages/boy/Jump/3.png"), 300);
-		anim.addFrame(ImageManager.loadImage("images/myimages/boy/Jump/4.png"), 300);
-		anim.addFrame(ImageManager.loadImage("images/myimages/boy/Jump/5.png"), 150);
-		anim.addFrame(ImageManager.loadImage("images/myimages/boy/Jump/6.png"), 100);
+		anim.addFrame(ImageManager.loadImage("images/myimages/boy/Jump/2.png"), 160);
+		anim.addFrame(ImageManager.loadImage("images/myimages/boy/Jump/3.png"), 160);
+		anim.addFrame(ImageManager.loadImage("images/myimages/boy/Jump/4.png"), 160);
+		anim.addFrame(ImageManager.loadImage("images/myimages/boy/Jump/5.png"), 160);
+		//anim.addFrame(ImageManager.loadImage("images/myimages/boy/Jump/6.png"), 100);
 		animations.put("jump", anim);
 
+		// anim = new Animation(false);
+		// anim.addFrame(ImageManager.loadImage("images/myimages/boy/JumpLeft/1.png"), 50);
+		// anim.addFrame(ImageManager.loadImage("images/myimages/boy/JumpLeft/2.png"), 300);
+		// anim.addFrame(ImageManager.loadImage("images/myimages/boy/JumpLeft/3.png"), 300);
+		// anim.addFrame(ImageManager.loadImage("images/myimages/boy/JumpLeft/4.png"), 300);
+		// anim.addFrame(ImageManager.loadImage("images/myimages/boy/JumpLeft/5.png"), 150);
+		// anim.addFrame(ImageManager.loadImage("images/myimages/boy/JumpLeft/6.png"), 100);
+		// animations.put("jumpLeft", anim);
+
 		anim = new Animation(false);
-		anim.addFrame(ImageManager.loadImage("images/myimages/boy/JumpLeft/1.png"), 50);
-		anim.addFrame(ImageManager.loadImage("images/myimages/boy/JumpLeft/2.png"), 300);
-		anim.addFrame(ImageManager.loadImage("images/myimages/boy/JumpLeft/3.png"), 300);
-		anim.addFrame(ImageManager.loadImage("images/myimages/boy/JumpLeft/4.png"), 300);
-		anim.addFrame(ImageManager.loadImage("images/myimages/boy/JumpLeft/5.png"), 150);
-		anim.addFrame(ImageManager.loadImage("images/myimages/boy/JumpLeft/6.png"), 100);
+		anim.addFrame(ImageManager.loadImage("images/myimages/boy/JumpLeft/2.png"), 160);
+		anim.addFrame(ImageManager.loadImage("images/myimages/boy/JumpLeft/3.png"), 160);
+		anim.addFrame(ImageManager.loadImage("images/myimages/boy/JumpLeft/4.png"), 160);
+		anim.addFrame(ImageManager.loadImage("images/myimages/boy/JumpLeft/5.png"), 160);
+		//anim.addFrame(ImageManager.loadImage("images/myimages/boy/Jump/6.png"), 100);
 		animations.put("jumpLeft", anim);
 	}
 
@@ -210,7 +220,6 @@ public class Level2Player {
 			return;		//not enough space to jump
 		
 		jumping = true;
-		overBoard = false;
 		if(direction % 2 == 0)
 			currentAnim = animations.get("jump");
 		else

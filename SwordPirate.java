@@ -4,7 +4,7 @@ import javax.swing.JFrame;
 import java.awt.Image;
 import java.util.HashMap;
 
-public class SwordPirate {
+public class SwordPirate implements Pirate{
 
    private JFrame window;
 

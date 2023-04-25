@@ -6,7 +6,7 @@ import javax.swing.JFrame;
 import java.awt.Image;
 import java.util.HashMap;
 
-public class BirdPirate {
+public class BirdPirate implements Pirate{
 
    private JFrame window;
 
@@ -210,6 +210,12 @@ public class BirdPirate {
       Rectangle2D.Double playerRect = player.getBoundingRectangle();
       
       return myRect.intersects(playerRect); 
+   }
+
+   @Override
+   public boolean collidesWithPlayer() {
+      // TODO Auto-generated method stub
+      throw new UnsupportedOperationException("Unimplemented method 'collidesWithPlayer'");
    }
 
 }
