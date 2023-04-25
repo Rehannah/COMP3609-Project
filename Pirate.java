@@ -8,4 +8,5 @@ public interface Pirate {
    public void move();
    public Rectangle2D.Double getBoundingRectangle();
    public boolean collidesWithPlayer();
+   public void decreaseLives();
 }

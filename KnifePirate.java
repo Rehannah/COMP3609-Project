@@ -54,18 +54,16 @@ public class KnifePirate implements Pirate{
       dy = 0;
 
       this.player = player;
-
-      pirateImage = ImageManager.loadImage ("images/myimages/pirates/knife/idle/3_3-PIRATE_IDLE_000.png").getScaledInstance(-1, height, BufferedImage.SCALE_DEFAULT);
+      pirateImage = ImageManager.loadImage ("images/pirates/knife/idle/3_3-PIRATE_IDLE_000.png").getScaledInstance(-1, height, BufferedImage.SCALE_DEFAULT);
       soundManager = SoundManager.getInstance();
+      
       xFracLeft = 659.0/1324;
       xFracRight = 280.0/1324;
       yFrac = 280.0/1253;
       widthFrac = 385.0/1324;
       heightFrac = 840.0/1253;
       
-
       soundPlayed = false;
-
       isActive = false;
 
       initialiseAnimations();
@@ -94,53 +92,53 @@ public class KnifePirate implements Pirate{
 	public void initialiseAnimations(){
 		animations = new HashMap<>();
 		Animation anim = new Animation(true);
-		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/knife/attack/3_3-PIRATE_ATTACK_000.png").getScaledInstance(-1, height, BufferedImage.SCALE_DEFAULT), 150);
-		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/knife/attack/3_3-PIRATE_ATTACK_001.png").getScaledInstance(-1, height, BufferedImage.SCALE_DEFAULT), 150);
-		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/knife/attack/3_3-PIRATE_ATTACK_002.png").getScaledInstance(-1, height, BufferedImage.SCALE_DEFAULT), 175);
-		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/knife/attack/3_3-PIRATE_ATTACK_003.png").getScaledInstance(-1, height, BufferedImage.SCALE_DEFAULT), 175);
-		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/knife/attack/3_3-PIRATE_ATTACK_004.png").getScaledInstance(-1, height, BufferedImage.SCALE_DEFAULT), 125);
-		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/knife/attack/3_3-PIRATE_ATTACK_005.png").getScaledInstance(-1, height, BufferedImage.SCALE_DEFAULT), 150);
-      anim.addFrame(ImageManager.loadImage("images/myimages/pirates/knife/attack/3_3-PIRATE_ATTACK_006.png").getScaledInstance(-1, height, BufferedImage.SCALE_DEFAULT), 150);
+		anim.addFrame(ImageManager.loadImage("images/pirates/knife/attack/3_3-PIRATE_ATTACK_000.png").getScaledInstance(-1, height, BufferedImage.SCALE_DEFAULT), 150);
+		anim.addFrame(ImageManager.loadImage("images/pirates/knife/attack/3_3-PIRATE_ATTACK_001.png").getScaledInstance(-1, height, BufferedImage.SCALE_DEFAULT), 150);
+		anim.addFrame(ImageManager.loadImage("images/pirates/knife/attack/3_3-PIRATE_ATTACK_002.png").getScaledInstance(-1, height, BufferedImage.SCALE_DEFAULT), 175);
+		anim.addFrame(ImageManager.loadImage("images/pirates/knife/attack/3_3-PIRATE_ATTACK_003.png").getScaledInstance(-1, height, BufferedImage.SCALE_DEFAULT), 175);
+		anim.addFrame(ImageManager.loadImage("images/pirates/knife/attack/3_3-PIRATE_ATTACK_004.png").getScaledInstance(-1, height, BufferedImage.SCALE_DEFAULT), 125);
+		anim.addFrame(ImageManager.loadImage("images/pirates/knife/attack/3_3-PIRATE_ATTACK_005.png").getScaledInstance(-1, height, BufferedImage.SCALE_DEFAULT), 150);
+      anim.addFrame(ImageManager.loadImage("images/pirates/knife/attack/3_3-PIRATE_ATTACK_006.png").getScaledInstance(-1, height, BufferedImage.SCALE_DEFAULT), 150);
 		animations.put("attack", anim);
 
       anim = new Animation(true);
-		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/knife/attack left/3_3-PIRATE_ATTACK_000.png").getScaledInstance(-1, height, BufferedImage.SCALE_DEFAULT), 150);
-		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/knife/attack left/3_3-PIRATE_ATTACK_001.png").getScaledInstance(-1, height, BufferedImage.SCALE_DEFAULT), 150);
-		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/knife/attack left/3_3-PIRATE_ATTACK_002.png").getScaledInstance(-1, height, BufferedImage.SCALE_DEFAULT), 175);
-		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/knife/attack left/3_3-PIRATE_ATTACK_003.png").getScaledInstance(-1, height, BufferedImage.SCALE_DEFAULT), 175);
-		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/knife/attack left/3_3-PIRATE_ATTACK_004.png").getScaledInstance(-1, height, BufferedImage.SCALE_DEFAULT), 125);
-		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/knife/attack left/3_3-PIRATE_ATTACK_005.png").getScaledInstance(-1, height, BufferedImage.SCALE_DEFAULT), 150);
-      anim.addFrame(ImageManager.loadImage("images/myimages/pirates/knife/attack left/3_3-PIRATE_ATTACK_006.png").getScaledInstance(-1, height, BufferedImage.SCALE_DEFAULT), 150);
+		anim.addFrame(ImageManager.loadImage("images/pirates/knife/attack left/3_3-PIRATE_ATTACK_000.png").getScaledInstance(-1, height, BufferedImage.SCALE_DEFAULT), 150);
+		anim.addFrame(ImageManager.loadImage("images/pirates/knife/attack left/3_3-PIRATE_ATTACK_001.png").getScaledInstance(-1, height, BufferedImage.SCALE_DEFAULT), 150);
+		anim.addFrame(ImageManager.loadImage("images/pirates/knife/attack left/3_3-PIRATE_ATTACK_002.png").getScaledInstance(-1, height, BufferedImage.SCALE_DEFAULT), 175);
+		anim.addFrame(ImageManager.loadImage("images/pirates/knife/attack left/3_3-PIRATE_ATTACK_003.png").getScaledInstance(-1, height, BufferedImage.SCALE_DEFAULT), 175);
+		anim.addFrame(ImageManager.loadImage("images/pirates/knife/attack left/3_3-PIRATE_ATTACK_004.png").getScaledInstance(-1, height, BufferedImage.SCALE_DEFAULT), 125);
+		anim.addFrame(ImageManager.loadImage("images/pirates/knife/attack left/3_3-PIRATE_ATTACK_005.png").getScaledInstance(-1, height, BufferedImage.SCALE_DEFAULT), 150);
+      anim.addFrame(ImageManager.loadImage("images/pirates/knife/attack left/3_3-PIRATE_ATTACK_006.png").getScaledInstance(-1, height, BufferedImage.SCALE_DEFAULT), 150);
 		animations.put("attackLeft", anim);
 
       anim = new Animation(true);
-		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/knife/walk/3_3-PIRATE_WALK_000.png").getScaledInstance(-1, height, BufferedImage.SCALE_DEFAULT), 150);
-		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/knife/walk/3_3-PIRATE_WALK_001.png").getScaledInstance(-1, height, BufferedImage.SCALE_DEFAULT), 150);
-		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/knife/walk/3_3-PIRATE_WALK_002.png").getScaledInstance(-1, height, BufferedImage.SCALE_DEFAULT), 175);
-		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/knife/walk/3_3-PIRATE_WALK_003.png").getScaledInstance(-1, height, BufferedImage.SCALE_DEFAULT), 175);
-		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/knife/walk/3_3-PIRATE_WALK_004.png").getScaledInstance(-1, height, BufferedImage.SCALE_DEFAULT), 125);
-		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/knife/walk/3_3-PIRATE_WALK_005.png").getScaledInstance(-1, height, BufferedImage.SCALE_DEFAULT), 150);
-      anim.addFrame(ImageManager.loadImage("images/myimages/pirates/knife/walk/3_3-PIRATE_WALK_006.png").getScaledInstance(-1, height, BufferedImage.SCALE_DEFAULT), 150);
+		anim.addFrame(ImageManager.loadImage("images/pirates/knife/walk/3_3-PIRATE_WALK_000.png").getScaledInstance(-1, height, BufferedImage.SCALE_DEFAULT), 150);
+		anim.addFrame(ImageManager.loadImage("images/pirates/knife/walk/3_3-PIRATE_WALK_001.png").getScaledInstance(-1, height, BufferedImage.SCALE_DEFAULT), 150);
+		anim.addFrame(ImageManager.loadImage("images/pirates/knife/walk/3_3-PIRATE_WALK_002.png").getScaledInstance(-1, height, BufferedImage.SCALE_DEFAULT), 175);
+		anim.addFrame(ImageManager.loadImage("images/pirates/knife/walk/3_3-PIRATE_WALK_003.png").getScaledInstance(-1, height, BufferedImage.SCALE_DEFAULT), 175);
+		anim.addFrame(ImageManager.loadImage("images/pirates/knife/walk/3_3-PIRATE_WALK_004.png").getScaledInstance(-1, height, BufferedImage.SCALE_DEFAULT), 125);
+		anim.addFrame(ImageManager.loadImage("images/pirates/knife/walk/3_3-PIRATE_WALK_005.png").getScaledInstance(-1, height, BufferedImage.SCALE_DEFAULT), 150);
+      anim.addFrame(ImageManager.loadImage("images/pirates/knife/walk/3_3-PIRATE_WALK_006.png").getScaledInstance(-1, height, BufferedImage.SCALE_DEFAULT), 150);
 		animations.put("walk", anim);
 
       anim = new Animation(true);
-		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/knife/walk left/3_3-PIRATE_WALK_000.png").getScaledInstance(-1, height, BufferedImage.SCALE_DEFAULT), 150);
-		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/knife/walk left/3_3-PIRATE_WALK_001.png").getScaledInstance(-1, height, BufferedImage.SCALE_DEFAULT), 150);
-		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/knife/walk left/3_3-PIRATE_WALK_002.png").getScaledInstance(-1, height, BufferedImage.SCALE_DEFAULT), 175);
-		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/knife/walk left/3_3-PIRATE_WALK_003.png").getScaledInstance(-1, height, BufferedImage.SCALE_DEFAULT), 175);
-		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/knife/walk left/3_3-PIRATE_WALK_004.png").getScaledInstance(-1, height, BufferedImage.SCALE_DEFAULT), 125);
-		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/knife/walk left/3_3-PIRATE_WALK_005.png").getScaledInstance(-1, height, BufferedImage.SCALE_DEFAULT), 150);
-      anim.addFrame(ImageManager.loadImage("images/myimages/pirates/knife/walk left/3_3-PIRATE_WALK_006.png").getScaledInstance(-1, height, BufferedImage.SCALE_DEFAULT), 150);
+		anim.addFrame(ImageManager.loadImage("images/pirates/knife/walk left/3_3-PIRATE_WALK_000.png").getScaledInstance(-1, height, BufferedImage.SCALE_DEFAULT), 150);
+		anim.addFrame(ImageManager.loadImage("images/pirates/knife/walk left/3_3-PIRATE_WALK_001.png").getScaledInstance(-1, height, BufferedImage.SCALE_DEFAULT), 150);
+		anim.addFrame(ImageManager.loadImage("images/pirates/knife/walk left/3_3-PIRATE_WALK_002.png").getScaledInstance(-1, height, BufferedImage.SCALE_DEFAULT), 175);
+		anim.addFrame(ImageManager.loadImage("images/pirates/knife/walk left/3_3-PIRATE_WALK_003.png").getScaledInstance(-1, height, BufferedImage.SCALE_DEFAULT), 175);
+		anim.addFrame(ImageManager.loadImage("images/pirates/knife/walk left/3_3-PIRATE_WALK_004.png").getScaledInstance(-1, height, BufferedImage.SCALE_DEFAULT), 125);
+		anim.addFrame(ImageManager.loadImage("images/pirates/knife/walk left/3_3-PIRATE_WALK_005.png").getScaledInstance(-1, height, BufferedImage.SCALE_DEFAULT), 150);
+      anim.addFrame(ImageManager.loadImage("images/pirates/knife/walk left/3_3-PIRATE_WALK_006.png").getScaledInstance(-1, height, BufferedImage.SCALE_DEFAULT), 150);
 		animations.put("walkLeft", anim);
 
       anim = new Animation(true);
-		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/knife/idle left/3_3-PIRATE_IDLE_000.png").getScaledInstance(-1, height, BufferedImage.SCALE_DEFAULT), 150);
-		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/knife/idle left/3_3-PIRATE_IDLE_001.png").getScaledInstance(-1, height, BufferedImage.SCALE_DEFAULT), 150);
-		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/knife/idle left/3_3-PIRATE_IDLE_002.png").getScaledInstance(-1, height, BufferedImage.SCALE_DEFAULT), 175);
-		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/knife/idle left/3_3-PIRATE_IDLE_003.png").getScaledInstance(-1, height, BufferedImage.SCALE_DEFAULT), 175);
-		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/knife/idle left/3_3-PIRATE_IDLE_004.png").getScaledInstance(-1, height, BufferedImage.SCALE_DEFAULT), 125);
-		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/knife/idle left/3_3-PIRATE_IDLE_005.png").getScaledInstance(-1, height, BufferedImage.SCALE_DEFAULT), 150);
-      anim.addFrame(ImageManager.loadImage("images/myimages/pirates/knife/idle left/3_3-PIRATE_IDLE_006.png").getScaledInstance(-1, height, BufferedImage.SCALE_DEFAULT), 150);
+		anim.addFrame(ImageManager.loadImage("images/pirates/knife/idle left/3_3-PIRATE_IDLE_000.png").getScaledInstance(-1, height, BufferedImage.SCALE_DEFAULT), 150);
+		anim.addFrame(ImageManager.loadImage("images/pirates/knife/idle left/3_3-PIRATE_IDLE_001.png").getScaledInstance(-1, height, BufferedImage.SCALE_DEFAULT), 150);
+		anim.addFrame(ImageManager.loadImage("images/pirates/knife/idle left/3_3-PIRATE_IDLE_002.png").getScaledInstance(-1, height, BufferedImage.SCALE_DEFAULT), 175);
+		anim.addFrame(ImageManager.loadImage("images/pirates/knife/idle left/3_3-PIRATE_IDLE_003.png").getScaledInstance(-1, height, BufferedImage.SCALE_DEFAULT), 175);
+		anim.addFrame(ImageManager.loadImage("images/pirates/knife/idle left/3_3-PIRATE_IDLE_004.png").getScaledInstance(-1, height, BufferedImage.SCALE_DEFAULT), 125);
+		anim.addFrame(ImageManager.loadImage("images/pirates/knife/idle left/3_3-PIRATE_IDLE_005.png").getScaledInstance(-1, height, BufferedImage.SCALE_DEFAULT), 150);
+      anim.addFrame(ImageManager.loadImage("images/pirates/knife/idle left/3_3-PIRATE_IDLE_006.png").getScaledInstance(-1, height, BufferedImage.SCALE_DEFAULT), 150);
 		animations.put("idleLeft", anim);
 	}
 
@@ -185,18 +183,18 @@ public class KnifePirate implements Pirate{
      chase();
 
       if (collidesWithPlayer()) {
-         lives--;
-         if (lives<=0) {
-            isActive=false;
-         }
+         //lives--;
+         // if (lives<=0) {
+         //    isActive=false;
+         // }
          if (getDirection()==1) {
             currentAnim = animations.get("attackLeft");
          }
          else {
             currentAnim = animations.get("attack");
          }
-         Image imageLeft = ImageManager.loadImage("images/myimages/pirates/knife/attack left/3_3-PIRATE_ATTACK_005.png");
-         Image imageRight = ImageManager.loadImage("images/myimages/pirates/knife/attack/3_3-PIRATE_ATTACK_005.png");
+         Image imageLeft = ImageManager.loadImage("images/pirates/knife/attack left/3_3-PIRATE_ATTACK_005.png");
+         Image imageRight = ImageManager.loadImage("images/pirates/knife/attack/3_3-PIRATE_ATTACK_005.png");
          if (pirateImage ==imageLeft || pirateImage ==imageRight)
             score.decreaseLives();
       }
@@ -210,21 +208,19 @@ public class KnifePirate implements Pirate{
       }   
    }
 
+   public void decreaseLives(){
+      lives--;
+      if (lives<=0) {
+         isActive=false;
+      }
+   }
 
    public Rectangle2D.Double getBoundingRectangle() {
       int width = pirateImage.getWidth(null);
-         if(getDirection() == 1){
-
-            Rectangle2D.Double rect = new Rectangle2D.Double (x+xFracLeft*width, y+yFrac*height, widthFrac*width, heightFrac*height);
-            // System.out.println("pirate"+rect);
-            return rect;
-         }
-         else{
-            Rectangle2D.Double rect = new Rectangle2D.Double (x+xFracRight*width, y+yFrac*height, widthFrac*width, heightFrac*height);
-            // System.out.println("pirate"+rect);
-            return rect; 
-         }
-            
+         if(getDirection() == 1)
+            return new Rectangle2D.Double (x+xFracLeft*width, y+yFrac*height, widthFrac*width, heightFrac*height);
+         else
+            return new Rectangle2D.Double (x+xFracRight*width, y+yFrac*height, widthFrac*width, heightFrac*height);
    }
 
    

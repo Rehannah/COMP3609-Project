@@ -85,22 +85,22 @@ public class BirdPirate implements Pirate{
 		animations = new HashMap<>();
 		Animation anim = new Animation(true);
       
-		Image stripImage = ImageManager.loadImage("images/myimages/pirates/bird/Little Bird Fly Forward.png");
+		Image stripImage = ImageManager.loadImage("images/pirates/bird/Little Bird Fly Forward.png");
 		anim = stripAnimation(stripImage, anim, 4);
 		animations.put("fly", anim);
 
       anim = new Animation(true);
-      stripImage = ImageManager.loadImage("images/myimages/pirates/bird/Little Bird Fly Forward Left.png");
+      stripImage = ImageManager.loadImage("images/pirates/bird/Little Bird Fly Forward Left.png");
 		anim = stripAnimation(stripImage, anim, 4);
 		animations.put("flyLeft", anim);
 
       anim = new Animation(true);
-      stripImage = ImageManager.loadImage("images/myimages/pirates/bird/Little Bird Light Attack.png");
+      stripImage = ImageManager.loadImage("images/pirates/bird/Little Bird Light Attack.png");
       anim = stripAnimation(stripImage, anim, 6);
       animations.put("attack", anim);
 
       anim = new Animation(true);
-      stripImage = ImageManager.loadImage("images/myimages/pirates/bird/Little Bird Light Attack Left.png");
+      stripImage = ImageManager.loadImage("images/pirates/bird/Little Bird Light Attack Left.png");
       anim = stripAnimation(stripImage, anim, 6);
       animations.put("attackLeft", anim);
 	}
@@ -173,7 +173,7 @@ public class BirdPirate implements Pirate{
 
      if (!window.isVisible ()) return;
       
-      if (collidesWithplayer()) {
+      if (collidesWithPlayer()) {
          lives--;
          if (lives<=0) {
             isActive=false;
@@ -184,8 +184,8 @@ public class BirdPirate implements Pirate{
          else{
             currentAnim = animations.get("attackLeft");
          }
-         Image imageLeft = ImageManager.loadImage("images/myimages/pirates/bird/Little Bird Light Attack Left.png");
-         Image imageRight = ImageManager.loadImage("images/myimages/pirates/bird/Little Bird Light Attack.png");
+         Image imageLeft = ImageManager.loadImage("images/pirates/bird/Little Bird Light Attack Left.png");
+         Image imageRight = ImageManager.loadImage("images/pirates/bird/Little Bird Light Attack.png");
          if (pirateImage ==imageLeft || pirateImage ==imageRight)
             score.decreaseLives();
       }
@@ -200,22 +200,25 @@ public class BirdPirate implements Pirate{
       }
    }
 
+   public void decreaseLives(){
+      lives--;
+      if (lives<=0) {
+         isActive=false;
+      }
+   }
+
    public Rectangle2D.Double getBoundingRectangle() {
       return new Rectangle2D.Double (x, y, width, height);
    }
 
+   public Rectangle2D.Double getAttackingRectangle() {
+      return new Rectangle2D.Double (x, y, width, height);
+   }
    
-   public boolean collidesWithplayer() {
+   public boolean collidesWithPlayer() {
       Rectangle2D.Double myRect = getBoundingRectangle();
       Rectangle2D.Double playerRect = player.getBoundingRectangle();
       
       return myRect.intersects(playerRect); 
    }
-
-   @Override
-   public boolean collidesWithPlayer() {
-      // TODO Auto-generated method stub
-      throw new UnsupportedOperationException("Unimplemented method 'collidesWithPlayer'");
-   }
-
 }

@@ -34,7 +34,7 @@ public class Level2Player {
 	public Level2Player (JFrame window) {
 		this.window = window;
 
-		playerImage = ImageManager.loadImage("images/myimages/boy/Idle/1.png");	  
+		playerImage = ImageManager.loadImage("images/boy/Idle/1.png");	  
 		dimension = window.getSize();
 		initialiseAnimations();
 		currentAnim = animations.get("idle");
@@ -52,7 +52,7 @@ public class Level2Player {
 		this.window = window;
 		panel = p;
 
-		playerImage = ImageManager.loadImage("images/myimages/boy/Idle/1.png");	  
+		playerImage = ImageManager.loadImage("images/boy/Idle/1.png");	  
 		dimension = window.getSize();
 		initialiseAnimations();
 		currentAnim = animations.get("idle");
@@ -69,74 +69,74 @@ public class Level2Player {
 	public void initialiseAnimations(){
 		animations = new HashMap<>();
 		Animation anim = new Animation(true);
-		anim.addFrame(ImageManager.loadImage("images/myimages/boy/Run/1.png"), 150);
-		anim.addFrame(ImageManager.loadImage("images/myimages/boy/Run/2.png"), 150);
-		anim.addFrame(ImageManager.loadImage("images/myimages/boy/Run/3.png"), 175);
-		anim.addFrame(ImageManager.loadImage("images/myimages/boy/Run/4.png"), 175);
-		anim.addFrame(ImageManager.loadImage("images/myimages/boy/Run/5.png"), 125);
-		anim.addFrame(ImageManager.loadImage("images/myimages/boy/Run/6.png"), 150);
+		anim.addFrame(ImageManager.loadImage("images/boy/Run/1.png"), 150);
+		anim.addFrame(ImageManager.loadImage("images/boy/Run/2.png"), 150);
+		anim.addFrame(ImageManager.loadImage("images/boy/Run/3.png"), 175);
+		anim.addFrame(ImageManager.loadImage("images/boy/Run/4.png"), 175);
+		anim.addFrame(ImageManager.loadImage("images/boy/Run/5.png"), 125);
+		anim.addFrame(ImageManager.loadImage("images/boy/Run/6.png"), 150);
 		animations.put("runRight", anim);
 		
 		anim = new Animation(true);
-		anim.addFrame(ImageManager.loadImage("images/myimages/boy/RunLeft/1.png"), 150);
-		anim.addFrame(ImageManager.loadImage("images/myimages/boy/RunLeft/2.png"), 150);
-		anim.addFrame(ImageManager.loadImage("images/myimages/boy/RunLeft/3.png"), 175);
-		anim.addFrame(ImageManager.loadImage("images/myimages/boy/RunLeft/4.png"), 175);
-		anim.addFrame(ImageManager.loadImage("images/myimages/boy/RunLeft/5.png"), 125);
-		anim.addFrame(ImageManager.loadImage("images/myimages/boy/RunLeft/6.png"), 150);
+		anim.addFrame(ImageManager.loadImage("images/boy/RunLeft/1.png"), 150);
+		anim.addFrame(ImageManager.loadImage("images/boy/RunLeft/2.png"), 150);
+		anim.addFrame(ImageManager.loadImage("images/boy/RunLeft/3.png"), 175);
+		anim.addFrame(ImageManager.loadImage("images/boy/RunLeft/4.png"), 175);
+		anim.addFrame(ImageManager.loadImage("images/boy/RunLeft/5.png"), 125);
+		anim.addFrame(ImageManager.loadImage("images/boy/RunLeft/6.png"), 150);
 		animations.put("runLeft", anim);
 
 		anim = new Animation(true);
-		anim.addFrame(ImageManager.loadImage("images/myimages/boy/Idle/1.png"), 150);
+		anim.addFrame(ImageManager.loadImage("images/boy/Idle/1.png"), 150);
 		animations.put("idle", anim);
 
 		anim = new Animation(true);
-		anim.addFrame(ImageManager.loadImage("images/myimages/boy/IdleLeft/1.png"), 150);
+		anim.addFrame(ImageManager.loadImage("images/boy/IdleLeft/1.png"), 150);
 		animations.put("idleLeft", anim);
 
 		anim = new Animation(false);
-		anim.addFrame(ImageManager.loadImage("images/myimages/boy/Throw/1.png"), 100);
-		anim.addFrame(ImageManager.loadImage("images/myimages/boy/Throw/2.png"), 100);
-		anim.addFrame(ImageManager.loadImage("images/myimages/boy/Throw/3.png"), 100);
+		anim.addFrame(ImageManager.loadImage("images/boy/Throw/1.png"), 100);
+		anim.addFrame(ImageManager.loadImage("images/boy/Throw/2.png"), 100);
+		anim.addFrame(ImageManager.loadImage("images/boy/Throw/3.png"), 100);
 		animations.put("throw", anim);
 
 		anim = new Animation(false);
-		anim.addFrame(ImageManager.loadImage("images/myimages/boy/ThrowLeft/1.png"), 100);
-		anim.addFrame(ImageManager.loadImage("images/myimages/boy/ThrowLeft/2.png"), 100);
-		anim.addFrame(ImageManager.loadImage("images/myimages/boy/ThrowLeft/3.png"), 100);
+		anim.addFrame(ImageManager.loadImage("images/boy/ThrowLeft/1.png"), 100);
+		anim.addFrame(ImageManager.loadImage("images/boy/ThrowLeft/2.png"), 100);
+		anim.addFrame(ImageManager.loadImage("images/boy/ThrowLeft/3.png"), 100);
 		animations.put("throwLeft", anim);
 		
 		// anim = new Animation(false);
-		// anim.addFrame(ImageManager.loadImage("images/myimages/boy/Jump/1.png"), 50);
-		// anim.addFrame(ImageManager.loadImage("images/myimages/boy/Jump/2.png"), 300);
-		// anim.addFrame(ImageManager.loadImage("images/myimages/boy/Jump/3.png"), 300);
-		// anim.addFrame(ImageManager.loadImage("images/myimages/boy/Jump/4.png"), 300);
-		// anim.addFrame(ImageManager.loadImage("images/myimages/boy/Jump/5.png"), 150);
-		// anim.addFrame(ImageManager.loadImage("images/myimages/boy/Jump/6.png"), 100);
+		// anim.addFrame(ImageManager.loadImage("images/boy/Jump/1.png"), 50);
+		// anim.addFrame(ImageManager.loadImage("images/boy/Jump/2.png"), 300);
+		// anim.addFrame(ImageManager.loadImage("images/boy/Jump/3.png"), 300);
+		// anim.addFrame(ImageManager.loadImage("images/boy/Jump/4.png"), 300);
+		// anim.addFrame(ImageManager.loadImage("images/boy/Jump/5.png"), 150);
+		// anim.addFrame(ImageManager.loadImage("images/boy/Jump/6.png"), 100);
 		// animations.put("jump", anim);
 		anim = new Animation(false);
-		anim.addFrame(ImageManager.loadImage("images/myimages/boy/Jump/2.png"), 160);
-		anim.addFrame(ImageManager.loadImage("images/myimages/boy/Jump/3.png"), 160);
-		anim.addFrame(ImageManager.loadImage("images/myimages/boy/Jump/4.png"), 160);
-		anim.addFrame(ImageManager.loadImage("images/myimages/boy/Jump/5.png"), 160);
-		//anim.addFrame(ImageManager.loadImage("images/myimages/boy/Jump/6.png"), 100);
+		anim.addFrame(ImageManager.loadImage("images/boy/Jump/2.png"), 160);
+		anim.addFrame(ImageManager.loadImage("images/boy/Jump/3.png"), 160);
+		anim.addFrame(ImageManager.loadImage("images/boy/Jump/4.png"), 160);
+		anim.addFrame(ImageManager.loadImage("images/boy/Jump/5.png"), 160);
+		//anim.addFrame(ImageManager.loadImage("images/boy/Jump/6.png"), 100);
 		animations.put("jump", anim);
 
 		// anim = new Animation(false);
-		// anim.addFrame(ImageManager.loadImage("images/myimages/boy/JumpLeft/1.png"), 50);
-		// anim.addFrame(ImageManager.loadImage("images/myimages/boy/JumpLeft/2.png"), 300);
-		// anim.addFrame(ImageManager.loadImage("images/myimages/boy/JumpLeft/3.png"), 300);
-		// anim.addFrame(ImageManager.loadImage("images/myimages/boy/JumpLeft/4.png"), 300);
-		// anim.addFrame(ImageManager.loadImage("images/myimages/boy/JumpLeft/5.png"), 150);
-		// anim.addFrame(ImageManager.loadImage("images/myimages/boy/JumpLeft/6.png"), 100);
+		// anim.addFrame(ImageManager.loadImage("images/boy/JumpLeft/1.png"), 50);
+		// anim.addFrame(ImageManager.loadImage("images/boy/JumpLeft/2.png"), 300);
+		// anim.addFrame(ImageManager.loadImage("images/boy/JumpLeft/3.png"), 300);
+		// anim.addFrame(ImageManager.loadImage("images/boy/JumpLeft/4.png"), 300);
+		// anim.addFrame(ImageManager.loadImage("images/boy/JumpLeft/5.png"), 150);
+		// anim.addFrame(ImageManager.loadImage("images/boy/JumpLeft/6.png"), 100);
 		// animations.put("jumpLeft", anim);
 
 		anim = new Animation(false);
-		anim.addFrame(ImageManager.loadImage("images/myimages/boy/JumpLeft/2.png"), 160);
-		anim.addFrame(ImageManager.loadImage("images/myimages/boy/JumpLeft/3.png"), 160);
-		anim.addFrame(ImageManager.loadImage("images/myimages/boy/JumpLeft/4.png"), 160);
-		anim.addFrame(ImageManager.loadImage("images/myimages/boy/JumpLeft/5.png"), 160);
-		//anim.addFrame(ImageManager.loadImage("images/myimages/boy/Jump/6.png"), 100);
+		anim.addFrame(ImageManager.loadImage("images/boy/JumpLeft/2.png"), 160);
+		anim.addFrame(ImageManager.loadImage("images/boy/JumpLeft/3.png"), 160);
+		anim.addFrame(ImageManager.loadImage("images/boy/JumpLeft/4.png"), 160);
+		anim.addFrame(ImageManager.loadImage("images/boy/JumpLeft/5.png"), 160);
+		//anim.addFrame(ImageManager.loadImage("images/boy/Jump/6.png"), 100);
 		animations.put("jumpLeft", anim);
 	}
 
@@ -296,8 +296,8 @@ public class Level2Player {
 			}
 			playerImage = currentAnim.getImage();
 		}
-		if((playerImage.equals(ImageManager.loadImage("images/myimages/boy/Throw/2.png")) ||
-		    playerImage.equals(ImageManager.loadImage("images/myimages/boy/ThrowLeft/2.png"))) &&
+		if((playerImage.equals(ImageManager.loadImage("images/boy/Throw/2.png")) ||
+		    playerImage.equals(ImageManager.loadImage("images/boy/ThrowLeft/2.png"))) &&
 		    oldImage != playerImage){
 
 			Coconut c =  new Coconut(window, this);

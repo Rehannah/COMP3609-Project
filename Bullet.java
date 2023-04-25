@@ -45,7 +45,7 @@ public class Bullet {
       dx = 20;
       dy = 0;
       
-      bulletImage = ImageManager.loadImage ("images/myimages/bullet.png");
+      bulletImage = ImageManager.loadImage ("images/bullet.png");
       soundManager = SoundManager.getInstance();
 
       soundPlayed = false;

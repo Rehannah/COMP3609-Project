@@ -50,14 +50,14 @@ public class TreasureAnimation {
 	public void initialiseAnimations(){
 		// load images for animation
 
-		Image animImage1 = ImageManager.loadImage("images/myimages/treasure/treasure chest0000.png");
-		Image animImage2 = ImageManager.loadImage("images/myimages/treasure/treasure chest0001.png");
-		Image animImage3 = ImageManager.loadImage("images/myimages/treasure/treasure chest0002.png");
-		Image animImage4 = ImageManager.loadImage("images/myimages/treasure/treasure chest0003.png");
-		Image animImage5 = ImageManager.loadImage("images/myimages/treasure/treasure chest0004.png");
-		Image animImage6 = ImageManager.loadImage("images/myimages/treasure/treasure chest0005.png");
-		Image animImage7 = ImageManager.loadImage("images/myimages/treasure/treasure chest0006.png");
-		Image animImage8 = ImageManager.loadImage("images/myimages/treasure/treasure chest0007.png");
+		Image animImage1 = ImageManager.loadImage("images/treasure/treasure chest0000.png");
+		Image animImage2 = ImageManager.loadImage("images/treasure/treasure chest0001.png");
+		Image animImage3 = ImageManager.loadImage("images/treasure/treasure chest0002.png");
+		Image animImage4 = ImageManager.loadImage("images/treasure/treasure chest0003.png");
+		Image animImage5 = ImageManager.loadImage("images/treasure/treasure chest0004.png");
+		Image animImage6 = ImageManager.loadImage("images/treasure/treasure chest0005.png");
+		Image animImage7 = ImageManager.loadImage("images/treasure/treasure chest0006.png");
+		Image animImage8 = ImageManager.loadImage("images/treasure/treasure chest0007.png");
 
 		// create animation object and insert frames
 

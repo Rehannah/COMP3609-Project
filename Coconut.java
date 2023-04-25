@@ -29,7 +29,6 @@ public class Coconut {  //Projectile Motion
     private Animation currentAnim;
 	private HashMap<String, Animation> animations;
 	private int direction;
-	private boolean collision;
 
 	public Coconut (JFrame w, Level2Player player) {
         window = w;
@@ -39,7 +38,6 @@ public class Coconut {  //Projectile Motion
 		active = false;
 		timeElapsed = 0;
       	dimension = window.getSize();
-		
 
         initialiseAnimations();
 		currentAnim = animations.get("roll");
@@ -49,17 +47,17 @@ public class Coconut {  //Projectile Motion
 	public void initialiseAnimations(){
 		animations = new HashMap<>();
 		Animation anim = new Animation(true);
-		anim.addFrame(ImageManager.loadImage("images/myimages/boy/Coconut/1.png"), 100);
-		anim.addFrame(ImageManager.loadImage("images/myimages/boy/Coconut/2.png"), 100);
-		anim.addFrame(ImageManager.loadImage("images/myimages/boy/Coconut/3.png"), 100);
-		anim.addFrame(ImageManager.loadImage("images/myimages/boy/Coconut/4.png"), 100);
-		anim.addFrame(ImageManager.loadImage("images/myimages/boy/Coconut/5.png"), 100);
-		anim.addFrame(ImageManager.loadImage("images/myimages/boy/Coconut/6.png"), 100);
+		anim.addFrame(ImageManager.loadImage("images/boy/Coconut/1.png"), 100);
+		anim.addFrame(ImageManager.loadImage("images/boy/Coconut/2.png"), 100);
+		anim.addFrame(ImageManager.loadImage("images/boy/Coconut/3.png"), 100);
+		anim.addFrame(ImageManager.loadImage("images/boy/Coconut/4.png"), 100);
+		anim.addFrame(ImageManager.loadImage("images/boy/Coconut/5.png"), 100);
+		anim.addFrame(ImageManager.loadImage("images/boy/Coconut/6.png"), 100);
 		animations.put("roll", anim);
 
 
 		anim = new Animation(true);
-		anim.addFrame(ImageManager.loadImage("images/myimages/coconut split.png"), 150);
+		anim.addFrame(ImageManager.loadImage("images/coconut split.png"), 150);
 		animations.put("split", anim);
 	}
 
@@ -114,11 +112,11 @@ public class Coconut {  //Projectile Motion
 
       	if (!window.isVisible ()) return;
 
-		if(collision){
-			collision = false;
-			deActivate();
-			return;
-		}
+		// if(collision){
+		// 	collision = false;
+		// 	deActivate();
+		// 	return;
+		// }
 
       	dx = (int) (initialVelocityX * timeElapsed);
 		dy = (int) (initialVelocityY * timeElapsed - 4.9 * timeElapsed * timeElapsed);
@@ -166,19 +164,17 @@ public class Coconut {  //Projectile Motion
    	}
 
 
-	public Rectangle2D.Double getBoundingRectangle() {
-		Rectangle2D.Double rect = new Rectangle2D.Double (x, y, XSIZE, YSIZE);
-		// System.out.println("coco"+rect);
-		return rect;
+	public Rectangle2D.Double getBoundingRectangle() {		
+		return new Rectangle2D.Double (x, y, XSIZE, YSIZE);
 	}	
 
     public boolean collidesWithPirate(ArrayList<Pirate> pirates) {        
 
         for (int i=0;i<pirates.size();i++) {
-            Pirate pirate = pirates.get(i);				
+			Pirate pirate = pirates.get(i);				
 			if (getBoundingRectangle().intersects(pirate.getBoundingRectangle())){
-				collision = true;
-				//pirate.decreaseLives
+				deActivate();
+				pirate.decreaseLives();
 				return true;
 			}
 		}

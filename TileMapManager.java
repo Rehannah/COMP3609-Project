@@ -15,7 +15,7 @@ public class TileMapManager {
 
     private GameWindow window;
     private Score score;
-    
+
     // host sprites used for cloning
     private PoisonSprite poisonSprite;
     private NutritiousSprite nutritiousSprite;
@@ -114,7 +114,7 @@ public class TileMapManager {
         tiles = new ArrayList<Image>();
         char ch = 'A';
         while (true) {
-            String filename = "images/myimages/tiles/tile_" + ch + ".png";
+            String filename = "images/tiles/tile_" + ch + ".png";
 	        file = new File(filename);
             if (!file.exists()) 
                 break;            

@@ -54,8 +54,8 @@ public class GameWindow extends JFrame implements
 
 		initFullScreen();
 
-		lifeImage = ImageManager.loadImage("images/myimages/lives/life.png");
-		noLifeImage = ImageManager.loadImage("images/myimages/lives/nolife.png");
+		lifeImage = ImageManager.loadImage("images/lives/life.png");
+		noLifeImage = ImageManager.loadImage("images/lives/nolife.png");
 
 		setButtonAreas();
 
@@ -66,7 +66,7 @@ public class GameWindow extends JFrame implements
 		soundManager = SoundManager.getInstance();
 		image = new BufferedImage (pWidth, pHeight, BufferedImage.TYPE_INT_RGB);
 		
-		backgroundImage = ImageManager.loadImage ("images/myimages/background/pirateship.gif");
+		backgroundImage = ImageManager.loadImage ("images/background/pirateship.gif");
 
 		startGame();
 	}
@@ -254,13 +254,13 @@ public class GameWindow extends JFrame implements
 
 		// we can now adjust the display modes, if we wish
 
-		showCurrentMode();
+		// showCurrentMode();
 
 		pWidth = getBounds().width;
 		pHeight = getBounds().height;
 		
-		System.out.println("Width of window is " + pWidth);
-		System.out.println("Height of window is " + pHeight);
+		// System.out.println("Width of window is " + pWidth);
+		// System.out.println("Height of window is " + pHeight);
 
 		try {
 			createBufferStrategy(NUM_BUFFERS);
@@ -354,8 +354,8 @@ public class GameWindow extends JFrame implements
 					int w, h;
 					w = tileMap.getWidth();
 					h = tileMap.getHeight();
-					System.out.println ("Width of tilemap " + w);
-					System.out.println ("Height of tilemap " + h);
+					// System.out.println ("Width of tilemap " + w);
+					// System.out.println ("Height of tilemap " + h);
 				}
 				catch (Exception e) {
 					System.out.println(e);
@@ -379,7 +379,7 @@ public class GameWindow extends JFrame implements
 
 	private void gameOverMessage(Graphics g) {
 		
-		Image gameOver = ImageManager.loadImage("images/myimages/gameOver.png");
+		Image gameOver = ImageManager.loadImage("images/gameOver.png");
 		int x = (pWidth - gameOver.getWidth(null)) / 2; 
 		int y = (pHeight - gameOver.getHeight(null)) / 2;
 		g.drawImage(gameOver, x,y, 300,200,null);

@@ -7,7 +7,7 @@ public class NutritiousSprite extends Sprite {
        
     public NutritiousSprite(Score s){
         
-        super(ImageManager.loadImage("images/myimages/tiles/nutritious.png"),s);        
+        super(ImageManager.loadImage("images/tiles/nutritious.png"),s);        
         visible = true;
         score = s;
     }

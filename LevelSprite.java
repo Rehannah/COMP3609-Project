@@ -5,7 +5,7 @@ public class LevelSprite extends Sprite{
     private Level1Player player;
 
     public LevelSprite() {
-        super(ImageManager.loadImage("images/myimages/tiles/nextLevel.png"), null);
+        super(ImageManager.loadImage("images/tiles/nextLevel.png"), null);
         visible = true;
     }
 
