@@ -1,27 +1,19 @@
 import java.awt.Dimension;
-import java.awt.Graphics2D;
 import javax.swing.JFrame;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.geom.Rectangle2D;
 import java.util.HashMap;
 
-public class Level1Player{			
-
-	private static final int DX = 8;	// amount of X pixels to move in one keystroke
-	private static final int DY = 32;	// amount of Y pixels to move in one keystroke
-
+public class Level1Player{	
 	private static final int TILE_SIZE = 96;
 
 	private JFrame window;		// reference to the JFrame on which player is drawn
 	private TileMap tileMap;
-	private BackgroundManager bgManager;
 
 	private int x;			// x-position of player's sprite
 	private int y;			// y-position of player's sprite
-	//private int position;
 
-	private Graphics2D g2;
 	private Dimension dimension;
 
 	private Image playerImage;
@@ -29,25 +21,23 @@ public class Level1Player{
 	private HashMap<String, Animation> animations;
 
 	private boolean jumping;
-	private int timeElapsed;
-	private int startY;
-
 	private boolean goingUp;
 	private boolean goingDown;
-
 	private boolean inAir;
+
 	private int initialVelocity;
-	private int startAir;
+	private int timeElapsed;
+	private int startY;
+	
 
 	public Level1Player (JFrame window, TileMap t, BackgroundManager b) {
 		this.window = window;
 
 		tileMap = t;			// tile map on which the player's sprite is displayed
-		bgManager = b;			// instance of BackgroundManager
 
 		goingUp = goingDown = false;
 		inAir = false;
-		playerImage = ImageManager.loadImage("images/myimages/boy/Idle/1.png");	  
+		playerImage = ImageManager.loadImage("images/boy/Idle/1.png");	  
 		dimension = window.getSize();
 		initialiseAnimations();	  
 		currentAnim = animations.get("run");
@@ -58,87 +48,52 @@ public class Level1Player{
 	public void initialiseAnimations(){
 		animations = new HashMap<>();
 		Animation anim = new Animation(true);
-		anim.addFrame(ImageManager.loadImage("images/myimages/boy/Run/1.png"), 150);
-		anim.addFrame(ImageManager.loadImage("images/myimages/boy/Run/2.png"), 150);
-		anim.addFrame(ImageManager.loadImage("images/myimages/boy/Run/3.png"), 175);
-		anim.addFrame(ImageManager.loadImage("images/myimages/boy/Run/4.png"), 175);
-		anim.addFrame(ImageManager.loadImage("images/myimages/boy/Run/5.png"), 125);
-		anim.addFrame(ImageManager.loadImage("images/myimages/boy/Run/6.png"), 150);
+		anim.addFrame(ImageManager.loadImage("images/boy/Run/1.png"), 150);
+		anim.addFrame(ImageManager.loadImage("images/boy/Run/2.png"), 150);
+		anim.addFrame(ImageManager.loadImage("images/boy/Run/3.png"), 175);
+		anim.addFrame(ImageManager.loadImage("images/boy/Run/4.png"), 175);
+		anim.addFrame(ImageManager.loadImage("images/boy/Run/5.png"), 125);
+		anim.addFrame(ImageManager.loadImage("images/boy/Run/6.png"), 150);
 		animations.put("run", anim);
 		
 		anim = new Animation(false);
-		anim.addFrame(ImageManager.loadImage("images/myimages/boy/Jump/1.png"), 30);
-		anim.addFrame(ImageManager.loadImage("images/myimages/boy/Jump/2.png"), 300);
-		anim.addFrame(ImageManager.loadImage("images/myimages/boy/Jump/3.png"), 300);
-		anim.addFrame(ImageManager.loadImage("images/myimages/boy/Jump/4.png"), 300);
+		anim.addFrame(ImageManager.loadImage("images/boy/Jump/1.png"), 30);
+		anim.addFrame(ImageManager.loadImage("images/boy/Jump/2.png"), 300);
+		anim.addFrame(ImageManager.loadImage("images/boy/Jump/3.png"), 300);
+		anim.addFrame(ImageManager.loadImage("images/boy/Jump/4.png"), 300);
 		animations.put("jump", anim);
 
 		anim = new Animation(false);
-		anim.addFrame(ImageManager.loadImage("images/myimages/boy/Jump/4.png"), 200);
-		anim.addFrame(ImageManager.loadImage("images/myimages/boy/Jump/5.png"), 150);
-		anim.addFrame(ImageManager.loadImage("images/myimages/boy/Jump/6.png"), 100);
+		anim.addFrame(ImageManager.loadImage("images/boy/Jump/4.png"), 200);
+		anim.addFrame(ImageManager.loadImage("images/boy/Jump/5.png"), 150);
+		anim.addFrame(ImageManager.loadImage("images/boy/Jump/6.png"), 100);
 		animations.put("fall", anim);
 
 		anim = new Animation(false);
-		anim.addFrame(ImageManager.loadImage("images/myimages/boy/Jump/1.png"), 30);
-		anim.addFrame(ImageManager.loadImage("images/myimages/boy/Jump/2.png"), 300);
-		anim.addFrame(ImageManager.loadImage("images/myimages/boy/Jump/3.png"), 300);
-		anim.addFrame(ImageManager.loadImage("images/myimages/boy/Jump/4.png"), 300);
-		animations.put("shortJump", anim);
-		
+		anim.addFrame(ImageManager.loadImage("images/boy/Jump/1.png"), 30);
+		anim.addFrame(ImageManager.loadImage("images/boy/Jump/2.png"), 300);
+		anim.addFrame(ImageManager.loadImage("images/boy/Jump/3.png"), 300);
+		anim.addFrame(ImageManager.loadImage("images/boy/Jump/4.png"), 300);
+		animations.put("shortJump", anim);		
 	}
-
-
-	// public Point collidesWithTile(int newX, int newY) {
-
-	// 	int playerWidth = playerImage.getWidth(null);
-	// 	int offsetY = tileMap.getOffsetY();
-	// 	int xTile = tileMap.pixelsToTiles(newX + playerWidth - tileMap.getOffsetX());
-	// 	int yTile = tileMap.pixelsToTiles(newY - offsetY);
-
-	// 	if (tileMap.getTile(xTile, yTile) != null) {
-	// 		Point tilePos = new Point (xTile, yTile);
-	// 		System.out.println("tile exist: Xtile: "+xTile);
-	// 		System.out.println("Ytile: "+yTile);
-	// 		return tilePos;
-	// 	}
-	// 	else {
-	// 		return null;
-	// 	}
-	// }
-
 
 	public Point collidesWithTileDown (int newX, int newY) {
 
 		int playerWidth = playerImage.getWidth(null);
 		int playerHeight = playerImage.getHeight(null);
 		int offsetY = tileMap.getOffsetY();
-		int yTileFrom = tileMap.pixelsToTiles(y - offsetY);
-		
-		// System.out.println("newY: "+newY);
-		
-		// System.out.println("Ytile From: "+yTileFrom);
+		int yTileFrom = tileMap.pixelsToTiles(y - offsetY);		
 		int yTileTo = tileMap.pixelsToTiles(newY - offsetY + playerHeight);
-		// System.out.println("Y ttile to: "+yTileTo);
 
 		for (int yTile=yTileFrom; yTile<=yTileTo; yTile++) {
 			int xTile = tileMap.pixelsToTiles(newX - tileMap.getOffsetX());
-			//System.out.println("offset: "+tileMap.getOffsetX());
-		// System.out.println("Xtile: "+xTile);
-			// System.out.println("x, y "+xTile + " "+ yTile);
 			if (tileMap.getTile(xTile, yTile) != null) {
-
 				if(newY < window.getHeight() - TILE_SIZE - getImage().getHeight(null)){
-					// System.out.println("1st working");
 					if(newY < yTile * TILE_SIZE +tileMap.getOffsetY() + 32)					
-					//System.out.println("first");
 						return new Point (xTile, yTile);
-					// System.out.println("no return");
 					return null;
 				}
-				// System.out.println("regular x "+xTile + " y "+yTile);
 				return new Point (xTile, yTile);
-
 			}
 			else {
 				xTile = tileMap.pixelsToTiles(newX - tileMap.getOffsetX());
@@ -146,14 +101,11 @@ public class Level1Player{
 					int leftSide = (xTile + 1) * TILE_SIZE;
 					if ((newX + playerWidth-tileMap.getOffsetX()) > leftSide) {
 						if(newY < window.getHeight() - TILE_SIZE - getImage().getHeight(null)){
-							// System.out.println("1st work");
-							if(newY < yTile * TILE_SIZE +tileMap.getOffsetY() + 32)					
-							//System.out.println("first");
+							if(newY < yTile * TILE_SIZE +tileMap.getOffsetY() + 32)		
 								return new Point (xTile+1, yTile);
 							else
 								return null;
 						}
-						// System.out.println("second");
 						return new Point (xTile+1, yTile);
 					}
 				}
@@ -172,10 +124,8 @@ public class Level1Player{
 		int yTileTo = tileMap.pixelsToTiles(newY -1 - offsetY);
 			
 		for (int yTile=yTileFrom; yTile>=yTileTo; yTile--) {
-			// System.out.println("x "+ xTile + " y "+yTile);
 			if (tileMap.getTile(xTile, yTile) != null) {
 				Point tilePos = new Point (xTile, yTile);
-				System.out.println("up collide 1");
 				return tilePos;
 			}
 			else {
@@ -183,7 +133,6 @@ public class Level1Player{
 					int leftSide = (xTile + 1) * TILE_SIZE;
 					if (newX -tileMap.getOffsetX() + playerWidth > leftSide) {
 						Point tilePos = new Point (xTile+1, yTile);
-						System.out.println("up collide 2");
 						return tilePos;
 					}
 				}
@@ -197,13 +146,10 @@ public class Level1Player{
 	public Point collidesWithTile(int newX, int newY) {
 
 		int playerWidth = playerImage.getWidth(null);
-		int playerHeight = playerImage.getHeight(null);
-
-			int fromX = Math.min (x, newX);
+		int fromX = Math.min (x, newX);
 		int fromY = Math.min (y, newY);
 		int toX = Math.max (x, newX);
 		int toY = Math.max (y, newY);
-		// System.out.println("from y  " +fromY + " toY " + toY);
 			
 		int fromTileX = tileMap.pixelsToTiles (fromX + Math.abs(tileMap.getOffsetX()));
 		int fromTileY = tileMap.pixelsToTiles (fromY - tileMap.getOffsetY());
@@ -212,16 +158,10 @@ public class Level1Player{
 
 		for (int x=fromTileX; x<=toTileX; x++) {
 			for (int y=fromTileY; y<=toTileY; y++) {
-				// System.out.println("X " +x + "y " + y);
-			
-				if (tileMap.getTile(x, y) != null) {
-					// System.out.println("X " +x + "y " + y);
-					Point tilePos = new Point (x, y);
-					return tilePos;
-				}
+				if (tileMap.getTile(x, y) != null) 
+					return new Point (x, y);
 			}
-		}
-		
+		}		
 		return null;
 	}
 	
@@ -233,23 +173,21 @@ public class Level1Player{
 	    if (!window.isVisible ()) 
 			return;
 		 	
-		if (direction == 2) {	
+		if (direction == 2) 	
 			tilePos = collidesWithTile(x, y);			
-		}
+		
 		else if (direction == 3 && !jumping) {	
 			jump();
 			return;
 		}
 		
-		if (tilePos != null) {  
-			// System.out.println (": Collision going right");
+		if (tilePos != null) { 
 			int playerWidth = playerImage.getWidth(null);
 			x = ((int) tilePos.getX()) * TILE_SIZE - playerWidth; // keep flush with left side of tile
 		}
-		else if (isInAir()) {
-			// System.out.println("In the air. Starting to fall.");
+		else if (isInAir()) 
 			fall();
-		}
+		
 	}		 
 
 
@@ -262,12 +200,10 @@ public class Level1Player{
 			playerHeight = playerImage.getHeight(null);
 			tilePos = collidesWithTile(x, y + playerHeight + 1); 	// check below player to see if there is a tile
 			
-			if (tilePos == null){				   	// there is no tile below player, so player is in the air
-				return true;
-			}
+			if (tilePos == null)				   	// there is no tile below player, so player is in the air
+				return true;			
 			else							// there is a tile below player, so the player is on a tile
-				return false;
-				
+				return false;				
 		}
 		return false;
 	}
@@ -280,7 +216,6 @@ public class Level1Player{
 		currentAnim = animations.get("fall");
 		goingUp = false;
 		goingDown = true;
-
 		startY = y;
 		initialVelocity = 0;
 	}
@@ -306,7 +241,7 @@ public class Level1Player{
 	}
 
 	public void idle() {
-		playerImage = ImageManager.loadImage("images/myimages/boy/Idle/1.png");	  
+		playerImage = ImageManager.loadImage("images/boy/Idle/1.png");	  
 	}
 
 
@@ -325,14 +260,12 @@ public class Level1Player{
 		timeElapsed++;
 
 		if (jumping || inAir) {
-			// System.out.println("inAir");
 			distance = (int) (initialVelocity * timeElapsed - 4.9 * timeElapsed * timeElapsed);
 			newY = startY - distance;
 
 			if (newY > y && goingUp) {
 				goingUp = false;
 				goingDown = true;
-				// System.out.println("Goig down");
 				currentAnim.stop();
 				currentAnim = animations.get("fall");
 			}
@@ -340,46 +273,28 @@ public class Level1Player{
 			if (goingUp) {
 				Point tilePos = collidesWithTileUp (x, newY);	
 				if (tilePos != null) {				// hits a tile going up
-					// System.out.println ("Jumping: Collision Going Up!");
-
 					setY(((int) tilePos.getY()) * TILE_SIZE + tileMap.getOffsetY() + TILE_SIZE - 63);		//tiles that can be collided with going up are narrower
 					fall();
 				}
-				else{
-					y = newY;
-					//System.out.println ("Jumping: No collision.");
-				}
+				else
+					y = newY;				
 			}
 			else if (goingDown) {			
 				Point tilePos = collidesWithTileDown (x, newY);	
-					if (tilePos != null) {				// hits a tile going down
-						// System.out.println ("Jumping: Collision Going Down!");
-						int playerHeight = playerImage.getHeight(null);
-						goingDown = false;
-
-						//int offsetY = tileMap.getOffsetY();
-						//int topTileY = ((int) tilePos.getY()) * TILE_SIZE + offsetY;
-
-						y = dimension.height - (tileMap.getHeight() - ((int) tilePos.getY())) * TILE_SIZE - playerImage.getHeight(null);
-						//System.out.print( dimension.height+ " "+tileMap.getHeight()+" "+ (int) tilePos.getY()+ " " + playerImage.getHeight(null)+"Y: "+y);
-						jumping = false;
-						inAir = false;
-						// System.out.println ("Reachg rounf");
-
-						currentAnim = animations.get("run");
-					}
-					else {
-						y = newY;
-						//System.out.println ("Jumping: No collision.");
-					}
+				if (tilePos != null) {				// hits a tile going down
+					goingDown = false;
+					y = dimension.height - (tileMap.getHeight() - ((int) tilePos.getY())) * TILE_SIZE - playerImage.getHeight(null);
+					jumping = false;
+					inAir = false;
+					currentAnim = animations.get("run");
+				}
+				else {
+					y = newY;
+				}
 			}
 		}
-		if (isInAir()){
-			// System.out.println("inair");
+		if (isInAir())
 			fall();
-		}
-		
-	// return true;
 	}
 
 	
@@ -403,9 +318,7 @@ public class Level1Player{
 		return playerImage;
 	}
 
-
-	public Rectangle2D getBoundingRectangle() {
-		
+	public Rectangle2D getBoundingRectangle() {		
 		return new Rectangle2D.Double(x - tileMap.getOffsetX(),y,getImage().getWidth(null), getImage().getHeight(null));
 	}
 }

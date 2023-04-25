@@ -1,7 +1,6 @@
 import javax.swing.*;			// need this for GUI objects
 import java.awt.*;			// need this for certain AWT classes
 import java.awt.image.BufferedImage;
-import java.nio.file.PathMatcher;
 import java.awt.event.*;
 import java.awt.image.BufferStrategy;	// need this to implement page flipping
 
@@ -177,7 +176,6 @@ public class GameWindow extends JFrame implements
 			
 		}
 	
-		//Graphics2D g2 = (Graphics2D) getGraphics();	// get the graphics context for window
 		drawButtons(imageContext);			// draw the buttons
 		drawScore(imageContext);
 		Graphics2D g2 = (Graphics2D) gScr;
@@ -235,8 +233,6 @@ public class GameWindow extends JFrame implements
 			leftOffset += width;
 			i++;
 		}
-
-
 	}
 
 
@@ -350,7 +346,7 @@ public class GameWindow extends JFrame implements
 	private void startGame() { 
 		if (gameThread == null) {
 			//soundManager.playSound ("background", true);
-			score =  new Score(this);
+			score =  new Score();
 			if (level==1) {
 				try {					
 					tileManager = new TileMapManager (this, score);

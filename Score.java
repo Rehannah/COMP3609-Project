@@ -4,12 +4,10 @@ public class Score {
     private static int DECREMENT = 10;
     private int points;
     private int lives;
-    private GameWindow window;
 
 
 
-    public Score(GameWindow window){
-        this.window = window;
+    public Score(){
         points = 0;
         lives = 3;
     }
