@@ -168,34 +168,26 @@ public class SwordPirate implements Pirate{
 
 
    public void move() {
-
-     if (!window.isVisible ()) return;
+      if (!window.isVisible ()) return;
 
       if (collidesWithPlayer()) {
-         if (getDirection()==1) {
+         if (getDirection()==1) 
             currentAnim = animations.get("attackLeft");
-         }
-         else{
+         else
             currentAnim = animations.get("attack");
-         }
+            
          Image imageLeft = ImageManager.loadImage("images/pirates/sword/attack left/1_entity_000_ATTACK_004.png");
          Image imageRight = ImageManager.loadImage("images/pirates/sword/attack/1_entity_000_ATTACK_004.png");
-         if (pirateImage ==imageLeft || pirateImage ==imageRight) {
+         if (pirateImage ==imageLeft || pirateImage ==imageRight) 
             score.decreaseLives();
-         }
       }
       else{
-         if (getDirection()==2) {
+         if (getDirection()==2) 
             currentAnim = animations.get("walk");
-         }
-         else {
+         else 
             currentAnim = animations.get("walkLeft");
-         }
       }
-
-
-     chase();
-
+      chase();
    }
 
    public void decreaseLives(){

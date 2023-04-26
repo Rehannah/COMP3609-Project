@@ -19,7 +19,7 @@ public class Captain implements Pirate{
    private double yFrac;
    private double widthFrac;
    private double heightFrac;
-   
+
    private int width;
    private int height;
 
@@ -211,35 +211,29 @@ public class Captain implements Pirate{
 
 
    public void move() {
-
       if (!window.isVisible ()) return;     
 
-      if (getDirection()==1) {
+      if (getDirection()==1) 
          currentAnim = animations.get("walkLeft");
-      }
-      else {
+      else 
          currentAnim = animations.get("walk");
-      }
+      
       if (x<=window.getWidth()-300){
          x=window.getWidth()-300;
-         if (getDirection()==1) {
+         if (getDirection()==1) 
             currentAnim = animations.get("attackLeft");
-         }
-         else {
+         else 
             currentAnim = animations.get("attack");
-         }
       }
       chase();
 
       if (bullets.size()!=0){
          for (int i=0; i<bullets.size(); i++) {
             Bullet bullet = bullets.get(i);
-            if (bullet!=null && bullet.isActive()) {
+            if (bullet!=null && bullet.isActive()) 
                bullet.move();
-            }
-            if (bullet.isActive()==false) {
+            if (bullet.isActive()==false) 
                bullets.remove(i);
-            }
          }
       }
    }
@@ -266,11 +260,10 @@ public class Captain implements Pirate{
    }
 
    public Rectangle2D.Double getAttackedRectangle() {
-      int width = pirateImage.getWidth(null);
-         if(getDirection() == 1)
-            return new Rectangle2D.Double (x+xFracLeft*width, y+yFrac*height, widthFrac*width, heightFrac*height);
-         else
-            return new Rectangle2D.Double (x+xFracRight*width, y+yFrac*height, widthFrac*width, heightFrac*height);
+      if(getDirection() == 1)
+         return new Rectangle2D.Double (x+xFracLeft*width, y+yFrac*height, widthFrac*width, heightFrac*height);
+      else
+         return new Rectangle2D.Double (x+xFracRight*width, y+yFrac*height, widthFrac*width, heightFrac*height);
    }
 
 }
