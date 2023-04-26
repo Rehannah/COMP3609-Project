@@ -77,7 +77,6 @@ public class GamePanel extends JPanel {
 		}
 
 		if (treasure!=null && treasure.isActive()) {
-			System.out.println("treasure updates");
 			treasure.update();
 		}
 
@@ -125,7 +124,6 @@ public class GamePanel extends JPanel {
 
 			if (captain.getLives()<=0) {
 				treasure.activate();
-				System.out.println("Chest activated treasure");
 			}
 		}
 	}
@@ -158,6 +156,10 @@ public class GamePanel extends JPanel {
 
 				}
 			}
+		}
+
+		if (treasure!=null && treasure.isActive()) {
+			treasure.draw(imageContext);
 		}
 	}
 
