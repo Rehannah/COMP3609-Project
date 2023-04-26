@@ -204,7 +204,7 @@ public class GameWindow extends JFrame implements
 	private void drawScore(Graphics2D g) {
 
 		Font oldFont, newFont;
-		int leftOffset = pWidth - 375;
+		int leftOffset = pWidth - 400;
 
 		oldFont = g.getFont();		// save current font to restore when finished
 	
@@ -213,7 +213,7 @@ public class GameWindow extends JFrame implements
 
     	g.setColor(Color.black);	// set outline colour of button
 		g.drawString("Points Scored", leftOffset, 60);
-		g.drawString("Lives Remaining", leftOffset-15, 110);
+		g.drawString("Player Lives", leftOffset+5, 110);
 		newFont = new Font ("Cambria", Font.BOLD, 25);
 		g.setFont(newFont);
 		g.drawString(Integer.toString(score.getPoints()), leftOffset+210, 63);
@@ -230,7 +230,7 @@ public class GameWindow extends JFrame implements
 		}
 
 		// draw empty hearts for the lives the player doesn't have
-		while(i<3){
+		while(i<5){
 			g.drawImage(noLifeImage, leftOffset, 85, width, height, null);	// draw the background image
 			leftOffset += width;
 			i++;
