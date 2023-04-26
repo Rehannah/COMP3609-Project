@@ -24,8 +24,8 @@ public class Animation {
     public Animation(boolean loop) {
         frames = new ArrayList<AnimFrame>();
         totalDuration = 0;
-	this.loop = loop;
-	isActive = false;
+        this.loop = loop;
+        isActive = false;
     }
 
 
@@ -47,7 +47,7 @@ public class Animation {
 	isActive = true;
         animTime = 0;						// reset time animation has run for to zero
         currFrameIndex = 0;					// reset current frame to first frame
-	startTime = System.currentTimeMillis();			// reset start time to current time
+	    startTime = System.currentTimeMillis();			// reset start time to current time
     }
 
 
@@ -55,7 +55,7 @@ public class Animation {
         Terminates this animation.
     */
     public synchronized void stop() {
-	isActive = true;
+	    isActive = false;
     }
 
 
@@ -85,8 +85,8 @@ public class Animation {
 		}
             }
 
-	    // if (!isActive)
-	    //    return;
+	    if (!isActive)
+	       return;
 
             while (animTime > getFrame(currFrameIndex).endTime) {
                 currFrameIndex++;				// set frame corresponding to time animation has run for

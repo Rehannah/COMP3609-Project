@@ -5,7 +5,7 @@ import java.awt.Image;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Captain {
+public class Captain implements Pirate{
 
    private JFrame window;
 
@@ -50,7 +50,7 @@ public class Captain {
 
       this.player = player;
 
-      pirateImage = ImageManager.loadImage ("images/myimages/pirates/captain/idle/2_entity_000_IDLE_000.png");
+      pirateImage = ImageManager.loadImage ("images/pirates/captain/idle/2_entity_000_IDLE_000.png");
       soundManager = SoundManager.getInstance();
 
       soundPlayed = false;
@@ -92,43 +92,43 @@ public class Captain {
 	public void initialiseAnimations(){
 		animations = new HashMap<>();
 		Animation anim = new Animation(true);
-		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/captain/attack/2_entity_000_ATTACK_000.png"), 450);
-		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/captain/attack/2_entity_000_ATTACK_001.png"), 150);
-		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/captain/attack/2_entity_000_ATTACK_002.png"), 155);
-		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/captain/attack/2_entity_000_ATTACK_003.png"), 155);
-		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/captain/attack/2_entity_000_ATTACK_004.png"), 125);
-		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/captain/attack/2_entity_000_ATTACK_005.png"), 150);
-      anim.addFrame(ImageManager.loadImage("images/myimages/pirates/captain/attack/2_entity_000_ATTACK_006.png"), 150);
+		anim.addFrame(ImageManager.loadImage("images/pirates/captain/attack/2_entity_000_ATTACK_000.png"), 450);
+		anim.addFrame(ImageManager.loadImage("images/pirates/captain/attack/2_entity_000_ATTACK_001.png"), 150);
+		anim.addFrame(ImageManager.loadImage("images/pirates/captain/attack/2_entity_000_ATTACK_002.png"), 155);
+		anim.addFrame(ImageManager.loadImage("images/pirates/captain/attack/2_entity_000_ATTACK_003.png"), 155);
+		anim.addFrame(ImageManager.loadImage("images/pirates/captain/attack/2_entity_000_ATTACK_004.png"), 125);
+		anim.addFrame(ImageManager.loadImage("images/pirates/captain/attack/2_entity_000_ATTACK_005.png"), 150);
+      anim.addFrame(ImageManager.loadImage("images/pirates/captain/attack/2_entity_000_ATTACK_006.png"), 150);
 		animations.put("attack", anim);
 		
       anim = new Animation(true);
-      anim.addFrame(ImageManager.loadImage("images/myimages/pirates/captain/attack left/2_entity_000_ATTACK_000.png"), 450);
-		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/captain/attack left/2_entity_000_ATTACK_001.png"), 150);
-		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/captain/attack left/2_entity_000_ATTACK_002.png"), 155);
-		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/captain/attack left/2_entity_000_ATTACK_003.png"), 155);
-		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/captain/attack left/2_entity_000_ATTACK_004.png"), 125);
-		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/captain/attack left/2_entity_000_ATTACK_005.png"), 150);
-      anim.addFrame(ImageManager.loadImage("images/myimages/pirates/captain/attack left/2_entity_000_ATTACK_006.png"), 150);
+      anim.addFrame(ImageManager.loadImage("images/pirates/captain/attack left/2_entity_000_ATTACK_000.png"), 450);
+		anim.addFrame(ImageManager.loadImage("images/pirates/captain/attack left/2_entity_000_ATTACK_001.png"), 150);
+		anim.addFrame(ImageManager.loadImage("images/pirates/captain/attack left/2_entity_000_ATTACK_002.png"), 155);
+		anim.addFrame(ImageManager.loadImage("images/pirates/captain/attack left/2_entity_000_ATTACK_003.png"), 155);
+		anim.addFrame(ImageManager.loadImage("images/pirates/captain/attack left/2_entity_000_ATTACK_004.png"), 125);
+		anim.addFrame(ImageManager.loadImage("images/pirates/captain/attack left/2_entity_000_ATTACK_005.png"), 150);
+      anim.addFrame(ImageManager.loadImage("images/pirates/captain/attack left/2_entity_000_ATTACK_006.png"), 150);
 		animations.put("attackLeft", anim);
 
       anim = new Animation(true);
-		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/captain/walk/2_entity_000_WALK_000.png"), 150);
-		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/captain/walk/2_entity_000_WALK_001.png"), 150);
-		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/captain/walk/2_entity_000_WALK_002.png"), 175);
-		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/captain/walk/2_entity_000_WALK_003.png"), 175);
-		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/captain/walk/2_entity_000_WALK_004.png"), 125);
-		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/captain/walk/2_entity_000_WALK_005.png"), 150);
-      anim.addFrame(ImageManager.loadImage("images/myimages/pirates/captain/walk/2_entity_000_WALK_006.png"), 150);
+		anim.addFrame(ImageManager.loadImage("images/pirates/captain/walk/2_entity_000_WALK_000.png"), 150);
+		anim.addFrame(ImageManager.loadImage("images/pirates/captain/walk/2_entity_000_WALK_001.png"), 150);
+		anim.addFrame(ImageManager.loadImage("images/pirates/captain/walk/2_entity_000_WALK_002.png"), 175);
+		anim.addFrame(ImageManager.loadImage("images/pirates/captain/walk/2_entity_000_WALK_003.png"), 175);
+		anim.addFrame(ImageManager.loadImage("images/pirates/captain/walk/2_entity_000_WALK_004.png"), 125);
+		anim.addFrame(ImageManager.loadImage("images/pirates/captain/walk/2_entity_000_WALK_005.png"), 150);
+      anim.addFrame(ImageManager.loadImage("images/pirates/captain/walk/2_entity_000_WALK_006.png"), 150);
 		animations.put("walk", anim);
 
       anim = new Animation(true);
-		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/captain/walk left/2_entity_000_WALK_000.png"), 150);
-		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/captain/walk left/2_entity_000_WALK_001.png"), 150);
-		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/captain/walk left/2_entity_000_WALK_002.png"), 175);
-		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/captain/walk left/2_entity_000_WALK_003.png"), 175);
-		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/captain/walk left/2_entity_000_WALK_004.png"), 125);
-		anim.addFrame(ImageManager.loadImage("images/myimages/pirates/captain/walk left/2_entity_000_WALK_005.png"), 150);
-      anim.addFrame(ImageManager.loadImage("images/myimages/pirates/captain/walk left/2_entity_000_WALK_006.png"), 150);
+		anim.addFrame(ImageManager.loadImage("images/pirates/captain/walk left/2_entity_000_WALK_000.png"), 150);
+		anim.addFrame(ImageManager.loadImage("images/pirates/captain/walk left/2_entity_000_WALK_001.png"), 150);
+		anim.addFrame(ImageManager.loadImage("images/pirates/captain/walk left/2_entity_000_WALK_002.png"), 175);
+		anim.addFrame(ImageManager.loadImage("images/pirates/captain/walk left/2_entity_000_WALK_003.png"), 175);
+		anim.addFrame(ImageManager.loadImage("images/pirates/captain/walk left/2_entity_000_WALK_004.png"), 125);
+		anim.addFrame(ImageManager.loadImage("images/pirates/captain/walk left/2_entity_000_WALK_005.png"), 150);
+      anim.addFrame(ImageManager.loadImage("images/pirates/captain/walk left/2_entity_000_WALK_006.png"), 150);
 		animations.put("walkLeft", anim);
 	}
 
@@ -144,8 +144,8 @@ public class Captain {
 				currentAnim.start();
          pirateImage = currentAnim.getImage();
 		}
-      Image imageLeft = ImageManager.loadImage("images/myimages/pirates/captain/attack left/2_entity_000_ATTACK_005.png");
-      Image imageRight = ImageManager.loadImage("images/myimages/pirates/captain/attack/2_entity_000_ATTACK_005.png");
+      Image imageLeft = ImageManager.loadImage("images/pirates/captain/attack left/2_entity_000_ATTACK_005.png");
+      Image imageRight = ImageManager.loadImage("images/pirates/captain/attack/2_entity_000_ATTACK_005.png");
       if (pirateImage==imageLeft || pirateImage==imageRight) {
          Bullet bullet = new Bullet(window, player, this, s);
          bullets.add(bullet);
@@ -241,6 +241,13 @@ public class Captain {
       }
    }
 
+
+   public void decreaseLives(){
+      lives--;
+      if (lives<=0) {
+         isActive=false;
+      }
+   }
 
    public Rectangle2D.Double getBoundingRectangle() {
       return new Rectangle2D.Double (x, y, width, height);

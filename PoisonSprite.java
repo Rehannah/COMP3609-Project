@@ -6,7 +6,7 @@ public class PoisonSprite extends Sprite {
     private Level1Player player;
     
     public PoisonSprite(Score s){        
-        super(ImageManager.loadImage("images/myimages/tiles/poison.png"), s);
+        super(ImageManager.loadImage("images/tiles/poison.png"), s);
         score = s;
         if(score == null){
             System.out.println("sprite");

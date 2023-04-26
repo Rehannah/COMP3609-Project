@@ -1,10 +1,5 @@
-import java.awt.Dimension;
-import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.geom.Rectangle2D;
-import java.util.HashMap;
-
-import javax.swing.JFrame;
 
 public abstract class Sprite implements Cloneable{
     
@@ -23,13 +18,6 @@ public abstract class Sprite implements Cloneable{
         visible = true;
         score = s;
     }
-
-    // public Sprite(Image im, Score s, Level1Player p){
-    //     image = im;
-    //     visible = true;
-    //     score = s;
-    //     player = p;
-    // }
 
     public abstract void setPlayer(Level1Player p);
 

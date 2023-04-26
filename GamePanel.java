@@ -1,5 +1,7 @@
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
+import java.awt.Graphics2D;
 import java.util.ArrayList;
 
 /**
@@ -16,8 +18,6 @@ public class GamePanel extends JPanel {
 	public BirdPirate bird;
 	// private ArrayList pirates;
 
-	private Coconut coconut;
-
 	private ArrayList<Coconut> coconuts;
 
 	private JFrame window;		// reference to the JFrame on which player is drawn
@@ -28,16 +28,12 @@ public class GamePanel extends JPanel {
 	
 	public GamePanel (JFrame window, Score s) {
 		this.window = window;
-
-		coconut=null;
-		coconuts=null;
-
 		this.s=s;
 	}
 
 	public void createGameEntities() {
 		coconuts = new ArrayList<Coconut>();
-		player = new Level2Player(window);
+		player = new Level2Player(window, this);
 		swordPirate = new SwordPirate(window, player, s);
 		knifePirate = new KnifePirate(window, player, s);
 		captain = new Captain(window, player, s);
@@ -47,25 +43,35 @@ public class GamePanel extends JPanel {
 
 
 	public void gameUpdate() {
+
+		ArrayList<Pirate> pirates = new ArrayList<>(4);
+
 		if (swordPirate!=null && swordPirate.isActive()) {
 			swordPirate.move();
+			pirates.add(swordPirate);
 		}
 
 		if (knifePirate !=null && knifePirate.isActive()) {
 			knifePirate.move();
+			pirates.add(knifePirate);
 		}
 		if (bird!=null && bird.isActive) {
 			bird.move();
+			pirates.add(bird);
 		}
 		if (captain !=null && captain.isActive) {
 			captain.move();
+			pirates.add(captain);
 		}
 
+		updatePlayer(-1);
 		if (coconuts!=null && coconuts.size()!=0) {
 			for (int i=0; i<coconuts.size(); i++) {
 				Coconut c = coconuts.get(i);
 				if (c.isActive()) {
-					coconut.update();
+					c.update();
+					if(c.collidesWithPirate(pirates))
+						s.increasePoints();
 				}
 			}
 		}
@@ -90,17 +96,18 @@ public class GamePanel extends JPanel {
 	}
 
 	public void throwCoconut(){
-		coconut =  new Coconut(window, player);
-		coconut.activate();
-		coconuts.add(coconut);
+		player.startThrow();
 	}
 
 	public ArrayList<Coconut> getCoconuts() {
 		return coconuts;
 	}
 
-	public Coconut getCoconut() {
-		return coconut;
+	public void addCoconut(Coconut c){
+		if(coconuts!= null){
+			coconuts.add(c);
+		}
+
 	}
 
 	public void nextPirate() {
@@ -120,4 +127,36 @@ public class GamePanel extends JPanel {
 			}
 		}
 	}
+	public void gameRender(Graphics2D imageContext) {
+		if (player != null) {
+			player.draw(imageContext);
+		}
+		else{
+			createGameEntities();
+		}
+
+		if (swordPirate.isActive()) {
+			swordPirate.draw(imageContext);
+		}
+		if (knifePirate.isActive()) {
+			knifePirate.draw(imageContext);
+		}
+		if (bird.isActive()) {
+			bird.draw(imageContext);
+		}
+		if (captain.isActive()) {
+			captain.draw(imageContext);
+		}
+
+		if (coconuts != null && coconuts.size()!=0) {
+			for (int i=0; i<coconuts.size(); i++) {
+				Coconut c = coconuts.get(i);
+				if (c!=null && c.isActive()) {
+					c.draw(imageContext);
+
+				}
+			}
+		}
+	}
+
 }
