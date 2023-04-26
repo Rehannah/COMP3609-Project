@@ -64,7 +64,7 @@ public class KnifePirate implements Pirate{
 
       soundPlayed = false;
 
-      isActive = false;
+      isActive = true;
 
       initialiseAnimations();
 		currentAnim = animations.get("walk");
