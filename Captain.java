@@ -45,7 +45,7 @@ public class Captain implements Pirate{
       x = window.getWidth();
       y = window.getHeight()-400;
 
-      dx = 5;
+      dx = 7;
       dy = 0;
 
       this.player = player;
@@ -198,35 +198,24 @@ public class Captain implements Pirate{
 
    public void move() {
 
-      if (!window.isVisible ()) return;
+      if (!window.isVisible ()) return;     
 
-     chase();
-     
-
-      if (collidesWithPlayer()) {
-         lives--;
-         if (lives<=0) {
-            isActive=false;
-            
-         }
+      if (getDirection()==1) {
+         currentAnim = animations.get("walkLeft");
       }
-     else{
+      else {
+         currentAnim = animations.get("walk");
+      }
+      if (x<=window.getWidth()-300){
+         x=window.getWidth()-300;
          if (getDirection()==1) {
-            currentAnim = animations.get("walkLeft");
+            currentAnim = animations.get("attackLeft");
          }
          else {
-            currentAnim = animations.get("walk");
-         }
-         if (x<=window.getWidth()-300){
-            x=window.getWidth()-300;
-            if (getDirection()==1) {
-               currentAnim = animations.get("attackLeft");
-            }
-            else {
-               currentAnim = animations.get("attack");
-            }
+            currentAnim = animations.get("attack");
          }
       }
+      chase();
 
       if (bullets.size()!=0){
          for (int i=0; i<bullets.size(); i++) {

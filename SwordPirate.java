@@ -37,10 +37,10 @@ public class SwordPirate implements Pirate{
       width = 250;
       height = 250;
 
-      x = window.getWidth()+50;
+      x = window.getWidth();
       y = window.getHeight()-400;
 
-      dx = 3;
+      dx = 8;
       dy = 0;
 
       this.player = player;
@@ -75,6 +75,10 @@ public class SwordPirate implements Pirate{
       return lives;
    }
 
+   public void activate() {
+      isActive=true;
+   }
+
 	public void initialiseAnimations(){
 		animations = new HashMap<>();
 		Animation anim = new Animation(true);
@@ -96,16 +100,6 @@ public class SwordPirate implements Pirate{
 		anim.addFrame(ImageManager.loadImage("images/pirates/sword/attack left/1_entity_000_ATTACK_005.png"), 150);
       anim.addFrame(ImageManager.loadImage("images/pirates/sword/attack left/1_entity_000_ATTACK_006.png"), 150);
 		animations.put("attackLeft", anim);
-		
-		anim = new Animation(true);
-		anim.addFrame(ImageManager.loadImage("images/pirates/sword/idle/1_entity_000_IDLE_000.png"), 150);
-		anim.addFrame(ImageManager.loadImage("images/pirates/sword/idle/1_entity_000_IDLE_001.png"), 150);
-		anim.addFrame(ImageManager.loadImage("images/pirates/sword/idle/1_entity_000_IDLE_002.png"), 175);
-		anim.addFrame(ImageManager.loadImage("images/pirates/sword/idle/1_entity_000_IDLE_003.png"), 175);
-		anim.addFrame(ImageManager.loadImage("images/pirates/sword/idle/1_entity_000_IDLE_004.png"), 125);
-		anim.addFrame(ImageManager.loadImage("images/pirates/sword/idle/1_entity_000_IDLE_005.png"), 150);
-      anim.addFrame(ImageManager.loadImage("images/pirates/sword/idle/1_entity_000_IDLE_006.png"), 150);
-		animations.put("idle", anim);
 
       anim = new Animation(true);
 		anim.addFrame(ImageManager.loadImage("images/pirates/sword/walk/1_entity_000_WALK_000.png"), 150);
@@ -158,43 +152,23 @@ public class SwordPirate implements Pirate{
    }
 
 
-   private void flee() {
-
-      if (x > player.getX())
-	  x = x + dx;
-      else
-      if (x < player.getX())
- 	  x = x - dx;
-
-      if (y > player.getY())
-	  y = y + dy;
-      else
-      if (y < player.getY())
- 	  y = y - dy;
-   }
-
 
    public void move() {
 
      if (!window.isVisible ()) return;
 
-     chase();
-
       if (collidesWithPlayer()) {
-         lives--;
-         if (lives<=0) {
-            isActive=false;
-         }
          if (getDirection()==1) {
-            currentAnim = animations.get("attack");
+            currentAnim = animations.get("attackLeft");
          }
          else{
-            currentAnim = animations.get("attackLeft");
+            currentAnim = animations.get("attack");
          }
          Image imageLeft = ImageManager.loadImage("images/pirates/sword/attack left/1_entity_000_ATTACK_004.png");
          Image imageRight = ImageManager.loadImage("images/pirates/sword/attack/1_entity_000_ATTACK_004.png");
-         if (pirateImage ==imageLeft || pirateImage ==imageRight)
+         if (pirateImage ==imageLeft || pirateImage ==imageRight) {
             score.decreaseLives();
+         }
       }
       else{
          if (getDirection()==2) {
@@ -207,12 +181,8 @@ public class SwordPirate implements Pirate{
 
       int Wwidth = window.getWidth();
 
-      if (x<150) {
-         x=150;
-      }
-      if (x >= Wwidth - (width+250)) {
-         x = Wwidth - (width+250);
-      }
+     chase();
+
    }
 
    public void decreaseLives(){
