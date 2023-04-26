@@ -173,9 +173,6 @@ public class Level2Player {
 				currentAnim.start();
 
 			x = x - DX;
-			if (x < 70) {			// stuck within the left bounds
-				x = 70;
-			}
 		}
 		else{
 			if (direction == 2) { //right
@@ -185,9 +182,6 @@ public class Level2Player {
 					currentAnim.start();
 
 				x = x + DX;
-				if (x > window.getWidth()-getImage().getWidth(null)) {			// stuck within the right bounds
-					x = window.getWidth()-getImage().getWidth(null);
-				}
 
 			}
 			else{
@@ -205,6 +199,12 @@ public class Level2Player {
 					}
 				} 
 			}
+		}
+		if (x < 70) {			// stuck within the left bounds
+			x = 70;
+		}
+		if (x > window.getWidth()-getImage().getWidth(null)) {			// stuck within the right bounds
+			x = window.getWidth()-getImage().getWidth(null);
 		}
 	}	
 

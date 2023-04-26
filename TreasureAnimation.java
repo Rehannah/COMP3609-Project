@@ -39,7 +39,7 @@ public class TreasureAnimation {
 		soundManager = SoundManager.getInstance();	
 						// get reference to Singleton instance of SoundManager	}
 		
-		x = window.getWidth()-500;
+		x = window.getWidth()-200;
 		y = window.getHeight()-300;
 		playSound();
 
@@ -80,7 +80,6 @@ public class TreasureAnimation {
 
 	public void activate() {
 		isActive=true;
-		System.out.println("Chest is activated");
 	 }
 
 
@@ -90,11 +89,9 @@ public class TreasureAnimation {
 		if(currentAnim != null){
 			if(currentAnim.isStillActive()) {
 				currentAnim.update();
-				System.out.println("anim updated");
 			}
 			else {
 				currentAnim.start();
-				System.out.println("anim started");
 			}
 				
         	treasureImage = currentAnim.getImage();
