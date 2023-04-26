@@ -199,6 +199,10 @@ public class TileMap {
 
 
     public void changeLevel() {
+        // Graphics2D g2 = (Graphics2D)window.getGraphics();
+        // Image nextLevel = ImageManager
+        SoundManager sm = SoundManager.getInstance();
+        sm.stopSound("l1background");
         window.increaseLevel();
     }
 }

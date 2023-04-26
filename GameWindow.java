@@ -46,6 +46,8 @@ public class GameWindow extends JFrame implements
 
 	private int level=2;
 
+	private long musicStartTime;
+
 
 
 	public GameWindow() {
@@ -345,17 +347,18 @@ public class GameWindow extends JFrame implements
 	
 	private void startGame() { 
 		if (gameThread == null) {
-			//soundManager.playSound ("background", true);
+			soundManager.playSound ("l1background", true);
 			score =  new Score();
 			if (level==1) {
 				try {					
 					tileManager = new TileMapManager (this, score);
 					tileMap = tileManager.loadMap("maps/map.txt");
-					int w, h;
+					/*  int w, h;
 					w = tileMap.getWidth();
 					h = tileMap.getHeight();
-					// System.out.println ("Width of tilemap " + w);
-					// System.out.println ("Height of tilemap " + h);
+					System.out.println ("Width of tilemap " + w);
+					System.out.println ("Height of tilemap " + h);
+					*/
 				}
 				catch (Exception e) {
 					System.out.println(e);
@@ -486,6 +489,20 @@ public class GameWindow extends JFrame implements
 
 		if (isOverPauseButton) {		// mouse click on Pause button
 			isPaused = !isPaused;     	// toggle pausing
+			if(isPaused){
+				if(level == 1){
+					musicStartTime = soundManager.getClipPosition("l1background");		//save time of background music for restart
+					soundManager.stopSound("l1background");	
+					return;
+				}
+				musicStartTime = soundManager.getClipPosition("l2background");		//save time of background music for restart
+				soundManager.stopSound("l2background");	
+				return;
+			}
+			if(level == 1)
+				soundManager.playSound("l1background", true, musicStartTime);
+			else
+				soundManager.playSound("l2background", true, musicStartTime);
 		}
 		else if (isOverQuitButton) {		// mouse click on Quit button
 			isRunning = false;		// set running to false to terminate
@@ -509,5 +526,7 @@ public class GameWindow extends JFrame implements
 		level++;
 		score.resetLives();
 		panel = new GamePanel(this, score);
+		SoundManager sm = SoundManager.getInstance();
+		sm.playSound("l2background", true);
 	}
 }

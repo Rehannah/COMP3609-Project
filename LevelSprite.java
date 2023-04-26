@@ -14,13 +14,14 @@ public class LevelSprite extends Sprite{
             return true;
         
         if(getBoundingRectangle().intersects(player.getBoundingRectangle())){
+            player.idle();
             map.changeLevel();
         }
         return true;
     }
 
     public Rectangle2D getBoundingRectangle() {
-        return new Rectangle2D.Double(x, y, getWidth(), getHeight());
+        return new Rectangle2D.Double(x+0.85*getWidth(), y, getWidth(), getHeight());
     }
     
 
