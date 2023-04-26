@@ -26,7 +26,9 @@ public class SoundManager {				// a Singleton class
 		clip = loadClip("sounds/nutritiousSound.wav");
 		clips.put("nutritious", clip);			// played when player's sprite collides 
 													// with nutritious sprite
-		clip = loadClip("sounds/BirdSound.wav");
+		clip = loadClip("sounds/boyHurt.wav");
+		clips.put("boyHurt", clip);			// played when player's sprite collides 
+																						clip = loadClip("sounds/BirdSound.wav");
 		clips.put("bird", clip);				// played for bird pirate
 	}
 

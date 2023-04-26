@@ -8,11 +8,6 @@ public class PoisonSprite extends Sprite {
     public PoisonSprite(Score s){        
         super(ImageManager.loadImage("images/tiles/poison.png"), s);
         score = s;
-        if(score == null){
-            System.out.println("sprite");
-            
-        }
-        
     }
     
     public boolean collidesWithPlayer(){
@@ -21,6 +16,7 @@ public class PoisonSprite extends Sprite {
 
         if(getBoundingRectangle().intersects(player.getBoundingRectangle())){
             setVisible(false);
+            SoundManager.getInstance().playSound("boyHurt", false);
             return score.decreaseLives();
         }
         return true;

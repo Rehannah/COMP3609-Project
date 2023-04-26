@@ -18,6 +18,7 @@ public class NutritiousSprite extends Sprite {
         
         if(getBoundingRectangle().intersects(player.getBoundingRectangle())){
             setVisible(false);
+            SoundManager.getInstance().playSound("nutritious", false);
             score.increasePoints();
         }
         return true;
