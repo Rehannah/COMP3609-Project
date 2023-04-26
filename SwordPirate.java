@@ -1,5 +1,7 @@
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
+import java.awt.geom.Rectangle2D.Double;
+
 import javax.swing.JFrame;
 import java.awt.Image;
 import java.util.HashMap;
@@ -31,6 +33,12 @@ public class SwordPirate implements Pirate{
    private Score score;
    private int lives=3;
 
+   private double xFracLeft;
+   private double xFracRight;
+   private double yFrac;
+   private double widthFrac;
+   private double heightFrac;
+
    public SwordPirate (JFrame w, Level2Player player, Score score) {
       window = w;
 
@@ -39,6 +47,12 @@ public class SwordPirate implements Pirate{
 
       x = window.getWidth();
       y = window.getHeight()-400;
+
+      xFracLeft = 659.0/1324;
+      xFracRight = 280.0/1324;
+      yFrac = 280.0/1253;
+      widthFrac = 385.0/1324;
+      heightFrac = 840.0/1253;
 
       dx = 8;
       dy = 0;
@@ -179,7 +193,6 @@ public class SwordPirate implements Pirate{
          }
       }
 
-      int Wwidth = window.getWidth();
 
      chase();
 
@@ -202,6 +215,13 @@ public class SwordPirate implements Pirate{
       Rectangle2D.Double playerRect = player.getBoundingRectangle();
       
       return myRect.intersects(playerRect); 
+   }
+
+   public Rectangle2D.Double getAttackedRectangle() {
+         if(getDirection() == 1)
+            return new Rectangle2D.Double (x+xFracLeft*width, y+yFrac*height, widthFrac*width, heightFrac*height);
+         else
+            return new Rectangle2D.Double (x+xFracRight*width, y+yFrac*height, widthFrac*width, heightFrac*height);
    }
 
 }

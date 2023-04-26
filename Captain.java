@@ -1,5 +1,7 @@
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
+import java.awt.geom.Rectangle2D.Double;
+
 import javax.swing.JFrame;
 import java.awt.Image;
 import java.util.ArrayList;
@@ -12,6 +14,12 @@ public class Captain implements Pirate{
    private int x;
    private int y;
 
+   private double xFracLeft;
+   private double xFracRight;
+   private double yFrac;
+   private double widthFrac;
+   private double heightFrac;
+   
    private int width;
    private int height;
 
@@ -44,6 +52,12 @@ public class Captain implements Pirate{
 
       x = window.getWidth();
       y = window.getHeight()-400;
+
+      xFracLeft = 659.0/1324;
+      xFracRight = 280.0/1324;
+      yFrac = 280.0/1253;
+      widthFrac = 385.0/1324;
+      heightFrac = 840.0/1253;
 
       dx = 7;
       dy = 0;
@@ -233,6 +247,7 @@ public class Captain implements Pirate{
 
    public void decreaseLives(){
       lives--;
+      soundManager.playSound("captainHurt", false);
       if (lives<=0) {
          isActive=false;
       }
@@ -248,6 +263,14 @@ public class Captain implements Pirate{
       Rectangle2D.Double playerRect = player.getBoundingRectangle();
       
       return myRect.intersects(playerRect); 
+   }
+
+   public Rectangle2D.Double getAttackedRectangle() {
+      int width = pirateImage.getWidth(null);
+         if(getDirection() == 1)
+            return new Rectangle2D.Double (x+xFracLeft*width, y+yFrac*height, widthFrac*width, heightFrac*height);
+         else
+            return new Rectangle2D.Double (x+xFracRight*width, y+yFrac*height, widthFrac*width, heightFrac*height);
    }
 
 }

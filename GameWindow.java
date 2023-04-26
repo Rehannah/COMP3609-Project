@@ -230,7 +230,7 @@ public class GameWindow extends JFrame implements
 		}
 
 		// draw empty hearts for the lives the player doesn't have
-		while(i<5){
+		while(i<3){
 			g.drawImage(noLifeImage, leftOffset, 85, width, height, null);	// draw the background image
 			leftOffset += width;
 			i++;
