@@ -173,6 +173,7 @@ public class Coconut {  //Projectile Motion
         for (int i=0;i<pirates.size();i++) {
 			Pirate pirate = pirates.get(i);				
 			if (getBoundingRectangle().intersects(pirate.getBoundingRectangle())){
+				deActivate();
 				pirate.decreaseLives();
 				return true;
 			}
