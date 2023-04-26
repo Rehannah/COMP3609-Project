@@ -38,23 +38,21 @@ public class KnifePirate implements Pirate{
    private Score score;
    private int lives=3;
 
-   
 
-   
 
    public KnifePirate (JFrame w, Level2Player player, Score s) {
       window = w;
       this.score = s;
 
       height = 230;
-      x = window.getWidth();
+      x = window.getWidth()-50;
       y = window.getHeight()-400;
 
-      dx = 4;
+      dx = 5;
       dy = 0;
 
       this.player = player;
-      pirateImage = ImageManager.loadImage ("images/pirates/knife/idle/3_3-PIRATE_IDLE_000.png").getScaledInstance(-1, height, BufferedImage.SCALE_DEFAULT);
+      pirateImage = ImageManager.loadImage ("images/pirates/knife/walk/3_3-PIRATE_WALK_000.png").getScaledInstance(-1, height, BufferedImage.SCALE_DEFAULT);
       soundManager = SoundManager.getInstance();
       
       xFracLeft = 659.0/1324;
@@ -64,7 +62,7 @@ public class KnifePirate implements Pirate{
       heightFrac = 840.0/1253;
       
       soundPlayed = false;
-      isActive = false;
+      isActive = true;
 
       initialiseAnimations();
 		currentAnim = animations.get("walk");
@@ -131,21 +129,7 @@ public class KnifePirate implements Pirate{
       anim.addFrame(ImageManager.loadImage("images/pirates/knife/walk left/3_3-PIRATE_WALK_006.png").getScaledInstance(-1, height, BufferedImage.SCALE_DEFAULT), 150);
 		animations.put("walkLeft", anim);
 
-      anim = new Animation(true);
-		anim.addFrame(ImageManager.loadImage("images/pirates/knife/idle left/3_3-PIRATE_IDLE_000.png").getScaledInstance(-1, height, BufferedImage.SCALE_DEFAULT), 150);
-		anim.addFrame(ImageManager.loadImage("images/pirates/knife/idle left/3_3-PIRATE_IDLE_001.png").getScaledInstance(-1, height, BufferedImage.SCALE_DEFAULT), 150);
-		anim.addFrame(ImageManager.loadImage("images/pirates/knife/idle left/3_3-PIRATE_IDLE_002.png").getScaledInstance(-1, height, BufferedImage.SCALE_DEFAULT), 175);
-		anim.addFrame(ImageManager.loadImage("images/pirates/knife/idle left/3_3-PIRATE_IDLE_003.png").getScaledInstance(-1, height, BufferedImage.SCALE_DEFAULT), 175);
-		anim.addFrame(ImageManager.loadImage("images/pirates/knife/idle left/3_3-PIRATE_IDLE_004.png").getScaledInstance(-1, height, BufferedImage.SCALE_DEFAULT), 125);
-		anim.addFrame(ImageManager.loadImage("images/pirates/knife/idle left/3_3-PIRATE_IDLE_005.png").getScaledInstance(-1, height, BufferedImage.SCALE_DEFAULT), 150);
-      anim.addFrame(ImageManager.loadImage("images/pirates/knife/idle left/3_3-PIRATE_IDLE_006.png").getScaledInstance(-1, height, BufferedImage.SCALE_DEFAULT), 150);
-		animations.put("idleLeft", anim);
 	}
-
-
-   public void activate() {
-      isActive=true;
-   }
 
    public void draw (Graphics2D g2) {
       
@@ -180,13 +164,7 @@ public class KnifePirate implements Pirate{
 
      if (!window.isVisible ()) return;
 
-     chase();
-
       if (collidesWithPlayer()) {
-         //lives--;
-         // if (lives<=0) {
-         //    isActive=false;
-         // }
          if (getDirection()==1) {
             currentAnim = animations.get("attackLeft");
          }
@@ -205,7 +183,8 @@ public class KnifePirate implements Pirate{
          else {
             currentAnim = animations.get("walk");
          }
-      }   
+      }
+      chase();
    }
 
    public void decreaseLives(){

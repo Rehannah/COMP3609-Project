@@ -40,7 +40,7 @@ public class BirdPirate implements Pirate{
       width = 150;
       height = 150;
 
-      dx = 5;
+      dx = 10;
       dy = 5;
 
       x = window.getWidth()+50;
@@ -173,11 +173,11 @@ public class BirdPirate implements Pirate{
 
      if (!window.isVisible ()) return;
       
+      if (lives<=0) {
+         isActive=false;
+      }
+
       if (collidesWithPlayer()) {
-         lives--;
-         if (lives<=0) {
-            isActive=false;
-         }
          if (getDirection()==2) {
             currentAnim = animations.get("attack");
          }

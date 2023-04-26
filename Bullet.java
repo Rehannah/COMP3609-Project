@@ -82,11 +82,15 @@ public class Bullet {
 
    private void chase() {
 
-      if (x > player.getX())
-	  x = x - dx;
+      if (x > player.getX()) {
+	      x = x - dx;
+      }
       else
-      if (x < player.getX())
- 	  x = x + dx;
+      if (x < player.getX()) {
+ 	      x = x + dx;
+         deActivate();
+      }
+
 
     //   if (y > player.getY())
 	//   y = y - dy;
