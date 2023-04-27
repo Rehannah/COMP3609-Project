@@ -203,16 +203,22 @@ public class BirdPirate implements Pirate{
          }
       }
 
-      if (t<=200) {
+      if (t<=250) {
          chase();
       }
       else{
          flee();
       }       
       
-      if (x>window.getWidth()+600 || x<=0) {
+      if (x>window.getWidth()+600) {
          x=window.getWidth()+600;
          t=0;
+      }
+      else{
+         if (x<=-600){
+            x=-600;
+            t=0;
+         }
       }
    }
 
