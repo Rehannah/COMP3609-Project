@@ -195,21 +195,24 @@ public class BirdPirate implements Pirate{
          }
       }
       else{
-         if (t<=200) {
-            chase();
-         }
-         else{
-            flee();
-         }
-         if (t>=400){
-            t=0;
-         }
          if (getDirection()==2) {
             currentAnim = animations.get("fly");
          }
          else{
             currentAnim = animations.get("flyLeft");
          }
+      }
+
+      if (t<=200) {
+         chase();
+      }
+      else{
+         flee();
+      }       
+      
+      if (x>window.getWidth()+600 || x<=0) {
+         x=window.getWidth()+600;
+         t=0;
       }
    }
 
