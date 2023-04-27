@@ -44,9 +44,11 @@ public class GameWindow extends JFrame implements
 	private GamePanel panel;
 	private Image backgroundImage;
 
-	private int level=2;
+	private int level=1;
 
 	private long musicStartTime;
+
+	private boolean motion;
 
 
 
@@ -69,7 +71,8 @@ public class GameWindow extends JFrame implements
 		image = new BufferedImage (pWidth, pHeight, BufferedImage.TYPE_INT_RGB);
 		
 		backgroundImage = ImageManager.loadImage ("images/background/pirateship.gif");
-
+		
+		
 		startGame();
 	}
 
@@ -349,8 +352,13 @@ public class GameWindow extends JFrame implements
 	
 	private void startGame() { 
 		if (gameThread == null) {
+			motion = true;
 			soundManager.playSound ("l1background", true);
 			score =  new Score();
+			
+			panel = new GamePanel(this, score);
+			panel.setPreferredSize(new Dimension(getWidth(), getHeight()));
+		
 			if (level==1) {
 				try {					
 					tileManager = new TileMapManager (this, score);
@@ -394,7 +402,7 @@ public class GameWindow extends JFrame implements
 
 	// implementation of methods in KeyListener interface
 
-	public void keyPressed (KeyEvent e) {
+	public void keyPressed (KeyEvent e) {		
 		
 		int keyCode = e.getKeyCode();
 
@@ -403,7 +411,10 @@ public class GameWindow extends JFrame implements
 			return;				//  one of these keys (ESC, Q, END)			
         }
 		
-		if (isPaused)
+		if(!motion)
+			return;
+		
+		if(isPaused)
 			return; 
 		
 		if (keyCode == KeyEvent.VK_SPACE) {
@@ -439,6 +450,9 @@ public class GameWindow extends JFrame implements
 	}
 
 	public void keyReleased (KeyEvent e) {		
+
+		if(!motion)
+			return;
 
 		int keyCode = e.getKeyCode();
 		
@@ -489,6 +503,9 @@ public class GameWindow extends JFrame implements
 
 	private void testMousePress(int x, int y) {
 
+		if(!motion)
+			return;
+
 		if (isOverPauseButton) {		// mouse click on Pause button
 			isPaused = !isPaused;     	// toggle pausing
 			if(isPaused){
@@ -518,7 +535,10 @@ public class GameWindow extends JFrame implements
 	*/
 
 	private void testMouseMove(int x, int y) { 
-		if (isRunning) {
+		if(!motion)
+			return;
+		
+			if (isRunning) {
 			isOverPauseButton = pauseButtonArea.contains(x,y) ? true : false;
 			isOverQuitButton = quitButtonArea.contains(x,y) ? true : false;
 		}
@@ -526,7 +546,11 @@ public class GameWindow extends JFrame implements
 
 	public void increaseLevel() {
 		level++;
-		panel = new GamePanel(this, score);
 		soundManager.playSound("l2background", true);
+	}
+
+
+	public void setNoMotion(boolean m) {
+		motion = m;
 	}
 }

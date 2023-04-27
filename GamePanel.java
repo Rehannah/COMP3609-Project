@@ -140,10 +140,12 @@ public class GamePanel extends JPanel {
 			}
 
 			if (captain.getLives()<=0) {
-				treasure.activate();
+				//treasure.activate();
+				winGame();
 			}
 		}
 	}
+
 	public void gameRender(Graphics2D imageContext) {
 		if (player != null) {
 			player.draw(imageContext);
@@ -178,6 +180,14 @@ public class GamePanel extends JPanel {
 		if (treasure!=null && treasure.isActive()) {
 			treasure.draw(imageContext);
 		}
+	}
+
+	public void winGame(){
+		window.setNoMotion(true);
+		//scale everyhting by 1/5
+		//run, jump, see treasure
+		//open, congratulations;
+		//remember sounds
 	}
 
 }

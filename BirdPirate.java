@@ -8,7 +8,7 @@ import java.util.HashMap;
 
 public class BirdPirate implements Pirate{
 
-   private JFrame window;
+   private GameWindow window;
 
    private int x;
    private int y;
@@ -35,7 +35,7 @@ public class BirdPirate implements Pirate{
    private Image birdImage;
 
    private int t; //time counter
-   public BirdPirate (JFrame w, Level2Player player, Score s) {
+   public BirdPirate (GameWindow w, Level2Player player, Score s) {
       window = w;
       this.score = s;
 
@@ -175,52 +175,52 @@ public class BirdPirate implements Pirate{
 
    public void move() {
       
-     if (!window.isVisible ()) return;
-     t++;
-      
-      if (lives<=0) {
-         isActive=false;
-      }
-      
-      if (collidesWithPlayer()) {
-         if (getDirection()==2) {
-            currentAnim = animations.get("attack");
-         }
-         else{
-            currentAnim = animations.get("attackLeft");
-         }
-         
-         if (birdImage ==currentAnim.getImage()) {
-            score.decreaseLives();
-         }
-      }
-      else{
-         if (getDirection()==2) {
-            currentAnim = animations.get("fly");
-         }
-         else{
-            currentAnim = animations.get("flyLeft");
-         }
-      }
-
-      if (t<=250) {
-         chase();
-      }
-      else{
-         flee();
-      }       
-      
-      if (x>window.getWidth()+600) {
-         x=window.getWidth()+600;
-         t=0;
-      }
-      else{
-         if (x<=-600){
-            x=-600;
-            t=0;
-         }
-      }
-   }
+      if (!window.isVisible ()) return;
+      t++;
+       
+       if (lives<=0) {
+          isActive=false;
+       }
+       
+       if (collidesWithPlayer()) {
+          if (getDirection()==2) {
+             currentAnim = animations.get("attack");
+          }
+          else{
+             currentAnim = animations.get("attackLeft");
+          }
+          
+          if (birdImage ==currentAnim.getImage()) {
+             score.decreaseLives();
+          }
+       }
+       else{
+          if (getDirection()==2) {
+             currentAnim = animations.get("fly");
+          }
+          else{
+             currentAnim = animations.get("flyLeft");
+          }
+       }
+ 
+       if (t<=250) {
+          chase();
+       }
+       else{
+          flee();
+       }       
+       
+       if (x>window.getWidth()+600) {
+          x=window.getWidth()+600;
+          t=0;
+       }
+       else{
+          if (x<=-600){
+             x=-600;
+             t=0;
+          }
+       }
+    }
 
    public void decreaseLives(){
       lives--;

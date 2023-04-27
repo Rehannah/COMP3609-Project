@@ -39,7 +39,7 @@ public class Captain implements Pirate{
    private ArrayList<Bullet> bullets;
 
    private Score s;
-   private int lives=3;
+   private int lives=2;
 
    public Captain (GameWindow w, Level2Player player, Score s) {
       window = w;
