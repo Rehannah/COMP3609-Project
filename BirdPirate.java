@@ -34,6 +34,7 @@ public class BirdPirate implements Pirate{
    private int lives=3;
    private Image birdImage;
 
+   private int t; //time counter
    public BirdPirate (JFrame w, Level2Player player, Score s) {
       window = w;
       this.score = s;
@@ -42,9 +43,9 @@ public class BirdPirate implements Pirate{
       height = 150;
 
       dx = 10;
-      dy = 5;
+      dy = 6;
 
-      x = window.getWidth()+50;
+      x = window.getWidth()+600;
       y = 200;
 
       this.player = player;
@@ -53,10 +54,12 @@ public class BirdPirate implements Pirate{
 
       soundPlayed = false;
 
-      isActive = false;
+      isActive = true;
 
       initialiseAnimations();
 		currentAnim = animations.get("fly");
+
+      t=0;
    }
 
    public boolean isActive() {
@@ -171,8 +174,9 @@ public class BirdPirate implements Pirate{
    }
 
    public void move() {
-
+      
      if (!window.isVisible ()) return;
+     t++;
       
       if (lives<=0) {
          isActive=false;
@@ -191,13 +195,21 @@ public class BirdPirate implements Pirate{
          }
       }
       else{
+         if (t<=200) {
+            chase();
+         }
+         else{
+            flee();
+         }
+         if (t>=400){
+            t=0;
+         }
          if (getDirection()==2) {
             currentAnim = animations.get("fly");
          }
          else{
             currentAnim = animations.get("flyLeft");
          }
-         chase();
       }
    }
 

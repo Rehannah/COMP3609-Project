@@ -50,7 +50,7 @@ public class Captain implements Pirate{
       width = 250;
       height = 250;
 
-      x = window.getWidth();
+      x = window.getWidth()+600;
       y = window.getHeight()-400;
 
       xFracLeft = 659.0/1324;

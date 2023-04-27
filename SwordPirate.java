@@ -45,7 +45,7 @@ public class SwordPirate implements Pirate{
       width = 250;
       height = 250;
 
-      x = window.getWidth();
+      x = window.getWidth()+600;
       y = window.getHeight()-400;
 
       xFracLeft = 659.0/1324;
@@ -54,7 +54,7 @@ public class SwordPirate implements Pirate{
       widthFrac = 385.0/1324;
       heightFrac = 840.0/1253;
 
-      dx = 8;
+      dx = 5;
       dy = 0;
 
       this.player = player;
