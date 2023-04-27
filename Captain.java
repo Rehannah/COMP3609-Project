@@ -9,7 +9,7 @@ import java.util.HashMap;
 
 public class Captain implements Pirate{
 
-   private JFrame window;
+   private GameWindow window;
 
    private int x;
    private int y;
@@ -41,7 +41,7 @@ public class Captain implements Pirate{
    private Score s;
    private int lives=3;
 
-   public Captain (JFrame w, Level2Player player, Score s) {
+   public Captain (GameWindow w, Level2Player player, Score s) {
       window = w;
 
       bullets = new ArrayList<Bullet>();

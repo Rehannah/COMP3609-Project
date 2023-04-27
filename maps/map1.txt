@@ -2,15 +2,18 @@
 # (Lines that start with '#' are comments)
 # The tiles are:
 #   (Space) Empty tile
-#   A..Z    Tiles A through Z
-#   o       Star
-#   !       Music Note
-#   *       Goal
-#   1       Bad Guy 1 (grub)
-#   2       Bad Guy 2 (fly)
+#   A       Tile for top right
+#   B	    Tile for top middle
+#   C	    Tile for top left
+#   D	    Tile for ground
+#   *       Nutritious plant
+#   !       Poisonous plant
+#   0       Token for progression to next level
 
-                      IIIIIII      IIIIIII   
-                                                     EF
- II              EF                 IIIII           EGD         II
-        EF       CD                                EGAD      
-BBBBBBBBGHBBBBBBBGHBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBGAAHBBBBBBBBBBB
+                          
+                               *****                      *****        
+                       **      ABBBC        **      **   ABBBBC                                 
+                      ABBC                  ABBC   ABBC                   
+                                                                          
+              **!       ****       !***!  **      !   **          *!**   0
+DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD

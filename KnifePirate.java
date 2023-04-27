@@ -8,7 +8,7 @@ import java.util.HashMap;
 
 public class KnifePirate implements Pirate{
 
-   private JFrame window;
+   private GameWindow window;
 
    private int x;
    private int y;
@@ -39,7 +39,7 @@ public class KnifePirate implements Pirate{
    private double widthFrac;
    private double heightFrac;
 
-   public KnifePirate (JFrame w, Level2Player player, Score score) {
+   public KnifePirate (GameWindow w, Level2Player player, Score score) {
       window = w;
 
       width = 250;
@@ -181,7 +181,8 @@ public class KnifePirate implements Pirate{
          Image imageLeft = ImageManager.loadImage("images/pirates/knife/attack left/3_3-PIRATE_ATTACK_005.png");
          Image imageRight = ImageManager.loadImage("images/pirates/knife/attack/3_3-PIRATE_ATTACK_005.png");
          if (pirateImage ==imageLeft || pirateImage ==imageRight) {
-            score.decreaseLives();
+            if(!score.decreaseLives())
+               window.endGame();
          }
       }
       else{

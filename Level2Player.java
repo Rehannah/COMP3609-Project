@@ -300,9 +300,7 @@ public class Level2Player {
 		    playerImage.equals(ImageManager.loadImage("images/boy/ThrowLeft/2.png"))) &&
 		    oldImage != playerImage){
 
-			Coconut c =  new Coconut(window, this);
-			c.activate();	
-			panel.addCoconut(c);		
+			panel.addCoconut();		
 		}
 		
 		g2.drawImage(playerImage, x, y, null);
