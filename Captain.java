@@ -232,7 +232,7 @@ public class Captain implements Pirate{
             Bullet bullet = bullets.get(i);
             if (bullet!=null && bullet.isActive()) 
                bullet.move();
-            if (bullet.isActive()==false) 
+            if (bullet!=null && !bullet.isActive()) 
                bullets.remove(i);
          }
       }
