@@ -150,10 +150,10 @@ public class BirdPirate implements Pirate{
       if (x < player.getX())
  	  x = x + dx;
 
-      if (y >= player.getY())
+      if (y >= player.getY()-100)
 	  y = y - dy;
       else
-      if (y <= player.getY())
+      if (y <= player.getY()-100)
  	  y = y + dy;
    }
 
