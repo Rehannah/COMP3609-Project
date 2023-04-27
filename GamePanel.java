@@ -12,33 +12,35 @@ public class GamePanel extends JPanel {
    
 	private SoundManager soundManager;
 	private Level2Player player;
-	public SwordPirate swordPirate;
-	public KnifePirate knifePirate;
-	public Captain captain;
-	public BirdPirate bird;
-	// private ArrayList pirates;
+	private SwordPirate swordPirate;
+	private KnifePirate knifePirate;
+	private Captain captain;
+	private BirdPirate bird;
+	private int numCoconuts;
 
 	private ArrayList<Coconut> coconuts;
 
-	private JFrame window;		// reference to the JFrame on which player is drawn
+	private GameWindow window;		// reference to the JFrame on which player is drawn
 	
 	private Score s;
 
-	public TreasureAnimation treasure;
+	private TreasureAnimation treasure;
 	
-	public GamePanel (JFrame window, Score s) {
+	public GamePanel (GameWindow window, Score s) {
 		this.window = window;
 		this.s=s;
 	}
 
 	public void createGameEntities() {
-		coconuts = new ArrayList<Coconut>();
+		numCoconuts = s.getLives()+1;
+		coconuts = new ArrayList<Coconut>(numCoconuts);
 		player = new Level2Player(window, this);
 		swordPirate = new SwordPirate(window, player, s);
 		knifePirate = new KnifePirate(window, player, s);
 		captain = new Captain(window, player, s);
 		bird = new BirdPirate(window, player, s);
 		treasure = new TreasureAnimation(window, player);
+		s.resetLives();
 	}
 
 
@@ -96,18 +98,36 @@ public class GamePanel extends JPanel {
 	}
 
 	public void throwCoconut(){
-		player.startThrow();
+		int size = coconuts.size();
+		if(size == 0)
+			player.startThrow();
+		else if(size <= numCoconuts){
+			for(int i=0; i<size; i++)
+				if(coconuts.get(i).isActive() == false)
+					player.startThrow();
+		}
 	}
 
 	public ArrayList<Coconut> getCoconuts() {
 		return coconuts;
 	}
 
-	public void addCoconut(Coconut c){
+	public void addCoconut(){
 		if(coconuts!= null){
-			coconuts.add(c);
+			if(coconuts.size() < numCoconuts){			
+				Coconut c =  new Coconut(window, player);
+				c.activate();	
+				coconuts.add(c);
+				return;
+			}
+			for(int i=0; i< coconuts.size(); i++){
+				Coconut c = coconuts.get(i);
+				if(!c.isActive()){
+					c.activate();
+					return;
+				}
+			}
 		}
-
 	}
 
 	public void nextPirate() {

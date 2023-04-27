@@ -8,7 +8,7 @@ import java.util.HashMap;
 
 public class SwordPirate implements Pirate{
 
-   private JFrame window;
+   private GameWindow window;
 
    private int x;
    private int y;
@@ -39,7 +39,7 @@ public class SwordPirate implements Pirate{
    private double widthFrac;
    private double heightFrac;
 
-   public SwordPirate (JFrame w, Level2Player player, Score score) {
+   public SwordPirate (GameWindow w, Level2Player player, Score score) {
       window = w;
 
       width = 250;
@@ -178,8 +178,10 @@ public class SwordPirate implements Pirate{
             
          Image imageLeft = ImageManager.loadImage("images/pirates/sword/attack left/1_entity_000_ATTACK_004.png");
          Image imageRight = ImageManager.loadImage("images/pirates/sword/attack/1_entity_000_ATTACK_004.png");
-         if (pirateImage ==imageLeft || pirateImage ==imageRight) 
-            score.decreaseLives();
+         if (pirateImage ==imageLeft || pirateImage ==imageRight){
+            if(!score.decreaseLives())
+               window.endGame();
+         }
       }
       else{
          if (getDirection()==2) 

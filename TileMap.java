@@ -139,7 +139,13 @@ public class TileMap {
         offsetX -= DX;
         if((screenWidth - tilesToPixels(mapWidth)) > offsetX){
             offsetX = screenWidth - tilesToPixels(mapWidth); 
-            player.idle();       
+            player.idle(); 
+            int x, y;
+            Image playerImage = player.getImage();
+            x = (dimension.width / 2 - playerImage.getWidth(null)/2);	// position player in middle of screen
+            y = dimension.height - (TILE_SIZE + playerImage.getHeight(null));
+            player.setX(x);
+            player.setY(y);      
         }
         else{
             bgManager.update();

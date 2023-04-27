@@ -6,7 +6,7 @@ import java.util.HashMap;
 
 public class Bullet {
 
-   private JFrame window;
+   private GameWindow window;
 
    private int x;
    private int y;
@@ -30,7 +30,7 @@ public class Bullet {
 
    private Score s;
 
-   public Bullet (JFrame w, Level2Player player, Captain captain, Score s) {
+   public Bullet (GameWindow w, Level2Player player, Captain captain, Score s) {
       window = w;
 
       this.player = player;
@@ -105,9 +105,9 @@ public class Bullet {
      if (!window.isVisible ()) return;
       chase();
       if (collidesWithPlayer()){
-         deActivate();
-         // s.decreasePoints();
-         s.decreaseLives();
+         deActivate();         
+         if(!s.decreaseLives())
+            window.endGame();
       }
    }
 

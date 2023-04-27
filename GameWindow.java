@@ -190,8 +190,10 @@ public class GameWindow extends JFrame implements
 
 	public void endGame(){
 		
-		screenUpdate();
+		screenUpdate();		
 		gameOverMessage(this.getGraphics());
+		soundManager.stopSound("l1background");
+		soundManager.stopSound("l2background");
 		try {
 			Thread.sleep(5000);
 		} 
@@ -524,9 +526,7 @@ public class GameWindow extends JFrame implements
 
 	public void increaseLevel() {
 		level++;
-		score.resetLives();
 		panel = new GamePanel(this, score);
-		SoundManager sm = SoundManager.getInstance();
-		sm.playSound("l2background", true);
+		soundManager.playSound("l2background", true);
 	}
 }

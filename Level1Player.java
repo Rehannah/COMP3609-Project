@@ -64,9 +64,9 @@ public class Level1Player{
 		animations.put("jump", anim);
 
 		anim = new Animation(false);
-		anim.addFrame(ImageManager.loadImage("images/boy/Jump/4.png"), 200);
-		anim.addFrame(ImageManager.loadImage("images/boy/Jump/5.png"), 150);
-		anim.addFrame(ImageManager.loadImage("images/boy/Jump/6.png"), 100);
+		anim.addFrame(ImageManager.loadImage("images/boy/Jump/4.png"), 350);//200
+		anim.addFrame(ImageManager.loadImage("images/boy/Jump/5.png"), 350);//150
+		anim.addFrame(ImageManager.loadImage("images/boy/Jump/6.png"), 100);//100
 		animations.put("fall", anim);
 
 		anim = new Animation(false);
@@ -163,32 +163,7 @@ public class Level1Player{
 			}
 		}		
 		return null;
-	}
-	
-
-
-	public synchronized void move (int direction) {
-	    Point tilePos = null;
-			
-	    if (!window.isVisible ()) 
-			return;
-		 	
-		if (direction == 2) 	
-			tilePos = collidesWithTile(x, y);			
-		
-		else if (direction == 3 && !jumping) {	
-			jump();
-			return;
-		}
-		
-		if (tilePos != null) { 
-			int playerWidth = playerImage.getWidth(null);
-			x = ((int) tilePos.getX()) * TILE_SIZE - playerWidth; // keep flush with left side of tile
-		}
-		else if (isInAir()) 
-			fall();
-		
-	}		 
+	}	 
 
 
 	public boolean isInAir() {
