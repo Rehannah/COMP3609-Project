@@ -135,10 +135,11 @@ public class GamePanel extends JPanel {
 			if (knifePirate.isActive()==false && swordPirate.getLives()==3) {
 				swordPirate.activate();
 			}
-			if (knifePirate.getLives()<=0 && swordPirate.getLives()<=0 && bird.getLives()==3) {
-				bird.activate();
-			}
-			if (knifePirate.getLives()<=0 && swordPirate.getLives()<=0 && bird.getLives()<=0 && captain.getLives()==3) {
+			// if (knifePirate.getLives()<=0 && bird.getLives()==3) {
+			// 	bird.activate();
+			// 	System.out.println("bird activate");
+			// }
+			if (knifePirate.getLives()<=0 && swordPirate.getLives()<=0 && captain.getLives()==3) {
 				captain.activate();
 			}
 
