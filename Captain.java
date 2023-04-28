@@ -39,7 +39,7 @@ public class Captain implements Pirate{
    private ArrayList<Bullet> bullets;
 
    private Score s;
-   private int lives=2;
+   private int lives=3;
 
    public Captain (GameWindow w, Level2Player player, Score s) {
       window = w;
@@ -233,7 +233,7 @@ public class Captain implements Pirate{
             if (bullet!=null && bullet.isActive()) 
                bullet.move();
             if (bullet!=null && !bullet.isActive()) 
-               bullets.remove(i);
+               bullets.remove(bullet);
          }
       }
    }

@@ -9,7 +9,7 @@ public class Level2Player {
 
 	private static final int DX = 8;	// amount of X pixels to move in one keystroke
 	
-	private JFrame window;		// reference to the JFrame on which player is drawn
+	private GameWindow window;		// reference to the JFrame on which player is drawn
 	private GamePanel panel;
 
 	private int x;			// x-position of player's sprite
@@ -31,24 +31,9 @@ public class Level2Player {
 	private int startY;
 	private int startX;
 
-	public Level2Player (JFrame window) {
-		this.window = window;
+	private boolean wonGame;
 
-		playerImage = ImageManager.loadImage("images/boy/Idle/1.png");	  
-		dimension = window.getSize();
-		initialiseAnimations();
-		currentAnim = animations.get("idle");
-		x = window.getWidth()/4;
-		y = window.getHeight()-400;
-
-		jumping = false;
-		initialVelocityX = 30;
-		initialVelocityY = 75;
-
-		direction=2;
-	}
-
-	public Level2Player (JFrame window, GamePanel p) {
+	public Level2Player (GameWindow window, GamePanel p) {
 		this.window = window;
 		panel = p;
 
@@ -64,6 +49,8 @@ public class Level2Player {
 		initialVelocityY = 75;
 
 		direction=2;
+
+		wonGame = false;
 	}
 
 	public void initialiseAnimations(){
@@ -153,10 +140,10 @@ public class Level2Player {
 	}
 
 	public synchronized void move (int direction) {
-
+		
 		if(jumping){
 			updateJumping();
-			return;
+			return;		
 		}
 
 		if(direction == -1)
@@ -194,8 +181,12 @@ public class Level2Player {
 						currentAnim = animations.get("idle");
 						currentAnim.start();
 					}
-					else if(direction == 5){
-						jump();
+					else {
+						if(direction == 5){
+							jump();
+						}
+						else if (direction == 6)
+							jumpUp();
 					}
 				} 
 			}
@@ -203,20 +194,23 @@ public class Level2Player {
 		if (x < 70) {			// stuck within the left bounds
 			x = 70;
 		}
-		if (x > window.getWidth()-getImage().getWidth(null)) {			// stuck within the right bounds
-			x = window.getWidth()-getImage().getWidth(null);
+		if(!wonGame){
+			if(x > window.getWidth()-getImage().getWidth(null)) 			// stuck within the right bounds
+				x = window.getWidth()-getImage().getWidth(null);
 		}
+		else if(x > window.getScreenWidth()-getImage().getWidth(null)) 			// stuck within the right bounds
+				x = window.getScreenWidth()-getImage().getWidth(null);
 	}	
 
 	private void jump () { 
 		if(!window.isVisible()) 
 			return;
-
+			
 		if(direction%2 == 0){
-			if(x+292 > dimension.width - getImage().getWidth(null) - 20)	//not enough space to jump
+			if(x+453 > dimension.width - getImage().getWidth(null) - 20)	//not enough space to jump
 				return;	
 		}
-		else if(x -292 < 70)
+		else if(x-453 < 70)
 			return;		//not enough space to jump
 		
 		jumping = true;
@@ -236,23 +230,23 @@ public class Level2Player {
 
 		if (!window.isVisible ()) 
 			return;
-		
+		if(wonGame){
+			updateJumpUp();
+			return;
+		}
 		timeElapsed += 0.5;
 		
-		int oldX = x;
 		int oldY = y;
 		int dx, dy;
-		int playerHeight = getImage().getHeight(null);	 		// below floor; extrapolate to bring player on top of floor.
-      	
+		
       	dx = (int) (initialVelocityX * timeElapsed);
 		dy = (int) (initialVelocityY * timeElapsed - 4.9 * timeElapsed * timeElapsed);
 
 		y = startY - dy;			// y is the height at which ball is thrown
       		
-        if (y > window.getHeight() - 200 - playerHeight){// System.out.println ("Y = " + y);
-	    	int amountOver = y - (window.getHeight() - 200 - playerHeight); 
-	    	y = window.getHeight() - 200 - playerHeight;
-	    	// System.out.println ("New Y = " + y);
+        if (y > window.getHeight() - 400){
+	    	int amountOver = y - (window.getHeight() - 400); 
+	    	y = window.getHeight() - 400;
             double fractionOver = (amountOver * 1.0) / (y - oldY);
 	    	timeElapsed = timeElapsed - (1 - fractionOver) * 0.5;
 	    	dx = (int) (initialVelocityX * timeElapsed);
@@ -270,7 +264,53 @@ public class Level2Player {
 			currentAnim.stop();
 	}
 
-	
+	private void jumpUp(){
+		if(!window.isVisible()) 
+			return;
+		
+		initialVelocityX = 25;
+		initialVelocityY = 40;
+		jumping = true;
+		currentAnim = animations.get("jump");
+		currentAnim.start();
+
+		timeElapsed = 0;		
+
+		startY = y;
+		startX = x;
+	}
+
+	private void updateJumpUp() {
+		if (!window.isVisible ()) 
+			return;
+		timeElapsed += 0.5;
+		
+		int oldY = y;
+		int dx, dy;
+				// below floor; extrapolate to bring player on top of floor.
+      	
+      	dx = (int) (initialVelocityX * timeElapsed);
+		dy = (int) (initialVelocityY * timeElapsed - 4.9 * timeElapsed * timeElapsed);
+
+		y = startY - dy;			// y is the height at which ball is thrown
+		
+		if (x > startX+20)
+			if(y > window.getHeight() - 250 - getImage().getHeight(null)){
+				int amountOver = y - (window.getHeight() - 250 - getImage().getHeight(null)); 
+				double fractionOver = (amountOver * 1.0) / (y - oldY);
+				y = window.getHeight() - 250 - getImage().getHeight(null);
+				timeElapsed = timeElapsed - (1 - fractionOver) * 0.5;
+				dx = (int) (initialVelocityX * timeElapsed);
+				jumping = false;
+			}
+		x = startX + dx;
+		
+		timeElapsed = timeElapsed + 0.5;
+		
+		if(!jumping)
+			currentAnim.stop();
+	}
+
 
 	public void startThrow(){
 		if(direction % 2 == 0)
@@ -318,4 +358,32 @@ public class Level2Player {
 	public int getDirection() {
 		return direction;
 	}
+
+    public void setWonGame(boolean w) {
+		wonGame = w;
+    }
+
+    public void idle() {
+    }
+
+    public void draw(Graphics2D g2, double scaleX, double scaleY, double scaleHeight, int factor) {
+		if(currentAnim != null){
+			if(currentAnim.isStillActive())
+				currentAnim.update();
+			else{
+				currentAnim = animations.get("idle");
+				currentAnim.start();
+			}
+			playerImage = currentAnim.getImage();
+		}
+
+		int width = playerImage.getWidth(null);
+		int height = playerImage.getHeight(null);
+		int x2 = x-factor*(int)Math.round(scaleX*x);
+		int y2 = y - factor*(int)Math.round(scaleY*y);
+		int h =(int)Math.round(Math.pow(scaleHeight,factor)*height);
+		int w = (int)(width*1.0/height*h);		
+		
+		g2.drawImage(playerImage, x2, y2, w, h, null);
+    }
 }

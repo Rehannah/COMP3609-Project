@@ -1,17 +1,16 @@
 import java.awt.Image;
 import java.awt.Graphics2D;
-import java.awt.geom.Rectangle2D;
 import java.util.HashMap;
 import javax.swing.JFrame;
 
 
 /**
-    The TreasureAnimation class creates an animation of a flying bird. 
+    The TreasureAnimation class creates an animation of an opening treasure chest. 
 */
 public class TreasureAnimation {
-	private JFrame window;
+	private GameWindow window;
 	
-	Animation animation;
+	// Animation animation;
 
 	private int x;		// x position of animation
 	private int y;		// y position of animation
@@ -19,32 +18,21 @@ public class TreasureAnimation {
 	private int width;
 	private int height;
 
-    private SoundManager soundManager;		// reference to SoundManager to play clip
-
-	private Level2Player player;
-
 	private Image treasureImage;
-   private Animation currentAnim;
+    private Animation currentAnim;
 	private HashMap<String, Animation> animations;
-	private boolean isActive;
 
-	public TreasureAnimation(JFrame w, Level2Player player) {
-		this.player = player;
+	public TreasureAnimation(GameWindow w) {
 		window=w;
 
 		initialiseAnimations();
-		currentAnim = animations.get("open");
-
-		isActive=false;
-		soundManager = SoundManager.getInstance();	
-						// get reference to Singleton instance of SoundManager	}
+		currentAnim = null;
 		
-		x = window.getWidth()-200;
-		y = window.getHeight()-300;
-		playSound();
-
-		height=150;
-		width=150;
+		x = window.getWidth()+70;
+		y = window.getHeight()-390;
+		treasureImage = ImageManager.loadImage("images/treasure/treasure chest0000.png");
+		height=100;
+		width=100;
 	}
 
 	public void initialiseAnimations(){
@@ -57,12 +45,12 @@ public class TreasureAnimation {
 		Image animImage5 = ImageManager.loadImage("images/treasure/treasure chest0004.png");
 		Image animImage6 = ImageManager.loadImage("images/treasure/treasure chest0005.png");
 		Image animImage7 = ImageManager.loadImage("images/treasure/treasure chest0006.png");
-		Image animImage8 = ImageManager.loadImage("images/treasure/treasure chest0007.png");
+		// Image animImage8 = ImageManager.loadImage("images/treasure/treasure chest0007.png");
 
 		// create animation object and insert frames
 
 		animations = new HashMap<>();
-		animation = new Animation(false);	// play once only
+		Animation animation = new Animation(false);	// play once only
 		animation.addFrame(animImage1, 200);
 		animation.addFrame(animImage2, 200);
 		animation.addFrame(animImage3, 200);
@@ -70,72 +58,46 @@ public class TreasureAnimation {
 		animation.addFrame(animImage5, 200);
 		animation.addFrame(animImage6, 200);
 		animation.addFrame(animImage7, 200);
-		animation.addFrame(animImage8, 200);
+		// animation.addFrame(animImage8, 200);
 		animations.put("open", animation);
 	}
 
-	public boolean isActive() {
-		return isActive;
-	 }
-
 	public void activate() {
-		isActive=true;
-	 }
+		if(currentAnim == null){
+			currentAnim = animations.get("open");
+			SoundManager.getInstance().playSound("win", false);
+			currentAnim.start();
+		}
+	}
 
 
 	public void draw(Graphics2D g2) {
-		g2.drawImage(animation.getImage(), x, y, width, height, null);
-
-		if(currentAnim != null){
-			if(currentAnim.isStillActive()) {
-				currentAnim.update();
-			}
-			else {
-				currentAnim.start();
-			}
-				
-        	treasureImage = currentAnim.getImage();
+		if(currentAnim != null && currentAnim.isStillActive()) {
+			g2.drawImage(currentAnim.getImage(), x, y, width, height, null);
 		}
+		g2.drawImage(treasureImage, x, y, width, height, null);
 	}
 
 	public void update() {
 		if (!window.isVisible ()) return;
 
-		if (!animation.isStillActive()) {
-			stopSound();
-			return;
-		}
-		else{
-			currentAnim.update();
+		if(currentAnim != null && currentAnim.isStillActive()) 
+				currentAnim.update();
+	}
+
+    public void draw(Graphics2D g2, double scaleX, double scaleY, double scaleHeight, int factor) {
+		if(currentAnim != null){
+			if(currentAnim.isStillActive())			
+				treasureImage = currentAnim.getImage();
+			else	
+				window.winGame();
 		}
 
+		int x2 = x-factor*(int)Math.round(scaleX*x);
+		int y2 = y - factor*(int)Math.round(scaleY*y);
+		int h =(int)Math.round(Math.pow(scaleHeight,factor)*height);
+		int w = (int)(width*1.0/height*h);		
 		
+		g2.drawImage(treasureImage, x2, y2, w, h, null);
 	}
-
-	public void playSound() {
-		soundManager.playSound("birdSound", true);
-	}
-
-
-	public void stopSound() {
-		soundManager.stopSound("birdSound");
-	}
-
-
-	public boolean collidesWithPlayer () {
-		Rectangle2D.Double myRect = getBoundingRectangle();
-		Rectangle2D.Double playerRect = player.getBoundingRectangle();
-		
-		if (myRect.intersects(playerRect)) {
-			System.out.println ("Collision with player!");
-			return true;
-		}
-		else
-			return false;
-	}
-
-	public Rectangle2D.Double getBoundingRectangle() {
-		return new Rectangle2D.Double (x, y, width, height);
-	}	
-
 }

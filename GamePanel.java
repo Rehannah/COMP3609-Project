@@ -2,6 +2,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.util.ArrayList;
 
 /**
@@ -25,26 +26,46 @@ public class GamePanel extends JPanel {
 	private Score s;
 
 	private TreasureAnimation treasure;
+	private boolean wonGame;
+	private int offsetX;
+	private int offsetY;
+	private double scaleX;
+	private double scaleY;
+	private double scaleHeight;
+	private int factor;
+	private Image backgroundImage;
 	
 	public GamePanel (GameWindow window, Score s) {
 		this.window = window;
 		this.s=s;
+		soundManager = SoundManager.getInstance();
 	}
 
-	public void createGameEntities() {
-		numCoconuts = s.getLives()+1;
-		coconuts = new ArrayList<Coconut>(numCoconuts);
+	public void createGameEntities() {		
+		soundManager.playSound("l2background", true);
+		wonGame = false;
+		backgroundImage = ImageManager.loadImage ("images/background/pirateship.gif");
 		player = new Level2Player(window, this);
+		numCoconuts = s.getLives();
+		coconuts = new ArrayList<Coconut>(numCoconuts);
+		for(int i=0; i< numCoconuts; i++){
+			Coconut c = new Coconut(window, player);
+			coconuts.add(c);
+		}
 		swordPirate = new SwordPirate(window, player, s);
 		knifePirate = new KnifePirate(window, player, s);
 		captain = new Captain(window, player, s);
 		bird = new BirdPirate(window, player, s);
-		treasure = new TreasureAnimation(window, player);
 		s.resetLives();
 	}
 
 
 	public void gameUpdate() {
+
+		if(wonGame){
+			winUpdate();
+			return;
+		}
 
 		ArrayList<Pirate> pirates = new ArrayList<>(4);
 
@@ -78,14 +99,11 @@ public class GamePanel extends JPanel {
 			}
 		}
 
-		if (treasure!=null && treasure.isActive()) {
-			treasure.update();
-		}
-
 		nextPirate();
 	}
 
 
+	
 	public void updatePlayer (int direction) {
 		if (player != null) {
 			player.move(direction);
@@ -98,14 +116,10 @@ public class GamePanel extends JPanel {
 	}
 
 	public void throwCoconut(){
-		int size = coconuts.size();
-		if(size == 0)
-			player.startThrow();
-		else if(size <= numCoconuts){
-			for(int i=0; i<size; i++)
-				if(coconuts.get(i).isActive() == false)
+		for(int i=0; i<coconuts.size(); i++)
+			if(coconuts.get(i).isActive() == false)
 					player.startThrow();
-		}
+		
 	}
 
 	public ArrayList<Coconut> getCoconuts() {
@@ -114,12 +128,6 @@ public class GamePanel extends JPanel {
 
 	public void addCoconut(){
 		if(coconuts!= null){
-			if(coconuts.size() < numCoconuts){			
-				Coconut c =  new Coconut(window, player);
-				c.activate();	
-				coconuts.add(c);
-				return;
-			}
 			for(int i=0; i< coconuts.size(); i++){
 				Coconut c = coconuts.get(i);
 				if(!c.isActive()){
@@ -140,13 +148,19 @@ public class GamePanel extends JPanel {
 			}
 
 			if (captain.getLives()<=0) {
-				//treasure.activate();
 				winGame();
 			}
 		}
 	}
 
 	public void gameRender(Graphics2D imageContext) {
+
+		if(wonGame){
+			winRender(imageContext);
+			return;
+		}
+		imageContext.drawImage(backgroundImage, 0, 0, window.pWidth+350, window.pHeight+80, null);
+			
 		if (player != null) {
 			player.draw(imageContext);
 		}
@@ -176,18 +190,58 @@ public class GamePanel extends JPanel {
 				}
 			}
 		}
-
-		if (treasure!=null && treasure.isActive()) {
-			treasure.draw(imageContext);
-		}
 	}
 
 	public void winGame(){
-		window.setNoMotion(true);
-		//scale everyhting by 1/5
-		//run, jump, see treasure
-		//open, congratulations;
-		//remember sounds
+		int pWidth = window.getBounds().width;
+		int pHeight = window.getBounds().height;
+		window.setMotion(false);
+		wonGame = true;
+		offsetX = 70;
+		offsetY = 16;
+		scaleX = offsetX*1.0/pWidth;
+		scaleY = offsetY*1.0/pHeight;
+		scaleHeight = (pHeight-offsetY)*1.0/pHeight;
+		factor = 4;	
+		player.setWonGame(true);	
+		player.idle();
+		treasure = new TreasureAnimation(window);
+	}
+
+	private void winUpdate() {
+		if(factor>=1)
+			return;
+			
+		int width = window.getScreenWidth();
+
+		if(player.getX() > width-300){
+			player.move(4);
+			treasure.activate();
+		}
+		else{
+			if(player.getX() > window.getScreenWidth() - 450)
+				player.move(6);			
+			else 
+				player.move(2);	
+			
+		}
+		treasure.update();
+			
+	}
+
+
+	private void winRender(Graphics2D imageContext) {
+		if(factor >= 1){
+			imageContext.drawImage(backgroundImage, 0, 0, window.getWidth()+(factor)*offsetX, window.getHeight()+(factor)*offsetY, null);
+			treasure.draw(imageContext, scaleX, scaleY, scaleHeight, 5-factor);
+			player.draw(imageContext, scaleX, scaleY, scaleHeight,5-factor);
+			factor--;
+		}
+		else{		
+			imageContext.drawImage(backgroundImage, 0, 0, window.getWidth(), window.getHeight(), null);
+			treasure.draw(imageContext, scaleX, scaleY, scaleHeight, 5);
+			player.draw(imageContext, scaleX, scaleY, scaleHeight, 5);
+		}
 	}
 
 }

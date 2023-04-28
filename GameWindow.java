@@ -13,7 +13,7 @@ public class GameWindow extends JFrame implements
 {
   	private static final int NUM_BUFFERS = 2;	// used for page flipping
 
-	private int pWidth, pHeight;     		// width and height of screen
+	public int pWidth, pHeight;     		// width and height of screen
 
 	private Thread gameThread = null;            	// the thread that controls the game
 	private volatile boolean isRunning = false;    	// used to stop the game thread
@@ -69,8 +69,6 @@ public class GameWindow extends JFrame implements
 
 		soundManager = SoundManager.getInstance();
 		image = new BufferedImage (pWidth, pHeight, BufferedImage.TYPE_INT_RGB);
-		
-		backgroundImage = ImageManager.loadImage ("images/background/pirateship.gif");
 		
 		
 		startGame();
@@ -176,12 +174,12 @@ public class GameWindow extends JFrame implements
 		}
 		else{
 			// render the background image first
-			imageContext.drawImage(backgroundImage, 0, 0, pWidth+350, pHeight+80, null);
 			panel.gameRender(imageContext);
 			
 		}
 	
-		drawButtons(imageContext);			// draw the buttons
+		if(motion)
+			drawButtons(imageContext);			// draw the buttons
 		drawScore(imageContext);
 		Graphics2D g2 = (Graphics2D) gScr;
 
@@ -353,16 +351,17 @@ public class GameWindow extends JFrame implements
 	private void startGame() { 
 		if (gameThread == null) {
 			motion = true;
-			soundManager.playSound ("l1background", true);
+			
 			score =  new Score();
 			
 			panel = new GamePanel(this, score);
 			panel.setPreferredSize(new Dimension(getWidth(), getHeight()));
 		
 			if (level==1) {
-				try {					
+				try {	
+					soundManager.playSound ("l1background", true);				
 					tileManager = new TileMapManager (this, score);
-					tileMap = tileManager.loadMap("maps/map.txt");
+					tileMap = tileManager.loadMap("maps/map2.txt");
 					/*  int w, h;
 					w = tileMap.getWidth();
 					h = tileMap.getHeight();
@@ -377,6 +376,7 @@ public class GameWindow extends JFrame implements
 
 			}
 			else{
+				soundManager.playSound ("l2background", true);
 				panel = new GamePanel(this, score);
        	 		panel.setPreferredSize(new Dimension(getWidth(), getHeight()));
 			}
@@ -546,11 +546,38 @@ public class GameWindow extends JFrame implements
 
 	public void increaseLevel() {
 		level++;
-		soundManager.playSound("l2background", true);
+		
 	}
 
 
-	public void setNoMotion(boolean m) {
+	public void setMotion(boolean m) {
 		motion = m;
+	}
+
+
+	public void winGame() {
+		winMessage(this.getGraphics());
+		
+		soundManager.stopSound("l2background");
+		soundManager.playSound("win", false);
+		try {
+			Thread.sleep(5000);
+		} 
+		catch (InterruptedException e) {}
+		isRunning = false;
+	}
+
+
+	private void winMessage(Graphics g) {
+		Image gameOver = ImageManager.loadImage("images/winGame.png");
+		int x = (getWidth() - gameOver.getWidth(null)) / 2; 
+		int y = (getHeight() - gameOver.getHeight(null)) / 2;
+		g.drawImage(gameOver, x,y, 300,200,null);
+
+	}
+
+
+	public int getScreenWidth() {
+		return device.getDisplayMode().getWidth();
 	}
 }

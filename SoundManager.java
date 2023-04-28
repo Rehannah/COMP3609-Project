@@ -27,16 +27,32 @@ public class SoundManager {				// a Singleton class
 		clips.put("nutritious", clip);			// played when player's sprite collides 
 													// with nutritious sprite
 		clip = loadClip("sounds/boyHurt.wav");
-		clips.put("boyHurt", clip);			// played when player's sprite collides 
+		clips.put("boyHurt", clip);				// played when player's sprite collides
+													// with poisonous sprite or is injured
 		
 		clip = loadClip("sounds/knifePirateHurt.wav");
-		clips.put("knifeHurt", clip);			// played when player's sprite collides 
+		clips.put("knifeHurt", clip);			// played when coconut collides with
+													// knife pirate
+		
+		clip = loadClip("sounds/swordPirateHurt.wav");
+		clips.put("swordHurt", clip);			// played when coconut collides with
+													// sword pirate 
 		
 		clip = loadClip("sounds/captainHurt.wav");
-		clips.put("captainHurt", clip);			// played when player's sprite collides 
+		clips.put("captainHurt", clip);			// played when pcoconut collides with
+													// captain pirate
+
+		clip = loadClip("sounds/pistol.wav");
+		clips.put("pistol", clip);				// played when captain shoots at player
 		
 		clip = loadClip("sounds/BirdSound.wav");
 		clips.put("bird", clip);				// played for bird pirate
+
+		clip = loadClip("sounds/win.wav");
+		clips.put("win", clip);					// played when game is won
+
+		clip = loadClip("sounds/lose.wav");
+		clips.put("lose", clip);				// played when game is lost
 	}
 
 

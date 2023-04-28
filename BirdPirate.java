@@ -191,7 +191,8 @@ public class BirdPirate implements Pirate{
           }
           
           if (birdImage ==currentAnim.getImage()) {
-             score.decreaseLives();
+             if(!score.decreaseLives())
+               window.endGame();
           }
        }
        else{
