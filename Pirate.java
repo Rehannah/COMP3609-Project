@@ -3,6 +3,8 @@ import java.awt.geom.Rectangle2D;
 
 public interface Pirate {
    public boolean isActive();
+   public int getDirection();
+   public int getLives();
 	public void initialiseAnimations();
    public void draw (Graphics2D g2);
    public void move();
