@@ -42,9 +42,8 @@ public class GameWindow extends JFrame implements
 	private Score score;
 
 	private GamePanel panel;
-	private Image backgroundImage;
 
-	private int level=1;
+	private int level=2;
 
 	private long musicStartTime;
 
@@ -195,6 +194,7 @@ public class GameWindow extends JFrame implements
 		gameOverMessage(this.getGraphics());
 		soundManager.stopSound("l1background");
 		soundManager.stopSound("l2background");
+		soundManager.playSound("lose", false);
 		try {
 			Thread.sleep(5000);
 		} 
@@ -361,7 +361,7 @@ public class GameWindow extends JFrame implements
 				try {	
 					soundManager.playSound ("l1background", true);				
 					tileManager = new TileMapManager (this, score);
-					tileMap = tileManager.loadMap("maps/map2.txt");
+					tileMap = tileManager.loadMap("maps/map.txt");
 					/*  int w, h;
 					w = tileMap.getWidth();
 					h = tileMap.getHeight();
@@ -377,8 +377,6 @@ public class GameWindow extends JFrame implements
 			}
 			else{
 				soundManager.playSound ("l2background", true);
-				panel = new GamePanel(this, score);
-       	 		panel.setPreferredSize(new Dimension(getWidth(), getHeight()));
 			}
 
 			gameThread = new Thread(this);
@@ -546,7 +544,8 @@ public class GameWindow extends JFrame implements
 
 	public void increaseLevel() {
 		level++;
-		
+		soundManager.stopSound("l1background");
+		soundManager.playSound("l2background", true);
 	}
 
 
@@ -557,23 +556,22 @@ public class GameWindow extends JFrame implements
 
 	public void winGame() {
 		winMessage(this.getGraphics());
-		
-		soundManager.stopSound("l2background");
-		soundManager.playSound("win", false);
 		try {
 			Thread.sleep(5000);
 		} 
 		catch (InterruptedException e) {}
 		isRunning = false;
+
+
 	}
 
 
 	private void winMessage(Graphics g) {
+		
 		Image gameOver = ImageManager.loadImage("images/winGame.png");
 		int x = (getWidth() - gameOver.getWidth(null)) / 2; 
 		int y = (getHeight() - gameOver.getHeight(null)) / 2;
 		g.drawImage(gameOver, x,y, 300,200,null);
-
 	}
 
 

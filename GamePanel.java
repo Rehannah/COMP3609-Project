@@ -41,21 +41,20 @@ public class GamePanel extends JPanel {
 		soundManager = SoundManager.getInstance();
 	}
 
-	public void createGameEntities() {		
-		soundManager.playSound("l2background", true);
+	public void createGameEntities() {	
 		wonGame = false;
 		backgroundImage = ImageManager.loadImage ("images/background/pirateship.gif");
-		player = new Level2Player(window, this);
+		player = new Level2Player(window, this, s);
 		numCoconuts = s.getLives();
 		coconuts = new ArrayList<Coconut>(numCoconuts);
 		for(int i=0; i< numCoconuts; i++){
 			Coconut c = new Coconut(window, player);
 			coconuts.add(c);
 		}
-		swordPirate = new SwordPirate(window, player, s);
-		knifePirate = new KnifePirate(window, player, s);
-		captain = new Captain(window, player, s);
-		bird = new BirdPirate(window, player, s);
+		swordPirate = new SwordPirate(window, player);
+		knifePirate = new KnifePirate(window, player);
+		captain = new Captain(window, player);
+		bird = new BirdPirate(window, player);
 		s.resetLives();
 	}
 
@@ -193,8 +192,11 @@ public class GamePanel extends JPanel {
 	}
 
 	public void winGame(){
+
 		int pWidth = window.getBounds().width;
 		int pHeight = window.getBounds().height;
+
+		soundManager.stopSound("l2background");
 		window.setMotion(false);
 		wonGame = true;
 		offsetX = 70;

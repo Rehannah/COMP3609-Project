@@ -1,0 +1,19 @@
+# Map file for tile-based game
+# (Lines that start with '#' are comments)
+# The tiles are:
+#   (Space) Empty tile
+#   A       Tile for top right
+#   B	    Tile for top middle
+#   C	    Tile for top left
+#   D	    Tile for ground
+#   *       Nutritious plant
+#   !       Poisonous plant
+#   0       Token for progression to next level
+
+                          
+           **                  *****                      *****        ABBBC *****                   ABBC ****           **       ****                
+          ABBC         **      ABBBC        **      **   ABBBBC             ABBBBC  *****!       **      ABBBBC **      ABBC  *  ABBBBC   *!!*                        
+                      ABBC                  ABBC   ABBC                             ABBBBC       AC            ABBC           B           ABBC           
+                                                                                                    
+              ***       ****       !***!  **      !   **          *!**   **!***!   ****     !**!**        ***!      ***! !*       !**!***       ** **0
+DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD

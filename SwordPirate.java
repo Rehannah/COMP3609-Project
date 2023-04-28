@@ -28,9 +28,9 @@ public class SwordPirate implements Pirate{
    private Animation currentAnim;
 	private HashMap<String, Animation> animations;
 
-   boolean isActive;
+   private boolean isActive;
 
-   private Score score;
+   private int gracePeriod;
    private int lives=3;
 
    private double xFracLeft;
@@ -39,7 +39,7 @@ public class SwordPirate implements Pirate{
    private double widthFrac;
    private double heightFrac;
 
-   public SwordPirate (GameWindow w, Level2Player player, Score score) {
+   public SwordPirate (GameWindow w, Level2Player player) {
       window = w;
 
       width = 250;
@@ -58,7 +58,6 @@ public class SwordPirate implements Pirate{
       dy = 0;
 
       this.player = player;
-      this.score = score;
 
       soundManager = SoundManager.getInstance();
 
@@ -68,6 +67,7 @@ public class SwordPirate implements Pirate{
 
       initialiseAnimations();
 		currentAnim = animations.get("walk");
+      gracePeriod = 20;
    }
 
    public boolean isActive() {
@@ -134,6 +134,16 @@ public class SwordPirate implements Pirate{
 		anim.addFrame(ImageManager.loadImage("images/pirates/sword/walk left/1_entity_000_WALK_005.png"), 150);
       anim.addFrame(ImageManager.loadImage("images/pirates/sword/walk left/1_entity_000_WALK_006.png"), 150);
 		animations.put("walkLeft", anim);
+
+      anim = new Animation(false);
+		anim.addFrame(ImageManager.loadImage("images/pirates/knife/hurt/3_3-PIRATE_HURT_000.png"), 50);
+		anim.addFrame(ImageManager.loadImage("images/pirates/sword/hurt/1_entity_000_HURT_004.png"), 100);
+		animations.put("hurt", anim);
+
+      anim = new Animation(false);
+		anim.addFrame(ImageManager.loadImage("images/pirates/knife/hurt left/3_3-PIRATE_HURT_000.png"), 50);
+		anim.addFrame(ImageManager.loadImage("images/pirates/sword/hurt left/1_entity_000_HURT_004.png"), 100);
+		animations.put("hurtLeft", anim);
 	}
 
 
@@ -178,9 +188,9 @@ public class SwordPirate implements Pirate{
             
          Image imageLeft = ImageManager.loadImage("images/pirates/sword/attack left/1_entity_000_ATTACK_004.png");
          Image imageRight = ImageManager.loadImage("images/pirates/sword/attack/1_entity_000_ATTACK_004.png");
-         if (pirateImage ==imageLeft || pirateImage ==imageRight){
-            if(!score.decreaseLives())
-               window.endGame();
+         if (gracePeriod > 15 && pirateImage ==imageLeft || pirateImage ==imageRight){
+            gracePeriod = 0;
+            player.hurt();
          }
       }
       else{
@@ -193,6 +203,12 @@ public class SwordPirate implements Pirate{
    }
 
    public void decreaseLives(){
+      soundManager.playSound("captainHurt", false);
+      if(getDirection() % 2 == 0)
+			currentAnim = animations.get("hurt");
+		else
+			currentAnim = animations.get("hurtLeft");
+		currentAnim.start();
       lives--;
       if (lives<=0) {
          isActive=false;

@@ -18,23 +18,15 @@ public class Bullet {
    private int dy;		// increment to move along y-axis
 
    private Level2Player player;
-   private SoundManager soundManager;
-  
-   private boolean soundPlayed;
 
    private Image bulletImage;
-   private Animation currentAnim;
-	private HashMap<String, Animation> animations;
 
    boolean isActive;
 
-   private Score s;
-
-   public Bullet (GameWindow w, Level2Player player, Captain captain, Score s) {
+   public Bullet (GameWindow w, Level2Player player, Captain captain) {
       window = w;
 
       this.player = player;
-      this.s = s;
 
       width = 80;
       height = 20;
@@ -46,9 +38,6 @@ public class Bullet {
       dy = 0;
       
       bulletImage = ImageManager.loadImage ("images/bullet.png");
-      soundManager = SoundManager.getInstance();
-
-      soundPlayed = false;
 
       isActive = true;
 
@@ -106,8 +95,7 @@ public class Bullet {
       chase();
       if (collidesWithPlayer()){
          deActivate();         
-         if(!s.decreaseLives())
-            window.endGame();
+         player.hurt();
       }
    }
 

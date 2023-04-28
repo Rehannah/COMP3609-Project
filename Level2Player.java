@@ -11,6 +11,7 @@ public class Level2Player {
 	
 	private GameWindow window;		// reference to the JFrame on which player is drawn
 	private GamePanel panel;
+	private Score score;
 
 	private int x;			// x-position of player's sprite
 	private int y;			// y-position of player's sprite
@@ -33,10 +34,12 @@ public class Level2Player {
 
 	private boolean wonGame;
 
-	public Level2Player (GameWindow window, GamePanel p) {
+	private SoundManager soundManager;
+
+	public Level2Player (GameWindow window, GamePanel p, Score s) {
 		this.window = window;
 		panel = p;
-
+		score = s;
 		playerImage = ImageManager.loadImage("images/boy/Idle/1.png");	  
 		dimension = window.getSize();
 		initialiseAnimations();
@@ -50,6 +53,7 @@ public class Level2Player {
 
 		direction=2;
 
+		soundManager = SoundManager.getInstance();
 		wonGame = false;
 	}
 
@@ -93,37 +97,18 @@ public class Level2Player {
 		anim.addFrame(ImageManager.loadImage("images/boy/ThrowLeft/3.png"), 100);
 		animations.put("throwLeft", anim);
 		
-		// anim = new Animation(false);
-		// anim.addFrame(ImageManager.loadImage("images/boy/Jump/1.png"), 50);
-		// anim.addFrame(ImageManager.loadImage("images/boy/Jump/2.png"), 300);
-		// anim.addFrame(ImageManager.loadImage("images/boy/Jump/3.png"), 300);
-		// anim.addFrame(ImageManager.loadImage("images/boy/Jump/4.png"), 300);
-		// anim.addFrame(ImageManager.loadImage("images/boy/Jump/5.png"), 150);
-		// anim.addFrame(ImageManager.loadImage("images/boy/Jump/6.png"), 100);
-		// animations.put("jump", anim);
 		anim = new Animation(false);
 		anim.addFrame(ImageManager.loadImage("images/boy/Jump/2.png"), 160);
 		anim.addFrame(ImageManager.loadImage("images/boy/Jump/3.png"), 160);
 		anim.addFrame(ImageManager.loadImage("images/boy/Jump/4.png"), 160);
 		anim.addFrame(ImageManager.loadImage("images/boy/Jump/5.png"), 160);
-		//anim.addFrame(ImageManager.loadImage("images/boy/Jump/6.png"), 100);
 		animations.put("jump", anim);
-
-		// anim = new Animation(false);
-		// anim.addFrame(ImageManager.loadImage("images/boy/JumpLeft/1.png"), 50);
-		// anim.addFrame(ImageManager.loadImage("images/boy/JumpLeft/2.png"), 300);
-		// anim.addFrame(ImageManager.loadImage("images/boy/JumpLeft/3.png"), 300);
-		// anim.addFrame(ImageManager.loadImage("images/boy/JumpLeft/4.png"), 300);
-		// anim.addFrame(ImageManager.loadImage("images/boy/JumpLeft/5.png"), 150);
-		// anim.addFrame(ImageManager.loadImage("images/boy/JumpLeft/6.png"), 100);
-		// animations.put("jumpLeft", anim);
 
 		anim = new Animation(false);
 		anim.addFrame(ImageManager.loadImage("images/boy/JumpLeft/2.png"), 160);
 		anim.addFrame(ImageManager.loadImage("images/boy/JumpLeft/3.png"), 160);
 		anim.addFrame(ImageManager.loadImage("images/boy/JumpLeft/4.png"), 160);
 		anim.addFrame(ImageManager.loadImage("images/boy/JumpLeft/5.png"), 160);
-		//anim.addFrame(ImageManager.loadImage("images/boy/Jump/6.png"), 100);
 		animations.put("jumpLeft", anim);
 	}
 
@@ -386,4 +371,11 @@ public class Level2Player {
 		
 		g2.drawImage(playerImage, x2, y2, w, h, null);
     }
+
+	public void hurt() {
+		
+		soundManager.playSound("boyHurt", false);
+		if(!score.decreaseLives())
+			window.endGame();
+	}
 }

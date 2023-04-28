@@ -10,10 +10,10 @@
 #   !       Poisonous plant
 #   0       Token for progression to next level
 
-                          
-           **                  *****                      *****        ABBBC *****                   ABBC ****           **       ****                
-          ABBC         **      ABBBC        **      **   ABBBBC             ABBBBC  *****!       **      ABBBBC **      ABBC  *  ABBBBC   *!!*                        
-                      ABBC                  ABBC   ABBC                             ABBBBC       AC            ABBC           B           ABBC           
+                                                                        ***                           **
+          ****         **      *****         **    !**   ******        ABBBC******               **  ABBC ****    **     **       ****    *!!*            
+          ABBC        ABBC     ABBBC    B   ABBC   ABC   ABBBBC             ABBBBC               AC      ABBBBC   AC    ABBC     ABBBBC   ABBC                        
+                                                                                                                                                         
                                                                                                     
-              ***       ****       !***!  **      !   **          *!**   **!***!   ****     !**!**        ***!      ***! !*       !**!***       ** **0
+               **       ****  !    !***!  *!       *              *!**   **!***!   **!***!**!**!**        ***!      ***! !*   *   !**!***       **!**0
 DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD

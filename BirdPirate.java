@@ -30,14 +30,13 @@ public class BirdPirate implements Pirate{
 
    boolean isActive;
 
-   private Score score;
+   private int gracePeriod;
    private int lives=3;
    private Image birdImage;
 
    private int t; //time counter
-   public BirdPirate (GameWindow w, Level2Player player, Score s) {
+   public BirdPirate (GameWindow w, Level2Player player) {
       window = w;
-      this.score = s;
 
       width = 150;
       height = 150;
@@ -190,9 +189,8 @@ public class BirdPirate implements Pirate{
              currentAnim = animations.get("attackLeft");
           }
           
-          if (birdImage ==currentAnim.getImage()) {
-             if(!score.decreaseLives())
-               window.endGame();
+          if ( birdImage ==currentAnim.getImage()) {
+             player.hurt();
           }
        }
        else{

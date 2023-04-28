@@ -17,8 +17,8 @@ public class Coconut {  //Projectile Motion
    	private int y;
 	private int xPos, yPos; 	// location from which to generate projectile
 
-   	private int initialVelocityX = 50;
-   	private int initialVelocityY = 10;
+   	private int initialVelocityX = 35;
+   	private int initialVelocityY = 30;
 
    	private Dimension dimension;
 
