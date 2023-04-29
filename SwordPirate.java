@@ -203,7 +203,7 @@ public class SwordPirate implements Pirate{
    }
 
    public void decreaseLives(){
-      soundManager.playSound("captainHurt", false);
+      soundManager.playSound("swordHurt", false);
       if(getDirection() % 2 == 0)
 			currentAnim = animations.get("hurt");
 		else
