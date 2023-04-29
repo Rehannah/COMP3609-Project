@@ -46,7 +46,7 @@ public class KnifePirate implements Pirate{
       height = 250;
 
       x = window.getWidth();
-      y = window.getHeight()-400;
+      y = window.getHeight()-425;
 
       xFracLeft = 659.0/1324;
       xFracRight = 280.0/1324;
@@ -133,30 +133,11 @@ public class KnifePirate implements Pirate{
 		anim.addFrame(ImageManager.loadImage("images/pirates/knife/walk left/3_3-PIRATE_WALK_005.png"), 150);
       anim.addFrame(ImageManager.loadImage("images/pirates/knife/walk left/3_3-PIRATE_WALK_006.png"), 150);
 		animations.put("walkLeft", anim);
-
-      anim = new Animation(false);
-		anim.addFrame(ImageManager.loadImage("images/pirates/knife/hurt/3_3-PIRATE_HURT_000.png"), 50);      
-		anim.addFrame(ImageManager.loadImage("images/pirates/knife/hurt/3_3-PIRATE_HURT_004.png"), 100);
-		animations.put("hurt", anim);
-
-      anim = new Animation(false);
-		anim.addFrame(ImageManager.loadImage("images/pirates/knife/hurt left/3_3-PIRATE_HURT_000.png"), 50);
-		anim.addFrame(ImageManager.loadImage("images/pirates/knife/hurt left/3_3-PIRATE_HURT_004.png"), 100);
-		animations.put("hurtLeft", anim);
 	}
 
 
    public void draw (Graphics2D g2) {
-
-      g2.drawImage(pirateImage, x, y, width, height, null);
-
-      if(currentAnim != null){
-			if(currentAnim.isStillActive())
-				currentAnim.update();
-			else
-				currentAnim.start();
-         pirateImage = currentAnim.getImage();
-		}
+      g2.drawImage(pirateImage, x, y, width, height, null);      
    }
 
 
@@ -193,7 +174,7 @@ public class KnifePirate implements Pirate{
          }
          Image imageLeft = ImageManager.loadImage("images/pirates/knife/attack left/3_3-PIRATE_ATTACK_005.png");
          Image imageRight = ImageManager.loadImage("images/pirates/knife/attack/3_3-PIRATE_ATTACK_005.png");
-         if (gracePeriod > 15 && (pirateImage ==imageLeft || pirateImage ==imageRight)) {
+         if (gracePeriod > 20 && (pirateImage ==imageLeft || pirateImage ==imageRight)) {
             gracePeriod = 0;
             player.hurt();
          }
@@ -207,6 +188,13 @@ public class KnifePirate implements Pirate{
          }
       }
 
+      if(currentAnim != null){
+			if(currentAnim.isStillActive())
+				currentAnim.update();
+			else
+				currentAnim.start();
+         pirateImage = currentAnim.getImage();
+		}
 
      chase();
 

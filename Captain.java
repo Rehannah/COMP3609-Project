@@ -39,6 +39,8 @@ public class Captain implements Pirate{
    private ArrayList<Bullet> bullets;
    private int lives=3;
 
+   private int gracePeriod;
+
    public Captain (GameWindow w, Level2Player player) {
       window = w;
 
@@ -47,8 +49,8 @@ public class Captain implements Pirate{
       width = 250;
       height = 250;
 
-      x = window.getWidth()+600;
-      y = window.getHeight()-400;
+      x = window.getWidth()+300;
+      y = window.getHeight()-425;
 
       xFracLeft = 659.0/1324;
       xFracRight = 280.0/1324;
@@ -70,6 +72,8 @@ public class Captain implements Pirate{
 
       initialiseAnimations();
 		currentAnim = animations.get("idle");
+
+      gracePeriod = 20;
 
    }
 
@@ -141,36 +145,13 @@ public class Captain implements Pirate{
 		anim.addFrame(ImageManager.loadImage("images/pirates/captain/walk left/2_entity_000_WALK_005.png"), 150);
       anim.addFrame(ImageManager.loadImage("images/pirates/captain/walk left/2_entity_000_WALK_006.png"), 150);
 		animations.put("walkLeft", anim);
-
-      anim = new Animation(false);
-		// anim.addFrame(ImageManager.loadImage("images/pirates/knife/hurt/2_entity_000_HURT_000.png"), 50);
-		anim.addFrame(ImageManager.loadImage("images/pirates/captain/hurt/2_entity_000_HURT_004.png"), 100);
-		animations.put("hurt", anim);
-
-      anim = new Animation(false);
-		// anim.addFrame(ImageManager.loadImage("images/pirates/knife/hurt left/2_entity_000_HURT_000.png"), 50);
-		anim.addFrame(ImageManager.loadImage("images/pirates/captain/hurt left/2_entity_000_HURT_004.png"), 100);
-		animations.put("hurtLeft", anim);
 	}
 
 
    public void draw (Graphics2D g2) {
 
-      g2.drawImage(pirateImage, x, y, width, height, null);
+      g2.drawImage(pirateImage, x, y, width, height, null);      
       
-      if(currentAnim != null){
-			if(currentAnim.isStillActive())
-				currentAnim.update();
-			else
-				currentAnim.start();
-         pirateImage = currentAnim.getImage();
-		}
-      Image imageLeft = ImageManager.loadImage("images/pirates/captain/attack left/2_entity_000_ATTACK_005.png");
-      Image imageRight = ImageManager.loadImage("images/pirates/captain/attack/2_entity_000_ATTACK_005.png");
-      if (pirateImage==imageLeft || pirateImage==imageRight) {
-         Bullet bullet = new Bullet(window, player, this);
-         bullets.add(bullet);
-      }
       if (bullets.size()!=0){
          for (int i=0; i<bullets.size(); i++) {
             Bullet bullet = bullets.get(i);
@@ -218,6 +199,7 @@ public class Captain implements Pirate{
 
 
    public void move() {
+      gracePeriod++;
       if (!window.isVisible ()) return;     
 
       if (getDirection()==1) 
@@ -234,6 +216,21 @@ public class Captain implements Pirate{
       }
       chase();
 
+      if(currentAnim != null){
+			if(currentAnim.isStillActive())
+				currentAnim.update();
+			else
+				currentAnim.start();
+         pirateImage = currentAnim.getImage();
+		}
+      Image imageLeft = ImageManager.loadImage("images/pirates/captain/attack left/2_entity_000_ATTACK_005.png");
+      Image imageRight = ImageManager.loadImage("images/pirates/captain/attack/2_entity_000_ATTACK_005.png");
+      if (gracePeriod > 20 && (pirateImage==imageLeft || pirateImage==imageRight)) {
+         gracePeriod = 0;
+         Bullet bullet = new Bullet(window, player, this);
+         bullets.add(bullet);
+      }
+
       if (bullets.size()!=0){
          for (int i=0; i<bullets.size(); i++) {
             Bullet bullet = bullets.get(i);
@@ -249,11 +246,6 @@ public class Captain implements Pirate{
    public void decreaseLives(){
       lives--;
       soundManager.playSound("captainHurt", false);
-      // if(getDirection() % 2 == 0)
-		// 	currentAnim = animations.get("hurt");
-		// else
-		// 	currentAnim = animations.get("hurtLeft");
-		// currentAnim.start();
       if (lives<=0) {
          isActive=false;
       }

@@ -130,14 +130,6 @@ public class BirdPirate implements Pirate{
 
    public void draw (Graphics2D g2) {
       g2.drawImage(pirateImage, x, y, width, height, null);
-      
-      if(currentAnim != null){
-			if(currentAnim.isStillActive())
-				currentAnim.update();
-			else
-				currentAnim.start();
-         pirateImage = currentAnim.getImage();
-		}
    }
 
 
@@ -180,6 +172,7 @@ public class BirdPirate implements Pirate{
        if (lives<=0) {
           isActive=false;
        }
+
        
        if (collidesWithPlayer()) {
           if (getDirection()==2) {
@@ -194,13 +187,19 @@ public class BirdPirate implements Pirate{
           }
        }
        else{
-          if (getDirection()==2) {
+         if(t<=250){
+          if (getDirection()==2) 
              currentAnim = animations.get("fly");
-          }
-          else{
+          else
              currentAnim = animations.get("flyLeft");
-          }
-       }
+         }
+         else{
+            if (getDirection()==2) 
+               currentAnim = animations.get("flyLeft");
+            else
+               currentAnim = animations.get("fly");
+         }
+      }
  
        if (t<=250) {
           chase();
@@ -219,12 +218,34 @@ public class BirdPirate implements Pirate{
              t=0;
           }
        }
+
+       if(x>0 && x<window.getWidth()){
+         if(!soundPlayed){
+            soundPlayed = true;
+            soundManager.playSound("bird", true);
+         }
+       }
+       else{
+         if(soundPlayed){
+            soundPlayed = false;
+            soundManager.stopSound("bird");
+         }
+       }
+
+       if(currentAnim != null){
+			if(currentAnim.isStillActive())
+				currentAnim.update();
+			else
+				currentAnim.start();
+         pirateImage = currentAnim.getImage();
+		}
     }
 
    public void decreaseLives(){
       lives--;
       if (lives<=0) {
          isActive=false;
+         soundManager.stopSound("bird");
       }
    }
 

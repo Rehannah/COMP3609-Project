@@ -19,10 +19,6 @@ public abstract class Sprite implements Cloneable{
         score = s;
     }
 
-    public abstract void setPlayer(Level1Player p);
-
-    public abstract void setMap(TileMap tm);
-
     public int getX() {
         return x;
     }
@@ -67,6 +63,10 @@ public abstract class Sprite implements Cloneable{
         }
     }
 
+    public abstract void setPlayer(Level1Player p);
+
+    public abstract void setMap(TileMap tm);
+    
     public abstract boolean collidesWithPlayer();
 
     public abstract Rectangle2D getBoundingRectangle();

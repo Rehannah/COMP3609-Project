@@ -60,25 +60,6 @@ public class Coconut {  //Projectile Motion
 		anim.addFrame(ImageManager.loadImage("images/coconut split.png"), 150);
 		animations.put("split", anim);
 	}
-
-    // // load animation from strip file
-    // public Animation stripAnimation(Image stripImage, Animation anim, int num) {
-    // 	int imageWidth = (int) stripImage.getWidth(null) / num;
-    //     int imageHeight = stripImage.getHeight(null);
-
-    //     for (int i=0; i<num; i++) {
-    //         BufferedImage frameImage = new BufferedImage (imageWidth, imageHeight, BufferedImage.TYPE_INT_ARGB);
-    //         Graphics2D g = (Graphics2D) frameImage.getGraphics();
-
-    //         g.drawImage(stripImage, 
-    //                 0, 0, imageWidth, imageHeight,
-    //                 i*imageWidth, 0, (i*imageWidth)+imageWidth, imageHeight,
-    //                 null);
-
-    //         anim.addFrame(frameImage, 100);
-    //     }
-    // 	return anim;
-    // }
  
 	
 	public boolean isActive() {
@@ -112,22 +93,14 @@ public class Coconut {  //Projectile Motion
 
       	if (!window.isVisible ()) return;
 
-		// if(collision){
-		// 	collision = false;
-		// 	deActivate();
-		// 	return;
-		// }
-
       	dx = (int) (initialVelocityX * timeElapsed);
 		dy = (int) (initialVelocityY * timeElapsed - 4.9 * timeElapsed * timeElapsed);
 
 		y = yPos - dy;			// y is the height at which ball is thrown
       		
         if (y > window.getHeight() - 200 - YSIZE) {	 		// below floor; extrapolate to bring ball on top of floor.
-	    	// System.out.println ("Y = " + y);
 	    	int amountOver = y - (200 - YSIZE); 
 	    	y = 200 - YSIZE;
-	    	// System.out.println ("New Y = " + y);
             double fractionOver = (amountOver * 1.0) / (y - oldY);
 	    	timeElapsed = timeElapsed - (1 - fractionOver) * 0.5;
 	    	dx = (int) (initialVelocityX * timeElapsed);

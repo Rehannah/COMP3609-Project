@@ -130,8 +130,6 @@ public class GameWindow extends JFrame implements
 		if (level==1) {
 			tileMap.update();
 		}
-		// if (!isPaused && isAnimShown && !isAnimPaused)
-			// animation.update();
 		if (level==2) {
 			panel.gameUpdate();
 		}
@@ -172,9 +170,7 @@ public class GameWindow extends JFrame implements
 			tileMap.draw(imageContext);
 		}
 		else{
-			// render the background image first
-			panel.gameRender(imageContext);
-			
+			panel.gameRender(imageContext);			
 		}
 	
 		if(motion)
@@ -190,10 +186,11 @@ public class GameWindow extends JFrame implements
 
 	public void endGame(){
 		
-		screenUpdate();		
-		gameOverMessage(this.getGraphics());
 		soundManager.stopSound("l1background");
 		soundManager.stopSound("l2background");
+		soundManager.stopSound("bird");
+		screenUpdate();				
+		gameOverMessage(this.getGraphics());
 		soundManager.playSound("lose", false);
 		try {
 			Thread.sleep(5000);
@@ -361,7 +358,7 @@ public class GameWindow extends JFrame implements
 				try {	
 					soundManager.playSound ("l1background", true);				
 					tileManager = new TileMapManager (this, score);
-					tileMap = tileManager.loadMap("maps/map.txt");
+					tileMap = tileManager.loadMap("maps/map1.txt");
 					/*  int w, h;
 					w = tileMap.getWidth();
 					h = tileMap.getHeight();
@@ -514,6 +511,7 @@ public class GameWindow extends JFrame implements
 				}
 				musicStartTime = soundManager.getClipPosition("l2background");		//save time of background music for restart
 				soundManager.stopSound("l2background");	
+				soundManager.stopSound("bird");
 				return;
 			}
 			if(level == 1)

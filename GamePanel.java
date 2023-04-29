@@ -185,7 +185,6 @@ public class GamePanel extends JPanel {
 				Coconut c = coconuts.get(i);
 				if (c!=null && c.isActive()) {
 					c.draw(imageContext);
-
 				}
 			}
 		}

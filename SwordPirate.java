@@ -21,13 +21,10 @@ public class SwordPirate implements Pirate{
 
    private Level2Player player;
    private SoundManager soundManager;
-  
-   private boolean soundPlayed;
 
    private Image pirateImage;
    private Animation currentAnim;
 	private HashMap<String, Animation> animations;
-
    private boolean isActive;
 
    private int gracePeriod;
@@ -46,7 +43,7 @@ public class SwordPirate implements Pirate{
       height = 250;
 
       x = window.getWidth()+300;
-      y = window.getHeight()-400;
+      y = window.getHeight()-425;
 
       xFracLeft = 659.0/1324;
       xFracRight = 280.0/1324;
@@ -60,9 +57,6 @@ public class SwordPirate implements Pirate{
       this.player = player;
 
       soundManager = SoundManager.getInstance();
-
-      soundPlayed = false;
-
       isActive = false;
 
       initialiseAnimations();
@@ -148,15 +142,7 @@ public class SwordPirate implements Pirate{
 
 
    public void draw (Graphics2D g2) {
-
-      g2.drawImage(pirateImage, x, y, width, height, null);
-      if(currentAnim != null){
-			if(currentAnim.isStillActive())
-				currentAnim.update();
-			else
-				currentAnim.start();
-         pirateImage = currentAnim.getImage();
-		}
+      g2.drawImage(pirateImage, x, y, width, height, null);      
    }
 
 
@@ -199,6 +185,15 @@ public class SwordPirate implements Pirate{
          else 
             currentAnim = animations.get("walkLeft");
       }
+
+      if(currentAnim != null){
+			if(currentAnim.isStillActive())
+				currentAnim.update();
+			else
+				currentAnim.start();
+         pirateImage = currentAnim.getImage();
+		}
+
       chase();
    }
 

@@ -12,9 +12,9 @@
 #   0       Token for progression to next level
 
                                                                         ***                           **
-          ****         **      *****         **    !**    **%**        ABBBC******               **  ABBC ****    **     **       ****    *!!*            
-          ABBC        ABBC     ABBBC    B   ABBC   ABC    ABBBC             ABBBBC               AC      ABBBBC   AC    ABBC     ABBBBC   ABBC                        
+            ****       **      *****         **    *!*    **%**        ABBBC******               **  ABBC ****    **     **       ****    *!!*            
+            ABBC      ABBC     ABBBC        ABBC   ABC    ABBBC             ABBBBC               AC      ABBBBC   AC    ABBC     ABBBBC   ABBC                        
                                                                                                                                                          
                                                                                                     
-               **%      ****  !    !***!  *!       *              *!**   **!***!   **!***%**!**!**        ***!      ***! !*   *   !**!***       **!**0
+                 *%*    ****  !     ****!***       *              *!**   **  ***   **!***%**!**!**        **!**     ***!***   %   !******       *****0
 DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
