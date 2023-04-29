@@ -29,6 +29,8 @@ public class TileMap {
 
     private GameWindow window;
     private Dimension dimension;
+    private boolean slow;
+    private int timeElapsed;
 
     /**
         Creates a new TileMap with the specified width and
@@ -136,7 +138,22 @@ public class TileMap {
 
 
     public void update() {
-        offsetX -= DX;
+        if(slow){
+            if(timeElapsed < 150){               //resume regular speed after 50 units of time
+                updateSlower();
+                return;
+            }
+            if(player.getY() >= dimension.height - (TILE_SIZE + player.getImage().getHeight(window))){  //let player be on ground before resuming regular speed
+                slow = false; 
+                player.stopSlow();               
+            }
+            else{
+                updateSlower();
+                return;
+            }
+        }
+        offsetX -= 2*DX;
+        
         if((screenWidth - tilesToPixels(mapWidth)) > offsetX){
             offsetX = screenWidth - tilesToPixels(mapWidth); 
             player.idle(); 
@@ -157,7 +174,41 @@ public class TileMap {
                 window.endGame();
             }
         }
+        timeElapsed++;
     }
+
+    public void startSlow(){
+        slow = true;
+        timeElapsed = 0;        
+        player.startSlow();
+    }
+
+    private void updateSlower() {
+        offsetX -= DX;
+        
+        if((screenWidth - tilesToPixels(mapWidth)) > offsetX){
+            offsetX = screenWidth - tilesToPixels(mapWidth); 
+            player.idle(); 
+            int x, y;
+            Image playerImage = player.getImage();
+            x = (dimension.width / 2 - playerImage.getWidth(null)/2);	// position player in middle of screen
+            y = dimension.height - (TILE_SIZE + playerImage.getHeight(null));
+            player.setX(x);
+            player.setY(y);      
+        }
+        else{
+            bgManager.updateSlower();
+            player.updateSlower();
+            Iterator iter = getSprites();
+            while(iter.hasNext()){
+                Sprite sprite = (Sprite)iter.next();
+                if(!sprite.collidesWithPlayer())
+                window.endGame();
+            }
+        }
+        timeElapsed++;
+    }
+
 
     //Draws the specified TileMap.
     public void draw(Graphics2D g2){

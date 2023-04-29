@@ -28,6 +28,8 @@ public class Level1Player{
 	private int initialVelocity;
 	private int timeElapsed;
 	private int startY;
+
+	private boolean slow;
 	
 
 	public Level1Player (JFrame window, TileMap t, BackgroundManager b) {
@@ -48,33 +50,49 @@ public class Level1Player{
 	public void initialiseAnimations(){
 		animations = new HashMap<>();
 		Animation anim = new Animation(true);
+		anim.addFrame(ImageManager.loadImage("images/boy/Run/1.png"), 75);
+		anim.addFrame(ImageManager.loadImage("images/boy/Run/2.png"), 75);
+		anim.addFrame(ImageManager.loadImage("images/boy/Run/3.png"), 90);
+		anim.addFrame(ImageManager.loadImage("images/boy/Run/4.png"), 90);
+		anim.addFrame(ImageManager.loadImage("images/boy/Run/5.png"), 65);
+		anim.addFrame(ImageManager.loadImage("images/boy/Run/6.png"), 75);
+		animations.put("run", anim);
+		
+		anim = new Animation(false);
+		anim.addFrame(ImageManager.loadImage("images/boy/Jump/1.png"), 15);
+		anim.addFrame(ImageManager.loadImage("images/boy/Jump/2.png"), 150);
+		anim.addFrame(ImageManager.loadImage("images/boy/Jump/3.png"), 150);
+		anim.addFrame(ImageManager.loadImage("images/boy/Jump/4.png"), 150);
+		animations.put("jump", anim);
+
+		anim = new Animation(false);
+		anim.addFrame(ImageManager.loadImage("images/boy/Jump/4.png"), 175);
+		anim.addFrame(ImageManager.loadImage("images/boy/Jump/5.png"), 175);
+		anim.addFrame(ImageManager.loadImage("images/boy/Jump/6.png"), 50);
+		animations.put("fall", anim);
+		
+		anim = new Animation(true);
 		anim.addFrame(ImageManager.loadImage("images/boy/Run/1.png"), 150);
 		anim.addFrame(ImageManager.loadImage("images/boy/Run/2.png"), 150);
-		anim.addFrame(ImageManager.loadImage("images/boy/Run/3.png"), 175);
-		anim.addFrame(ImageManager.loadImage("images/boy/Run/4.png"), 175);
-		anim.addFrame(ImageManager.loadImage("images/boy/Run/5.png"), 125);
+		anim.addFrame(ImageManager.loadImage("images/boy/Run/3.png"), 170);
+		anim.addFrame(ImageManager.loadImage("images/boy/Run/4.png"), 170);
+		anim.addFrame(ImageManager.loadImage("images/boy/Run/5.png"), 120);
 		anim.addFrame(ImageManager.loadImage("images/boy/Run/6.png"), 150);
-		animations.put("run", anim);
+		animations.put("runSlow", anim);
 		
 		anim = new Animation(false);
 		anim.addFrame(ImageManager.loadImage("images/boy/Jump/1.png"), 30);
 		anim.addFrame(ImageManager.loadImage("images/boy/Jump/2.png"), 300);
 		anim.addFrame(ImageManager.loadImage("images/boy/Jump/3.png"), 300);
 		anim.addFrame(ImageManager.loadImage("images/boy/Jump/4.png"), 300);
-		animations.put("jump", anim);
+		animations.put("jumpSlow", anim);
 
 		anim = new Animation(false);
-		anim.addFrame(ImageManager.loadImage("images/boy/Jump/4.png"), 350);//200
-		anim.addFrame(ImageManager.loadImage("images/boy/Jump/5.png"), 350);//150
-		anim.addFrame(ImageManager.loadImage("images/boy/Jump/6.png"), 100);//100
-		animations.put("fall", anim);
-
-		anim = new Animation(false);
-		anim.addFrame(ImageManager.loadImage("images/boy/Jump/1.png"), 30);
-		anim.addFrame(ImageManager.loadImage("images/boy/Jump/2.png"), 300);
-		anim.addFrame(ImageManager.loadImage("images/boy/Jump/3.png"), 300);
-		anim.addFrame(ImageManager.loadImage("images/boy/Jump/4.png"), 300);
-		animations.put("shortJump", anim);		
+		anim.addFrame(ImageManager.loadImage("images/boy/Jump/4.png"), 350);
+		anim.addFrame(ImageManager.loadImage("images/boy/Jump/5.png"), 350);
+		anim.addFrame(ImageManager.loadImage("images/boy/Jump/6.png"), 100);
+		animations.put("fallSlow", anim);
+		
 	}
 
 	public Point collidesWithTileDown (int newX, int newY) {
@@ -183,12 +201,28 @@ public class Level1Player{
 		return false;
 	}
 
+	public void startSlow(){
+		slow = true;
+		currentAnim = animations.get("runSlow");
+		currentAnim.start();
+	}
+
+	
+	public void stopSlow() {
+		slow = false;
+		currentAnim = animations.get("run");
+		currentAnim.start();
+	}
 
 	private void fall() {
 		jumping = false;
 		inAir = true;
 		timeElapsed = 0;
-		currentAnim = animations.get("fall");
+		if(slow)
+			currentAnim = animations.get("fallSlow");
+		else
+			currentAnim = animations.get("fall");
+		currentAnim.start();
 		goingUp = false;
 		goingDown = true;
 		startY = y;
@@ -204,7 +238,10 @@ public class Level1Player{
 			return;
 		
 		jumping = true;
-		currentAnim = animations.get("jump");
+		if(slow)
+			currentAnim = animations.get("jumpSlow");
+		else
+			currentAnim = animations.get("jump");
 		currentAnim.start();
 		timeElapsed = 0;
 
@@ -212,7 +249,7 @@ public class Level1Player{
 		goingDown = false;
 
 		startY = y;
-		initialVelocity = 100;
+		initialVelocity = 95;
 	}
 
 	public void idle() {
@@ -232,7 +269,7 @@ public class Level1Player{
 			playerImage = currentAnim.getImage();
 		}		
 		
-		timeElapsed++;
+		timeElapsed+=2;
 
 		if (jumping || inAir) {
 			distance = (int) (initialVelocity * timeElapsed - 4.9 * timeElapsed * timeElapsed);
@@ -243,6 +280,7 @@ public class Level1Player{
 				goingDown = true;
 				currentAnim.stop();
 				currentAnim = animations.get("fall");
+				currentAnim.start();
 			}
 
 			if (goingUp) {
@@ -262,6 +300,7 @@ public class Level1Player{
 					jumping = false;
 					inAir = false;
 					currentAnim = animations.get("run");
+					currentAnim.start();
 				}
 				else {
 					y = newY;
@@ -296,4 +335,61 @@ public class Level1Player{
 	public Rectangle2D getBoundingRectangle() {		
 		return new Rectangle2D.Double(x - tileMap.getOffsetX(),y,getImage().getWidth(null), getImage().getHeight(null));
 	}
+
+
+    public void updateSlower() {
+		int distance = 0;
+		int newY = 0;
+		
+		if(currentAnim != null){
+			if(currentAnim.isStillActive())
+				currentAnim.update();
+			else
+				currentAnim.start();
+			playerImage = currentAnim.getImage();
+		}		
+		
+		timeElapsed++;
+
+		if (jumping || inAir) {
+			distance = (int) (initialVelocity * timeElapsed - 4.9 * timeElapsed * timeElapsed);
+			newY = startY - distance;
+
+			if (newY > y && goingUp) {
+				goingUp = false;
+				goingDown = true;
+				currentAnim.stop();
+				currentAnim = animations.get("fallSlow");
+				currentAnim.start();
+			}
+
+			if (goingUp) {
+				Point tilePos = collidesWithTileUp (x, newY);	
+				if (tilePos != null) {				// hits a tile going up
+					setY(((int) tilePos.getY()) * TILE_SIZE + tileMap.getOffsetY() + TILE_SIZE - 63);		//tiles that can be collided with going up are narrower
+					fall();
+				}
+				else
+					y = newY;				
+			}
+			else if (goingDown) {			
+				Point tilePos = collidesWithTileDown (x, newY);	
+				if (tilePos != null) {				// hits a tile going down
+					goingDown = false;
+					y = dimension.height - (tileMap.getHeight() - ((int) tilePos.getY())) * TILE_SIZE - playerImage.getHeight(null);
+					jumping = false;
+					inAir = false;
+					currentAnim = animations.get("runSlow");
+					currentAnim.start();
+				}
+				else {
+					y = newY;
+				}
+			}
+		}
+		if (isInAir())
+			fall();
+    }
+
+
 }

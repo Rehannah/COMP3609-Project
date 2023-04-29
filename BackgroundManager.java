@@ -31,39 +31,39 @@ public class BackgroundManager {
   	private int numBackgrounds;
 
   	public BackgroundManager(JFrame window) {
-    		numBackgrounds = bgImages.length;
-    		backgrounds = new Background[numBackgrounds];
+    	numBackgrounds = bgImages.length;
+    	backgrounds = new Background[numBackgrounds];
 
-    		for (int i = 0; i < numBackgrounds; i++) {
-       			backgrounds[i] = new Background(window, bgImages[i], moveAmount[i]);
-    		}
+    	for (int i = 0; i < numBackgrounds; i++) {
+       		backgrounds[i] = new Background(window, bgImages[i], moveAmount[i]);
+    	}
   	} 
 
 
-  	public void moveRight() { 
+  	private void moveRight() { 
 		for (int i=0; i < numBackgrounds; i++)
       			backgrounds[i].moveRight();
   	}
 
-
-  	public void moveLeft() {
+	private void moveRightSlower() {
 		for (int i=0; i < numBackgrounds; i++)
-      			backgrounds[i].moveLeft();
-  	}
-
+      			backgrounds[i].moveRightSlower();
+	}
 
 	public void update(){
 		moveRight();
 	}
 
+	public void updateSlower(){
+		moveRightSlower();
+	}
 
   	// The draw method draws the backgrounds on the screen. The
   	// backgrounds are drawn from the back to the front.
-
-  	public void draw (Graphics2D g2) { 
+  	
+	public void draw (Graphics2D g2) { 
 		for (int i=0; i < numBackgrounds; i++)
       			backgrounds[i].draw(g2);
   	}
-
 }
 

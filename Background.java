@@ -32,38 +32,48 @@ public class Background {
 					
 		}
 
+		bgX = bgX - 2*bgDX;
+
+		backgroundX = backgroundX - 2*bgDX;
+		backgroundX2 = backgroundX2 - 2*bgDX;
+
+		if(Math.abs(bgX/bgImageWidth) > 0){
+			int amountOver = Math.abs(bgX%bgImageWidth);
+			backgroundX = -amountOver;
+			backgroundX2 = bgImageWidth-amountOver;
+		}
+
+		// if ((bgX + bgImageWidth) % bgImageWidth == 0) {
+		// 	backgroundX = 0;
+		// 	backgroundX2 = bgImageWidth;
+		// }
+
+
+  	}
+
+    public void moveRightSlower() {
+		if (bgX == 0) {
+			backgroundX = 0;
+			backgroundX2 = bgImageWidth;
+					
+		}
+
 		bgX = bgX - bgDX;
 
 		backgroundX = backgroundX - bgDX;
 		backgroundX2 = backgroundX2 - bgDX;
 
-		if ((bgX + bgImageWidth) % bgImageWidth == 0) {
-			backgroundX = 0;
-			backgroundX2 = bgImageWidth;
+		if(Math.abs(bgX/bgImageWidth) > 0){
+			int amountOver = Math.abs(bgX%bgImageWidth);
+			backgroundX = -amountOver;
+			backgroundX2 = bgImageWidth-amountOver;
 		}
-
-
-  	}
-
-
-  	public void moveLeft() {
-	
-		if (bgX == 0) {
-			backgroundX = bgImageWidth * -1;
-			backgroundX2 = 0;			
-		}
-
-		bgX = bgX + bgDX;
-				
-		backgroundX = backgroundX + bgDX;	
-		backgroundX2 = backgroundX2 + bgDX;
-
-		if ((bgX + bgImageWidth) % bgImageWidth == 0) {
-			backgroundX = bgImageWidth * -1;
-			backgroundX2 = 0;
-		}			
-   	}
- 
+		
+		// if ((bgX + bgImageWidth) % bgImageWidth == 0) {
+		// 	backgroundX = 0;
+		// 	backgroundX2 = bgImageWidth;
+		// }
+    }
 
   	public void draw (Graphics2D g2) {
 		g2.drawImage(bgImage, backgroundX, 0, 1920, 1080, null);
@@ -71,8 +81,9 @@ public class Background {
   	}
 
 
-  	public Image loadImage (String fileName) {
+  	private Image loadImage (String fileName) {
 		return new ImageIcon(fileName).getImage();
   	}
+
 
 }

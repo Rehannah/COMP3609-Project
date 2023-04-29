@@ -45,7 +45,6 @@ public class TreasureAnimation {
 		Image animImage5 = ImageManager.loadImage("images/treasure/treasure chest0004.png");
 		Image animImage6 = ImageManager.loadImage("images/treasure/treasure chest0005.png");
 		Image animImage7 = ImageManager.loadImage("images/treasure/treasure chest0006.png");
-		// Image animImage8 = ImageManager.loadImage("images/treasure/treasure chest0007.png");
 
 		// create animation object and insert frames
 

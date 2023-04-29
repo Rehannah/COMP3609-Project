@@ -43,7 +43,7 @@ public class GameWindow extends JFrame implements
 
 	private GamePanel panel;
 
-	private int level=2;
+	private int level=1;
 
 	private long musicStartTime;
 
@@ -215,11 +215,11 @@ public class GameWindow extends JFrame implements
 		g.setFont(newFont);		// set this as font for text on buttons
 
     	g.setColor(Color.black);	// set outline colour of button
-		g.drawString("Points Scored", leftOffset, 60);
-		g.drawString("Player Lives", leftOffset+5, 110);
+		g.drawString("Points Scored", leftOffset, 50);
+		g.drawString("Player Lives", leftOffset+5, 100);
 		newFont = new Font ("Cambria", Font.BOLD, 25);
 		g.setFont(newFont);
-		g.drawString(Integer.toString(score.getPoints()), leftOffset+210, 63);
+		g.drawString(Integer.toString(score.getPoints()), leftOffset+210, 53);
 		g.setFont(oldFont);
 
 		leftOffset += 150;
@@ -298,11 +298,11 @@ public class GameWindow extends JFrame implements
 		//  Buttons are placed at the top of the window.
 
 		int leftOffset = (pWidth - (2 * 150) - 20) / 2;
-		pauseButtonArea = new Rectangle(leftOffset, 60, 150, 40);
+		pauseButtonArea = new Rectangle(leftOffset, 50, 150, 40);
 
 		leftOffset = leftOffset + 170;
 		
-		quitButtonArea = new Rectangle(leftOffset, 60, 150, 40);
+		quitButtonArea = new Rectangle(leftOffset, 50, 150, 40);
 	}
 
 
@@ -390,7 +390,7 @@ public class GameWindow extends JFrame implements
 
 	private void gameOverMessage(Graphics g) {
 		
-		Image gameOver = ImageManager.loadImage("images/gameOver.png");
+		Image gameOver = ImageManager.loadImage("images/lose.png");
 		int x = (pWidth - gameOver.getWidth(null)) / 2; 
 		int y = (pHeight - gameOver.getHeight(null)) / 2;
 		g.drawImage(gameOver, x,y, 300,200,null);
@@ -568,7 +568,7 @@ public class GameWindow extends JFrame implements
 
 	private void winMessage(Graphics g) {
 		
-		Image gameOver = ImageManager.loadImage("images/winGame.png");
+		Image gameOver = ImageManager.loadImage("images/win.png");
 		int x = (getWidth() - gameOver.getWidth(null)) / 2; 
 		int y = (getHeight() - gameOver.getHeight(null)) / 2;
 		g.drawImage(gameOver, x,y, 300,200,null);

@@ -20,6 +20,7 @@ public class TileMapManager {
     private PoisonSprite poisonSprite;
     private NutritiousSprite nutritiousSprite;
     private LevelSprite levelSprite;
+    private SlowSprite slowSprite;
 
 
     public TileMapManager(GameWindow window, Score s) {
@@ -29,6 +30,7 @@ public class TileMapManager {
         poisonSprite = new PoisonSprite(score);
         nutritiousSprite = new NutritiousSprite(score);
         levelSprite = new LevelSprite();
+        slowSprite = new SlowSprite();
         loadTileImages();
     }
 
@@ -80,6 +82,9 @@ public class TileMapManager {
                 }
                 else if (ch == '*') {
                     addSprite(newMap, nutritiousSprite, x, y);
+                }
+                else if (ch == '%') {
+                    addSprite(newMap, slowSprite, x, y);
                 }
                 else if (ch == '0') {
                     addSprite(newMap, levelSprite, x, y);
