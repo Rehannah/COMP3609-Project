@@ -227,6 +227,7 @@ public class Captain implements Pirate{
       Image imageRight = ImageManager.loadImage("images/pirates/captain/attack/2_entity_000_ATTACK_005.png");
       if (gracePeriod > 20 && (pirateImage==imageLeft || pirateImage==imageRight)) {
          gracePeriod = 0;
+         soundManager.playSound("pistol", false);
          Bullet bullet = new Bullet(window, player, this);
          bullets.add(bullet);
       }

@@ -20,15 +20,15 @@ public class SoundManager {				// a Singleton class
 		Clip clip = loadClip("sounds/level1background.wav");
 		clips.put("l1background", clip);		// level 1 background theme sound
 
-		clip = loadClip("sounds/level2background.wav");
-		clips.put("l2background", clip);		// level 2background theme sound
-
 		clip = loadClip("sounds/nutritiousSound.wav");
 		clips.put("nutritious", clip);			// played when player's sprite collides 
 													// with nutritious sprite
 		clip = loadClip("sounds/boyHurt.wav");
 		clips.put("boyHurt", clip);				// played when player's sprite collides
 													// with poisonous sprite or is injured
+
+		clip = loadClip("sounds/level2background.wav");
+		clips.put("l2background", clip);		// level 2background theme sound
 		
 		clip = loadClip("sounds/knifePirateHurt.wav");
 		clips.put("knifeHurt", clip);			// played when coconut collides with
