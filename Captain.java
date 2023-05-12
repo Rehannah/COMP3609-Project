@@ -246,6 +246,7 @@ public class Captain implements Pirate{
 
    public void decreaseLives(){
       lives--;
+      soundManager.stopSound("captainHurt");
       soundManager.playSound("captainHurt", false);
       if (lives<=0) {
          isActive=false;

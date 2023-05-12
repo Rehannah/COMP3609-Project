@@ -48,6 +48,9 @@ public class GameWindow extends JFrame implements
 	private long musicStartTime;
 
 	private boolean motion;
+	private boolean changingLevel;
+	private BufferedImage levelUpImage;
+	private int timeElapsed;
 
 
 
@@ -170,11 +173,15 @@ public class GameWindow extends JFrame implements
 			tileMap.draw(imageContext);
 		}
 		else{
-			panel.gameRender(imageContext);			
+			if(changingLevel)
+				drawLevelGraphic(imageContext);
+			if(timeElapsed > 1)
+				panel.gameRender(imageContext);			
 		}
 	
 		if(motion)
 			drawButtons(imageContext);			// draw the buttons
+		
 		drawScore(imageContext);
 		Graphics2D g2 = (Graphics2D) gScr;
 
@@ -183,6 +190,44 @@ public class GameWindow extends JFrame implements
 		imageContext.dispose();
 		g2.dispose();
 	}
+
+	private void drawLevelGraphic(Graphics2D g2) {		
+		if(levelUpImage == null)
+			getLevelUpImage();
+
+		int x = (getWidth() - levelUpImage.getWidth(null)) / 2; 
+		int y = (getHeight() - levelUpImage.getHeight(null)) / 2;
+
+		g2.drawImage(levelUpImage, x,y, 300,200,null);
+
+		timeElapsed++;
+		if(timeElapsed>100)
+			changingLevel = false;
+	}
+
+
+	private void getLevelUpImage() {
+		levelUpImage = ImageManager.loadBufferedImage("images/levelUP.png");
+
+		int imWidth = levelUpImage.getWidth();
+        int imHeight = levelUpImage.getHeight();
+        int [] pixels = new int[imWidth * imHeight];
+        int a, colours, newValue;
+        levelUpImage.getRGB(0, 0, imWidth, imHeight, pixels, 0, imWidth);
+         
+        for (int i=0; i<pixels.length; i++) {
+            a = (pixels[i] >>> 24);
+			colours = pixels[i] & 16777215;
+            if (a > 100) {
+				a = 100;				
+               	newValue = colours | (a << 24);
+               	pixels[i] = newValue;
+            }
+        }
+        levelUpImage.setRGB(0, 0, imWidth, imHeight, pixels, 0, imWidth);	
+      
+	}
+
 
 	public void endGame(){
 		
@@ -541,7 +586,9 @@ public class GameWindow extends JFrame implements
 	}
 
 	public void increaseLevel() {
-		level++;
+		level=2;
+		changingLevel = true;
+		timeElapsed = 0;
 		soundManager.stopSound("l1background");
 		soundManager.playSound("l2background", true);
 	}

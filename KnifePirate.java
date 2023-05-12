@@ -201,6 +201,7 @@ public class KnifePirate implements Pirate{
    }
 
    public void decreaseLives(){
+      soundManager.stopSound("knifeHurt");
       soundManager.playSound("knifeHurt", false);
       lives--;
       if (lives<=0) {

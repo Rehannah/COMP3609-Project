@@ -373,7 +373,7 @@ public class Level2Player {
     }
 
 	public void hurt() {
-		
+		soundManager.stopSound("boyHurt");
 		soundManager.playSound("boyHurt", false);
 		if(!score.decreaseLives())
 			window.endGame();

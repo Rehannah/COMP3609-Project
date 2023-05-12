@@ -198,12 +198,8 @@ public class SwordPirate implements Pirate{
    }
 
    public void decreaseLives(){
+      soundManager.stopSound("swordHurt");
       soundManager.playSound("swordHurt", false);
-      if(getDirection() % 2 == 0)
-			currentAnim = animations.get("hurt");
-		else
-			currentAnim = animations.get("hurtLeft");
-		currentAnim.start();
       lives--;
       if (lives<=0) {
          isActive=false;

@@ -37,7 +37,7 @@ public class Bullet {
       dx = 20;
       dy = 0;
       
-      bulletImage = ImageManager.loadImage ("images/bullet.png");
+      bulletImage = ImageManager.loadImage ("images/pirates/captain/bullet.png");
 
       isActive = true;
 

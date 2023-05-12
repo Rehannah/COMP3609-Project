@@ -28,7 +28,7 @@ public class TreasureAnimation {
 		initialiseAnimations();
 		currentAnim = null;
 		
-		x = window.getWidth()+70;
+		x = window.getWidth()+150;
 		y = window.getHeight()-390;
 		treasureImage = ImageManager.loadImage("images/treasure/treasure chest0000.png");
 		height=100;

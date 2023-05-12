@@ -11,10 +11,10 @@
 #   %       Token to slow down player
 #   0       Token for progression to next level
 
-                                                                 ***                   
-            **!**       **      *****         **    *!*         ABBBC******                    
-            ABBBC      ABBC     ABBBC        ABBC   ABC              ABBBBC                              
+                                                                    ***                   
+            **!**       **       *****        **    *!*            ABBBC******                    
+            ABBBC      ABBC      ABBBC       ABBC   ABC                 ABBBBC                              
                                                                                                                                                   
                                                                                              
-                  *%*    ****  !     ****!***       *      *!**   **  ***   *****0
-DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
+                  ***    *** %        ****!***      *      *!**!     **  ***   *****0
+DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
